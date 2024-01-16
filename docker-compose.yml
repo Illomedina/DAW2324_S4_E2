@@ -11,7 +11,7 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_USER=bn_myapp
       - MARIADB_DATABASE=bitnami_myapp
-  myapp:
+  laravel:
     image: docker.io/bitnami/laravel:10
     ports:
       - '8000:8000'
@@ -21,7 +21,7 @@ services:
       - DB_USERNAME=bn_myapp
       - DB_DATABASE=bitnami_myapp
     volumes:
-      - './my-project:/app'
+      - './customAIze:/app'
     depends_on:
       - mariadb
   phpmyadmin:
