@@ -26,7 +26,7 @@ services:
       context: ./react
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "3000:3000"
     volumes:
       - "./react:/app"
       - "/app/node_modules"
