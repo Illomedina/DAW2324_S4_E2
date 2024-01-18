@@ -1,7 +1,4 @@
-# Copyright VMware, Inc.
-# SPDX-License-Identifier: APACHE-2.0
-
-version: '2'
+version: ""
 
 services:
   mariadb:
@@ -14,20 +11,40 @@ services:
   laravel:
     image: docker.io/bitnami/laravel:10
     ports:
-      - '8000:8000'
+      - "8000:8000"
     environment:
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_USERNAME=bn_myapp
       - DB_DATABASE=bitnami_myapp
     volumes:
-      - './customAIze:/app'
+      - "./laravel:/app"
     depends_on:
       - mariadb
+  react:
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - "./react:/app"
+      - "/app/node_modules"
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mariadb
-      - PMA_USER=myapp
-      - PMA_PASSWORD=super
+    ports:
+      - "8002:8002"
+    links:
+      - 'mariadb:db'
+  fastapi:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      - "./fastapi:/app"
+    depends_on:
+      - mariadb
