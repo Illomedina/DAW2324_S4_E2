@@ -1,13 +1,6 @@
-version: ""
+version: "3.8"
 
 services:
-  mariadb:
-    image: docker.io/bitnami/mariadb:11.2
-    environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=bn_myapp
-      - MARIADB_DATABASE=bitnami_myapp
   laravel:
     image: docker.io/bitnami/laravel:10
     ports:
@@ -16,11 +9,13 @@ services:
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_USERNAME=bn_myapp
-      - DB_DATABASE=bitnami_myapp
+      - DB_PASSWORD=myapp_password # Asegúrate de cambiar esto por tu contraseña real
+      - DB_DATABASE=customAIze
     volumes:
       - "./laravel:/app"
     depends_on:
       - mariadb
+
   react:
     build:
       context: ./react
@@ -30,21 +25,32 @@ services:
     volumes:
       - "./react:/app"
       - "/app/node_modules"
+
+  mariadb:
+    image: 'bitnami/mariadb:11.2'
+    environment:
+      - MARIADB_ROOT_PASSWORD=root_password # Cambia esto por tu contraseña real
+      - MARIADB_DATABASE=customAIze
+      - MARIADB_USER=bn_myapp
+      - MARIADB_PASSWORD=myapp_password # Asegúrate de cambiar esto por tu contraseña real
+    volumes:
+      - 'mariadb_data:/bitnami/mariadb'
+    ports:
+      - "3306:3306"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      - PMA_ARBITRARY=1
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+      - PMA_USER=bn_myapp # Usuario de la base de datos
+      - PMA_PASSWORD=myapp_password # Asegúrate de cambiar esto por la contraseña de tu base de datos
     ports:
-      - "8002:8002"
-    links:
-      - 'mariadb:db'
-  fastapi:
-    build:
-      context: ./fastapi
-      dockerfile: Dockerfile
-    ports:
-      - "8001:8001"
-    volumes:
-      - "./fastapi:/app"
+      - "8080:80"
     depends_on:
       - mariadb
+
+
+volumes:
+  mariadb_data:
+    driver: local
