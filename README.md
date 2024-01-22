@@ -7,5 +7,5 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-#Paquetes:
+# Paquetes (Gabriel):
 npm install react-router-dom
