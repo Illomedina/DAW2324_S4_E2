@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('sku');
             $table->integer('dpi');
             $table->string('type');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }
