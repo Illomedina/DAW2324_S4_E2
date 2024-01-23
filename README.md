@@ -7,6 +7,15 @@ cp .env.example .env
 php artisan key:generate
 ```
 
+# Arrancando docker:
+```
+Laravel, mysql, phpmyadmin, react:
+docker-compose up --build
+
+Fastapi:
+docker-compose -f docker-compose-fastapi.yml up --build
+```
+
 # Paquetes:
 ```
 npm install react-router-dom
