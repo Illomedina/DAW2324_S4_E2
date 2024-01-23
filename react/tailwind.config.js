@@ -1,33 +1,3 @@
-
-# Before start
-```
-cd /laravel
-composer install
-cp .env.example .env
-php artisan key:generate
-```
-
-# Paquetes:
-```
-npm install react-router-dom
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-npm install @headlessui/react @heroicons/react
-```
-
-# Archivos a modificar:
-.env
-```
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=customAIze
-DB_USERNAME=root
-DB_PASSWORD=rootpwd
-```
-
-tailwind.config.js
-```
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -36,6 +6,8 @@ export default {
     extend: {
       colors: {
         black: '#191624',
+        primaryColor: '#061F41',
+        grayBackground: '#E9ECEF',
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',
@@ -75,10 +47,3 @@ export default {
     },
   }
 }
-```
-index.css
-```
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-```
