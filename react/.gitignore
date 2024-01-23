@@ -25,4 +25,7 @@ dist-ssr
 
 #Tailwind
 src/postcss.config.js
+src/tailwind.config.js
+src/vite.config.js
+
 
