@@ -16,6 +16,16 @@ npm install @headlessui/react @heroicons/react
 ```
 
 # Archivos a modificar:
+.env
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=customAIze
+DB_USERNAME=root
+DB_PASSWORD=rootpwd
+```
+
 tailwind.config.js
 ```
 /** @type {import('tailwindcss').Config} */
