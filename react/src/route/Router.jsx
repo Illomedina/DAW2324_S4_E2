@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import LoginForm from '../components/Login'
 import PageNotFound from '../pages/PageNotFound'
-import { Sidebar } from '../components/Sidebar';
+import Dashboard from '../pages/dashboard';
 
 export const Router = () => {
 
@@ -11,7 +11,7 @@ return (
     <Routes>
         <Route path="/" element={<LoginForm />} />
         <Route path="/*" element={<PageNotFound />} />
-        <Route path="/side-bar" element={<Sidebar />} />
+        <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 };
