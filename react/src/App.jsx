@@ -6,7 +6,7 @@ import {
 } from "react-router-dom"
 
 import LoginForm from './components/Login'
-
+import PageNotFound from './Pages/PageNotFound'
 
 
 function App() {
@@ -15,6 +15,10 @@ function App() {
     {
       path: "/",
       element:  <LoginForm />,
+    },  
+    {
+      path: "*",
+      element:  <PageNotFound />,
     },
     // other pages....
     // {
