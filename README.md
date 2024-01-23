@@ -7,7 +7,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-# Paquetes (Gabriel):
+# Paquetes:
 ```
 npm install react-router-dom
 npm install -D tailwindcss postcss autoprefixer
