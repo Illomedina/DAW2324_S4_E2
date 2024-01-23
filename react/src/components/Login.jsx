@@ -32,7 +32,7 @@ export const Login = () => {
           <div className="w-full md:w-full lg:w-9/12 mx-auto md:mx-0">
             <div className="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
               <h2 className="text-2xl font-bold text-primaryColor text-left mb-5">
-                Sigin
+                Sign in
               </h2>
               <form action="" className="w-full">
                 <div id="input" className="flex flex-col w-full my-5">
@@ -79,7 +79,7 @@ export const Login = () => {
                           ></path>
                         </svg>
                       </div>
-                      <div className="font-bold">Sigin</div>
+                      <div className="font-bold">Sign in</div>
                     </div>
                   </button>
                   <div className="flex justify-evenly mt-5">
