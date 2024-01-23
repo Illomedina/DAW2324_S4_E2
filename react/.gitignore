@@ -24,8 +24,8 @@ dist-ssr
 *.sw?
 
 #Tailwind
-src/postcss.config.js
-src/tailwind.config.js
-src/vite.config.js
+# src/postcss.config.js
+# src/tailwind.config.js
+# src/vite.config.js
 
 
