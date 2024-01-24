@@ -82,3 +82,18 @@ index.css
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 ```
+
+# Estructura directorios
+```
+src
+├───assets
+├───components (Cosas reutilizables (botones, inputs, etc))
+│   ├───Sidebar
+├───pages
+│   ├───auth
+│   ├───dashboard
+├───router
+└───views
+    ├───auth
+    ├───dashboard
+```
