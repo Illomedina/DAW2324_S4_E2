@@ -42,6 +42,16 @@ services:
     depends_on:
       - mysql
 
+  fastapi:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: fastapi
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./fastapi/app:/app
+
 volumes:
   mysql_data:
     driver: local
