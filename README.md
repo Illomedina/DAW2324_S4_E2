@@ -26,7 +26,7 @@ DB_USERNAME=root
 DB_PASSWORD=rootpwd
 ```
 
-fastapi/ .env
+fastapi/app .env
 ```
 SECRET_KEY=mysecretkey
 ALGORITHM=HS256
