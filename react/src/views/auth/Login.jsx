@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import './Login.css'
 // import './App.css
 
 export const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = () => {
+    console.log("username", username);
+  };
+
+
   return (
     <div className="antialiased background-login">
       <div className="container px-6 mx-auto">
@@ -42,6 +50,8 @@ export const Login = () => {
                   <input
                     type="text"
                     id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     placeholder="Please insert your username"
                     className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryColor focus:shadow-lg"
                   />
@@ -60,6 +70,7 @@ export const Login = () => {
                 <div  className="flex flex-col w-full my-5">
                   <button id="button"
                     type="button"
+                    onClick={onSubmit}
                     className="w-full py-4 rounded-lg text-black-100"
                   >
                     <div className="flex flex-row items-center justify-center">
