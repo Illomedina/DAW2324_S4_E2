@@ -10,7 +10,7 @@ return (
     <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/*" element={<PageNotFound />} />
-        <Route path="/sectionTable" element={<SectionTable SectionName={"Productos"}></SectionTable>} />
+        <Route path="/sectionTable" element={<SectionTable SectionName={"Beneficios"}></SectionTable>} />
     </Routes>
   );
 };

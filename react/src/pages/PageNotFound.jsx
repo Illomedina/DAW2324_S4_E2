@@ -1,6 +1,6 @@
 import React from "react";
 import "./PageNotFound.css";
-// import './App.css
+import { NavLink } from "react-router-dom";
 
 export const PageNotFound = () => {
   return (
@@ -34,7 +34,7 @@ export const PageNotFound = () => {
                   d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
                 />
               </svg>
-              <span>Go home</span>
+              <span><NavLink to="/">Go home</NavLink></span>
             </button>
           </div>
         </div>

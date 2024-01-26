@@ -27,7 +27,7 @@
 
 .buttonEdit{
     background-color: #00E6CE;
-    color: white;
+    color: #061F41;
     margin-left: 5px;
     font-size: 14px;
     border-radius: 20px;
@@ -38,6 +38,7 @@
 
 }.buttonEdit:hover{
     background-color: #061F41;
+    color: white;
 }
 
 .buttonContainer{
