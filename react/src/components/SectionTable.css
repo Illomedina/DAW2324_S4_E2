@@ -6,44 +6,43 @@
     padding: 8px 16px; 
     font-weight: 500;
     transition: all 0.2s ease-in-out;
-    width: 80px;
+    width: 70px;
 }.buttonCreate:hover{
     background-color: #061F41;
 }
 
 .buttonDelete{
     background-color: #E50042;
+    margin-left: 5px;
     font-size: 14px;
     color: white;
     border-radius: 20px;
-    margin-left: 5px;
     padding: 8px 16px; 
     font-weight: 500;
     transition: all 0.2s ease-in-out;
-    width: 80px;
+    width: 70px;
 }.buttonDelete:hover{
     background-color: #061F41;
-}
-
-.buttonHolder{
-    margin-left: 140px;
 }
 
 .buttonEdit{
     background-color: #00E6CE;
     color: white;
+    margin-left: 5px;
     font-size: 14px;
     border-radius: 20px;
-    margin-left: 5px;
     padding: 8px 16px; 
     font-weight: 500;
     transition: all 0.2s ease-in-out;
-    width: 80px;
+    width: 70px;
 
 }.buttonEdit:hover{
     background-color: #061F41;
 }
 
+.buttonContainer{
+    align-items: flex-end;
+}
 
 .headerContainer{
     display: flex;
