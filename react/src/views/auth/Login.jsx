@@ -15,7 +15,7 @@ export const Login = () => {
     <div className="antialiased background-login">
       <div className="container px-6 mx-auto">
         <div className="flex flex-col text-center md:text-left md:flex-row h-screen justify-evenly md:items-center">
-          <div className="flex flex-col w-full">
+          <div className="flex pl-20 flex-col w-full">
             <div>
               <svg
                 className="w-20 h-20 mx-auto md:float-left fill-stroke primary-color"
@@ -37,7 +37,7 @@ export const Login = () => {
               Control and monitorize your website data from dashboard.
             </p>
           </div>
-          <div className="w-full md:w-full lg:w-9/12 mx-auto md:mx-0">
+          <div className="w-full pr-20 md:w-full lg:w-9/12 mx-auto md:mx-0">
             <div className="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
               <h2 className="text-2xl font-bold text-primaryColor text-left mb-5">
                 Sign in

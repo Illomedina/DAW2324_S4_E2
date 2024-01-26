@@ -6,7 +6,7 @@ export const PageNotFound = () => {
   return (
     <div className="background">
       <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
-        <div className="wf-ull lg:w-1/2">
+        <div className="wf-ull lg:w-1/2 pl-40">
           <p className="text-sm font-medium text-primaryColor">404 error</p>
           <h1 className="mt-3 text-2xl font-semibold text-primaryColor md:text-3xl">
             Page not found
@@ -39,7 +39,7 @@ export const PageNotFound = () => {
           </div>
         </div>
 
-        <div className="relative w-full mt-12 lg:w-1/2 lg:mt-0">
+        <div className="relative w-full pr-40 mt-12 lg:w-1/2 lg:mt-0">
           <svg className="w-full max-w-lg lg:mx-auto text-primaryColor"
             width="514"
             height="164"
