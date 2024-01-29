@@ -1,15 +1,14 @@
 import React from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import LoginForm from '../components/Login'
-import PageNotFound from '../pages/PageNotFound'
-import Dashboard from '../pages/Dashboard';
+import Login from '../pages/auth/Login'
+import PageNotFound from '../pages/404/PageNotFound'
 
 export const Router = () => {
 
 return (
     <Routes>
-        <Route path="/" element={<LoginForm />} />
+        <Route path="/" element={<Login />} />
         <Route path="/*" element={<PageNotFound />} />
         <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
