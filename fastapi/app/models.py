@@ -1,4 +1,4 @@
-from sqlalchemy import DateTime, create_engine, Column, Boolean, Integer, String, MetaData, Table, ForeignKey, Float, insert
+from sqlalchemy import DateTime, Column, Boolean, Integer, String, MetaData, Table, Float
 from datetime import datetime
 
 metadata = MetaData()
