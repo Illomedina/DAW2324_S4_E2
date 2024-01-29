@@ -19,19 +19,20 @@ products_table = Table(
 
 ### TAULA IMATGES PRODUCTES ###
 products_images_table = Table(
-    'productImages', metadata,
-    Column('idProductImage', Integer),
+    'product_images', metadata,
+    Column('id', Integer),
+    Column('idProduct', Integer),
+    Column('idPicanova', String(255)),
     Column('original', String(255)),
     Column('thumb', String(255)),
-    Column('idProduct', Integer),
     Column('created_at', DateTime, default=datetime.now),
     Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),
 )
 
 ### TAULA DETALLS PRODUCTES ###
 product_details_table = Table(
-    'productDetails', metadata,
-    Column('idProductDetail', Integer),
+    'product_details', metadata,
+    Column('id', Integer),
     Column('idProduct', Integer), 
     Column('code', String(255)),
     Column('variant_id', Integer),
@@ -44,4 +45,6 @@ product_details_table = Table(
     Column('currency', String(3)),
     Column('formatted_price', String(20)),
     Column('price_in_subunit', Integer),
+    Column('created_at', DateTime, default=datetime.now),
+    Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),
 )

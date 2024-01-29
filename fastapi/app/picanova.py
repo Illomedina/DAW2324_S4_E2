@@ -26,3 +26,15 @@ async def fetch_products_from_api():
     except Exception as e:
         print(f"Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Error interno del servidor")
+
+
+async def get_product_details_from_api(product_id: int) -> dict:
+    url = (f"{PICANOVA_PRODUCTS_URL}/{product_id}")
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            url,
+            headers={'Authorization': f'Basic {encoded_credentials}'}
+        )
+        if response.status_code == 200:
+            return response.json().get('data', {})
+        return {}
