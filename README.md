@@ -16,7 +16,7 @@ npm install @headlessui/react @heroicons/react
 ```
 
 # Archivos a modificar:
-.env
+laravel/.env
 ```
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -24,6 +24,19 @@ DB_PORT=3306
 DB_DATABASE=customAIze
 DB_USERNAME=root
 DB_PASSWORD=rootpwd
+```
+
+fastapi/app .env
+```
+SECRET_KEY=mysecretkey
+ALGORITHM=HS256
+API_USER=alumne
+API_PASSWORD=2b8af5289aa93fc62eae989b4dcc9725
+DB_USER=root
+DB_PASSWORD=rootpwd
+DB_HOST=mysql
+DB_NAME=customAIze
+DB_PORT=3306
 ```
 
 tailwind.config.js
