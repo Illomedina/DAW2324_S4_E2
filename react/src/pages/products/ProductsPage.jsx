@@ -4,14 +4,11 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
 
 const ImageCellRenderer = ({ data }) => {
-    return data.product_images && data.product_images.length > 0 ? (
-        <img src={data.product_images[0].thumb} style={{ width: 50, height: 50 }} alt={data.name} />
-    ) : (
-        <span>No Image</span>
-    );
+    return <img src={data.thumb} style={{ width: 50, height: 50 }} alt={`Image for ${data.name}`} />;
 };
 
 export default function ProductsPage() {
+
     const [rowData, setRowData] = useState([]);
     const MissionResultRenderer = ({ value }) => (
         <span
@@ -34,20 +31,23 @@ export default function ProductsPage() {
     );
     const colDefs = [
         {
-            field: 'product_images',
+            field: 'thumb',
             headerName: 'Image',
-            cellRendererFramework: ImageCellRenderer,
+            cellRenderer: ImageCellRenderer,
         },
         { field: 'name', headerName: 'Product Name' },
         { field: 'sku', headerName: 'SKU' },
         { field: 'dpi', headerName: 'DPI' },
-        { field: 'type', headerName: 'Type' }, {
-            field: 'is active',
+        { field: 'type', headerName: 'Type' },
+        {
+            field: 'is_active',
+            headerName: 'Is Active',
             width: 120,
             cellRenderer: MissionResultRenderer,
         }
         // Agrega más columnas según sea necesario
     ];
+
 
     useEffect(() => {
         fetch('http://localhost:8000/api/products')
@@ -57,7 +57,7 @@ export default function ProductsPage() {
     }, []);
 
     return (
-        <div className="ag-theme-quartz" style={{ width: '100%', height: '600px' }}>
+        <div className="ag-theme-quartz" style={{ width: '70%', height: '100%' }}>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}
