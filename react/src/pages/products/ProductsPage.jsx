@@ -1,64 +1,69 @@
 import React, { useEffect, useState } from 'react';
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
+import { AgGridReact } from 'ag-grid-react';
 
+const ImageCellRenderer = ({ data }) => {
+    return data.product_images && data.product_images.length > 0 ? (
+        <img src={data.product_images[0].thumb} style={{ width: 50, height: 50 }} alt={data.name} />
+    ) : (
+        <span>No Image</span>
+    );
+};
 
 export default function ProductsPage() {
-
-    const [products, setProducts] = useState([]);
+    const [rowData, setRowData] = useState([]);
+    const MissionResultRenderer = ({ value }) => (
+        <span
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                height: '100%',
+                alignItems: 'center',
+            }}
+        >
+            {
+                <img
+                    alt={`${value}`}
+                    src={`https://www.ag-grid.com/example-assets/icons/${value ? 'tick-in-circle' : 'cross-in-circle'
+                        }.png`}
+                    style={{ width: 'auto', height: 'auto' }}
+                />
+            }
+        </span>
+    );
+    const colDefs = [
+        {
+            field: 'product_images',
+            headerName: 'Image',
+            cellRendererFramework: ImageCellRenderer,
+        },
+        { field: 'name', headerName: 'Product Name' },
+        { field: 'sku', headerName: 'SKU' },
+        { field: 'dpi', headerName: 'DPI' },
+        { field: 'type', headerName: 'Type' }, {
+            field: 'is active',
+            width: 120,
+            cellRenderer: MissionResultRenderer,
+        }
+        // Agrega más columnas según sea necesario
+    ];
 
     useEffect(() => {
         fetch('http://localhost:8000/api/products')
-            .then(response => response.json())
-            .then(data => setProducts(data))
-            .then(console.log(products));
+            .then((result) => result.json())
+            .then((data) => setRowData(data))
+            .catch((error) => console.error('Error fetching data: ', error));
     }, []);
 
-
-
     return (
-        <div className="bg-white">
-            <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
-
-                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                    {products.map((product) => (
-                        <div key={product.id} className="group relative">
-                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                                <img
-                                    src={product.product_images[0].thumb}
-                                    alt={product.imageAlt}
-                                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                />
-                            </div>
-                            <div className="mt-4 flex justify-between">
-                                <div>
-                                    <h3 className="text-sm text-gray-700">
-                                        <a href={product.href}>
-                                            <span aria-hidden="true" className="absolute inset-0" />
-                                            {product.name}
-                                        </a>
-                                    </h3>
-                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                </div>
-                                <p className="text-sm font-medium text-gray-900">{product.price}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+        <div className="ag-theme-quartz" style={{ width: '100%', height: '600px' }}>
+            <AgGridReact
+                rowData={rowData}
+                columnDefs={colDefs}
+                pagination={true}
+                rowSelection="multiple"
+            />
         </div>
-    )
+    );
 }

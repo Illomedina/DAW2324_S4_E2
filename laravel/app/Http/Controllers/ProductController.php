@@ -14,6 +14,8 @@ class ProductController extends Controller
             $query->select('idProduct', 'thumb');
         }])->get();
 
+        // dd($products[0]);
+
         return response()->json($products);
     }
 }
