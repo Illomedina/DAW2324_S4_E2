@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*Route::get('user', function () {
+    return view('user');
+});*/
+
+//Uso el controlador para mostrar diferentes vistas
+//Si el usuario es admin podra tener opciones a eliminar usuarios.
+Route::get('/user', UserController::class, 'showUser');
