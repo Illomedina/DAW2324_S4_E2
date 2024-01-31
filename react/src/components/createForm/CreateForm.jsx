@@ -2,7 +2,7 @@ import "./CreateForm.css";
 import "../sectionTable/SectionTable.css";
 import React, { useState } from "react";
 
-const CreateForm = (props, { section }) => {
+const CreateForm = (props, {section}) => {
   const listBenefits = [
     {
       id: 1,

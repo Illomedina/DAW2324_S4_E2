@@ -5,7 +5,8 @@ import Login from '../pages/auth/Login'
 import PageNotFound from '../pages/404/PageNotFound'
 import SectionTable from '../components/sectionTable/SectionTable'
 import DashboardPage from '../pages/dashboard/DashboardPage'
-import BenefitsPage from '../pages/dashboard/BenefitsPage';
+import BenefitsPage from '../pages/benefits/BenefitsPage';
+import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
 
 export const Router = () => {
 
@@ -14,12 +15,8 @@ return (
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/*" element={<PageNotFound />} />
-        <Route path="/sectionTable" element={<SectionTable SectionName={"Beneficios"}></SectionTable>} />
-        <Route path="/benefits" element={
-          <BenefitsPage>
-             
-          </BenefitsPage>
-        } />
+        <Route path="/benefits" element={<BenefitsPage></BenefitsPage>} />
+        <Route path="/benefits=create" element={<BenefitsCreate></BenefitsCreate>} />
     </Routes>
   );
 };
