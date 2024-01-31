@@ -1,0 +1,66 @@
+.buttonCreate{
+    background-color: #5857AA;
+    color: white;
+    font-size: 14px;
+    border-radius: 20px;
+    padding: 8px 16px; 
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    width: 70px;
+}.buttonCreate:hover{
+    background-color: #061F41;
+}
+
+.buttonDelete{
+    background-color: #E50042;
+    margin-left: 5px;
+    font-size: 14px;
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px; 
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    width: 70px;
+}.buttonDelete:hover{
+    background-color: #061F41;
+}
+
+.buttonEdit{
+    background-color: #00E6CE;
+    color: #061F41;
+    margin-left: 5px;
+    font-size: 14px;
+    border-radius: 20px;
+    padding: 8px 16px; 
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    width: 70px;
+
+}.buttonEdit:hover{
+    background-color: #061F41;
+    color: white;
+}
+
+.buttonContainer{
+    align-items: flex-end;
+}
+
+.headerContainer{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    background-color: #fff;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 20px;
+    padding-top: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+
+    .divContainer{
+        margin-left: 100px;
+    }
