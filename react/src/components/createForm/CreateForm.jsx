@@ -1,8 +1,8 @@
-import "./CrudFormBenefits.css";
+import "./CreateForm.css";
 import "../sectionTable/SectionTable.css";
 import React, { useState } from "react";
 
-const CrudFormBenefits = (props, { section }) => {
+const CreateForm = (props, { section }) => {
   const listBenefits = [
     {
       id: 1,
@@ -87,4 +87,4 @@ const CrudFormBenefits = (props, { section }) => {
   );
 };
 
-export default CrudFormBenefits;
+export default CreateForm;
