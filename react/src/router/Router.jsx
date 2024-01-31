@@ -5,6 +5,7 @@ import Login from '../pages/auth/Login'
 import PageNotFound from '../pages/404/PageNotFound'
 import SectionTable from '../components/sectionTable/SectionTable'
 import DashboardPage from '../pages/dashboard/DashboardPage'
+import AppLayout from '../layout/AppLayout';
 
 export const Router = () => {
 
@@ -13,7 +14,9 @@ return (
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/*" element={<PageNotFound />} />
-        <Route path="/sectionTable" element={<SectionTable SectionName={"Beneficios"}></SectionTable>} />
+        <Route path="/sectionTable" element={<AppLayout>
+          <SectionTable SectionName={"Beneficios"}></SectionTable>
+        </AppLayout>} />
     </Routes>
   );
 };
