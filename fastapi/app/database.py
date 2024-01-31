@@ -11,12 +11,8 @@ DB_NAME = os.getenv("DB_NAME")
 
 
 database_user_uri = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-print ("user ======", {database_user_uri})
 
 engine = create_engine(database_user_uri)
-
-connection = engine.connect()
-print("Conexión exitosa a la base de datos.")
 
 def get_connection():
     return engine.connect()
