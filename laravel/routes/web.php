@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*Route::get('user', function () {
+Route::get('user', function () {
     return view('user');
-});*/
+});
 
 //Uso el controlador para mostrar diferentes vistas
 //Si el usuario es admin podra tener opciones a eliminar usuarios.
