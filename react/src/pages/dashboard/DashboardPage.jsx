@@ -4,7 +4,7 @@ import AppLayout from '../../layout/AppLayout'
 export const DashboardPage = () => {
     return (
         <AppLayout>
-            Hola
+            dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
         </AppLayout>
     )
 }
