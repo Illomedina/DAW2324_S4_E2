@@ -5,3 +5,6 @@ python-dotenv==0.19.1
 sqlalchemy<=1.4.41
 PyMySQL==1.0.2
 cryptography
+python-multipart
+python-jose[pyjwt]
+httpx
