@@ -13,6 +13,7 @@ export const Router = () => {
     <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/user" element={<User />} />
         <Route path="/*" element={<PageNotFound />} />
     </Routes>
   );
