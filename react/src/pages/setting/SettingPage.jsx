@@ -7,7 +7,7 @@ const SettingPage = () => {
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const response = await fetch('https://thronesapi.com/api/v2/Characters');
+              const response = await fetch('http://localhost:8000/api');
               const data = await response.json();
               setJsonData(data);
             } catch (error) {
@@ -20,8 +20,8 @@ const SettingPage = () => {
 
   const columnDefs = [
     { headerName: 'ID', field: 'id' },
-    { headerName: 'Name', field: 'firstName' },
-    { headerName: 'Surname', field: 'lastName' },
+    { headerName: 'Nom', field: 'config' },
+    { headerName: 'value', field: 'value' },
 
     // ... otras definiciones de columna
   ];

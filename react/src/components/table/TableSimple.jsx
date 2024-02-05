@@ -18,6 +18,25 @@ const AgGridTable = ({ rowData, columnDefs }) => {
     gridApi.setQuickFilter(event.target.value);
   };
 
+  const handleEditClick = (id) => {
+    // Lógica para la edición, por ejemplo, abrir un formulario de edición
+    console.log(`Edit row with ID ${id}`);
+  };
+
+  const handleDeleteClick = (id) => {
+    // Lógica para la eliminación, por ejemplo, mostrar un modal de confirmación
+    console.log(`Delete row with ID ${id}`);
+  };
+
+  const frameworkComponents = {
+    editButtonRenderer: (params) => (
+      <button onClick={() => handleEditClick(params.data.id)}>Edit</button>
+    ),
+    deleteButtonRenderer: (params) => (
+      <button onClick={() => handleDeleteClick(params.data.id)}>Delete</button>
+    ),
+  };
+
   return (
     <div className="p-4 border rounded-md">
       <div className="mb-4 flex items-center justify-end">
@@ -40,6 +59,8 @@ const AgGridTable = ({ rowData, columnDefs }) => {
             flex: 1,
             minWidth: 150,
           }}
+          frameworkComponents={frameworkComponents}
+          onGridReady={onGridReady}
         />
       </div>
     </div>
@@ -47,3 +68,4 @@ const AgGridTable = ({ rowData, columnDefs }) => {
 };
 
 export default AgGridTable;
+

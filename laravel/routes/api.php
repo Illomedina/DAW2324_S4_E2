@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-
+//use App\Http\Controllers\ProductControllerController;
+use App\Http\Controllers\setting\SettingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,4 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/products', [ProductController::class, 'index']);
+//Route::resource('settings', SettingController::class);
+Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+//Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
+
