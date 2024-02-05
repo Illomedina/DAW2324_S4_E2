@@ -4,9 +4,14 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
 import ButtonFetchAPI from '../../components/ButtonFetchAPI';
+import { Link } from 'react-router-dom';
 
 const ImageCellRenderer = ({ data }) => {
     return <img src={data.thumb} style={{ width: 50, height: 50 }} alt={`Image for ${data.name}`} />;
+};
+
+const NameCellRenderer = ({ data }) => {
+    return <Link to={`/products/${data.id}`}>{data.name}</Link>;
 };
 
 const EditProduct = () => {
@@ -69,7 +74,11 @@ export default function ProductsPage() {
             headerName: 'Image',
             cellRenderer: ImageCellRenderer,
         },
-        { field: 'name', headerName: 'Product Name' },
+        {
+            field: 'name',
+            headerName: 'Product Name',
+            cellRenderer: NameCellRenderer
+        },
         {
             field: 'is_active',
             headerName: 'Is Active',

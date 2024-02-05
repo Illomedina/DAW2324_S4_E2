@@ -47,21 +47,21 @@ async def insert_products(products_data):
             try:
                 product_id = insert_product(connection, product_data)
                 insert_product_images(connection, product_id, product_data.get('images', []))
-                product_details_data = await get_product_details_from_api(product_id)
+                product_details_data = await get_product_details_from_api(product_data.get('id'))
                 insert_product_details(connection, product_id, product_details_data)
             except Exception as e:
                 print(f"Error al insertar el producto {product_data.get('id')}: {e}")
 
 def insert_product(connection, product_data):
-    product_id = product_data.get('id')
+    idPicanova = product_data.get('id')
     name = product_data.get('name')
     sku = product_data.get('sku')
     dpi = product_data.get('dpi')
     product_type = product_data.get('type')
 
-    if product_id is not None:
+    if idPicanova is not None:
         ins_product = products_table.insert().values(
-            idPicanova=product_id,
+            idPicanova=idPicanova,
             name=name,
             sku=sku,
             dpi=dpi,
