@@ -3,7 +3,6 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
-import ButtonFetchAPI from '../../components/ButtonFetchAPI';
 
 const ImageCellRenderer = ({ data }) => {
     return <img src={data.thumb} style={{ width: 50, height: 50 }} alt={`Image for ${data.name}`} />;
@@ -20,14 +19,14 @@ const EditProduct = () => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth="1.5"
+            stroke-width="1.5"
             stroke="currentColor"
             className="h-6 w-6"
             x-tooltip="tooltip"
         >
             <path
                 strokeLinecap="round"
-                strokeLinejoin="round"
+                stroke-linejoin="round"
                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
             />
         </svg>
@@ -71,11 +70,10 @@ export default function ProductsPage() {
         },
         { field: 'name', headerName: 'Product Name' },
         {
-            field: 'is_active',
+            field: 'is_active, boolean',
             headerName: 'Is Active',
             width: 120,
             cellRenderer: ProductIsActive,
-            field: 'boolean',
             cellEditor: 'agCheckboxCellEditor',
         }, {
             headerName: 'Actions',
@@ -91,9 +89,7 @@ export default function ProductsPage() {
 
     return (
         <AppLayout>
-
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
-                <ButtonFetchAPI />
                 <AgGridReact
                     rowData={rowData}
                     defaultColDef={defaultColDef}
