@@ -56,22 +56,24 @@ const ProductDetailsPage = () => {
 
     return (
         <AppLayout>
-            <div className="ag-theme-quartz" style={{ height: 'auto', width: '100%' }}>
-                <h1>{product.name}</h1>
-                <h2>Product Details</h2>
-                <AgGridReact
-                    rowData={detailRowData}
-                    columnDefs={detailColumnDefs}
-                    defaultColDef={defaultColDef}
-                    domLayout='autoHeight'
-                />
-                <h2>Product Images</h2>
-                <AgGridReact
-                    rowData={imageRowData}
-                    columnDefs={imageColumnDefs}
-                    defaultColDef={defaultColDef}
-                    domLayout='autoHeight'
-                />
+            <div style={{ height: '500px', overflowY: 'auto' }}>
+                <div className="ag-theme-quartz" style={{ width: '100%' }}>
+                    <h1>{product.name}</h1>
+                    <h2>Product Details</h2>
+                    <AgGridReact
+                        rowData={detailRowData}
+                        columnDefs={detailColumnDefs}
+                        defaultColDef={defaultColDef}
+                        domLayout='autoHeight'
+                    />
+                    <h2>Product Images</h2>
+                    <AgGridReact
+                        rowData={imageRowData}
+                        columnDefs={imageColumnDefs}
+                        defaultColDef={defaultColDef}
+                        domLayout='autoHeight'
+                    />
+                </div>
             </div>
         </AppLayout>
     );
