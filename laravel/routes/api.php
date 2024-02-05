@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-//use App\Http\Controllers\ProductControllerController;
+use App\Http\Controllers\ProductControllerController;
 use App\Http\Controllers\setting\SettingController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +33,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/customers', [CustomerController::class, 'index']);
