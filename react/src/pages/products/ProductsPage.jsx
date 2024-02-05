@@ -80,11 +80,10 @@ export default function ProductsPage() {
             cellRenderer: NameCellRenderer
         },
         {
-            field: 'is_active',
+            field: 'is_active, boolean',
             headerName: 'Is Active',
             width: 120,
             cellRenderer: ProductIsActive,
-            field: 'boolean',
             cellEditor: 'agCheckboxCellEditor',
         }, {
             headerName: 'Actions',
