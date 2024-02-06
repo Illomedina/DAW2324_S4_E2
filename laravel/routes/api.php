@@ -29,8 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::resource('settings', SettingController::class);
-Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+Route::resource('/settings', SettingController::class);
+//Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
 Route::get('/products', [ProductController::class, 'index']);
