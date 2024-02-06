@@ -7,7 +7,7 @@ const SettingPage = () => {
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const response = await fetch('http://localhost:8000/api');
+              const response = await fetch('http://localhost:8000/api/settings');
               const data = await response.json();
               setJsonData(data);
             } catch (error) {
