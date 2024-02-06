@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('idProduct')->references('id')->on('products')->onDelete('cascade');
             $table->string('code');
-            $table->integer('variant_id');
+            $table->integer('variant_id')->index();
             $table->string('variant_code');
             $table->string('sku');
             $table->string('name');

@@ -135,51 +135,46 @@ def insert_product_details(connection, product_id, product_details_data):
         if options_data:
             for option_id, option_data in options_data.items():
                 name = option_data['name']
+                image = option_data['image']
+                description = option_data['description']
                 is_required = option_data['is_required']
                 ins_options = product_options_table.insert().values(
                     idProduct=product_id,
+                    variant_id=variant_id,
                     option_id_picanova=option_id,
                     name=name,
+                    image=image,
+                    description=description,
                     is_required=is_required
                 )
                 connection.execute(ins_options)
-            #     ({
-            #         'idProduct': product_id,
-            #         'option_id_picanova': option_id,
-            #         'name': option_data['name'],
-            #         'is_required': option_data['is_required']
-            #     })
-            
-            # # Verifica si hay algo que insertar
-            # if insert_data:
-            #     # Realiza una inserción masiva
-            #     ins_option = product_options_table.insert()
-            #     result = connection.execute(ins_option, insert_data)
-            # else:
-            #     print("No hay datos de opciones para insertar.")
+                option_values = options_data.get(option_id, {}).get('values', [])
+                if option_values:
+                    for value in option_values:
+                        idValue = value.get('id')
+                        name = value.get('name')
+                        sku = value.get('sku')
+                        image_id = value.get('image', {}).get('id', None)
+                        image_original = value.get('image', {}).get('original', None)
+                        price = value.get('price')
+                        currency = value.get('price_details', {}).get('currency')
+                        formatted_price = value.get('price_details', {}).get('formatted')
+                        price_in_subunit = value.get('price_details', {}).get('in_subunit')
+                        
+                        ins_option_values = product_option_values_table.insert().values(
+                            idOption = option_id,
+                            option_value_id_picanova = idValue,
+                            name = name,
+                            sku = sku,
+                            image_id = image_id,
+                            image_original = image_original,
+                            price = price,
+                            currency = currency,
+                            formatted_price = formatted_price,
+                            price_in_subunit = price_in_subunit
+                        )
+                        connection.execute(ins_option_values)
+                else:
+                    print("No option values available.")
         else:
             print("No options data available.")
-
-        # options = product_detail_data.get('options', {})
-        # for option_id, option_data in options.items():
-        #     # Insertar datos de la opción
-        #     ins_option = product_options_table.insert().values(
-        #         idProduct=product_id,
-        #         option_id_picanova=option_id,
-        #         # name=option_data['name'],
-        #         # is_required=option_data['is_required']
-        #     )
-        #     result = connection.execute(ins_option)
-
-        #     option_db_id = result.inserted_primary_key[0]  # Obtener el ID de la opción insertada
-
-        #     # Insertar valores de la opción
-        #     for value in option_data.get('values', []):
-        #         ins_value = product_option_values_table.insert().values(
-        #             idOption=option_db_id,
-        #             name=value['name'],
-        #             sku=value.get('sku'),
-        #             image_url=value.get('image', {}).get('original'),
-        #             # Añade aquí más campos según tu modelo de datos
-        #         )
-        #         connection.execute(ins_value)

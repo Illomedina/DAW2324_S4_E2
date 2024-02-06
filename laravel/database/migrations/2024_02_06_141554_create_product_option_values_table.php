@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('image_original');
             $table->float('price');
             $table->string('currency');
-            $table->string('formatted');
-            $table->integer('in_subunit');
+            $table->string('formatted_price');
+            $table->integer('price_in_subunit');
             $table->timestamps();
         });
     }

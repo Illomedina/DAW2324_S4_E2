@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('product_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idProduct')->references('id')->on('products')->onDelete('cascade');
+            $table->integer('variant_id');
+            $table->foreign('variant_id')->references('variant_id')->on('product_details');
             $table->string('option_id_picanova');
             $table->string('name');
             $table->string('image')->nullable();
