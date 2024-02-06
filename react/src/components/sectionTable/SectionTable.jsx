@@ -23,11 +23,11 @@ function SectionTable({ SectionName }) {
   };
 
   const deleteBenefits = async (id) => {
-    const response = await axios.delete('http://localhost:8000/api/deleteBenefits', {params: {'id': id}, method: 'DELETE'});
-    if(response.status === 200) {
-      console.log("OK", response.data);
-    }else{
-      console.log("Error");
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/deleteBenefits/${id}`);
+      console.log('Resource deleted successfully:', response.data);
+      } catch (error) {
+      console.error('Error deleting resource:', error);
     }
   };
 

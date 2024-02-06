@@ -15,13 +15,11 @@ class BenefitsController extends Controller
     }
 
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-        try {
-            Benefits::whereIn('id', $request->id)->delete(); // $request->id MUST be an array
-            return response()->json('benefits deleted');
-        } catch (Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
+        $benefit = Benefits::findOrFail($id);
+        $benefit->delete();
+        
+        return response()->json(['message' => 'Resource deleted successfully'], 200);
     }
 }
