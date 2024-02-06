@@ -4,7 +4,7 @@ import httpx, base64
 ### IMPORTS FROM OUR FILES ###
 from tokenAuth import get_current_user
 from database import engine
-from models import metadata, products_table, products_images_table, product_details_table
+from models import metadata, products_table, products_images_table, product_details_table, product_options_table, product_option_values_table
 
 PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 
@@ -40,6 +40,16 @@ async def get_product_details_from_api(product_id: int) -> dict:
         if response.status_code == 200:
             return response.json().get('data', {})
         return {}
+    
+async def get_product_options_from_api(product_id: int, product_data) -> dict:
+    url = (f"{PICANOVA_PRODUCTS_URL}/{product_id}")
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            url,
+            headers={'Authorization': f'Basic {encoded_credentials}'}
+        )
+        if response.status_code == 200:
+            return response.json().get('options', {})
     
 async def insert_products(products_data):
     with engine.connect() as connection:
@@ -119,3 +129,57 @@ def insert_product_details(connection, product_id, product_details_data):
         )
 
         connection.execute(ins_details)
+
+        options_data = product_detail_data.get('options', {})
+
+        if options_data:
+            for option_id, option_data in options_data.items():
+                name = option_data['name']
+                is_required = option_data['is_required']
+                ins_options = product_options_table.insert().values(
+                    idProduct=product_id,
+                    option_id_picanova=option_id,
+                    name=name,
+                    is_required=is_required
+                )
+                connection.execute(ins_options)
+            #     ({
+            #         'idProduct': product_id,
+            #         'option_id_picanova': option_id,
+            #         'name': option_data['name'],
+            #         'is_required': option_data['is_required']
+            #     })
+            
+            # # Verifica si hay algo que insertar
+            # if insert_data:
+            #     # Realiza una inserción masiva
+            #     ins_option = product_options_table.insert()
+            #     result = connection.execute(ins_option, insert_data)
+            # else:
+            #     print("No hay datos de opciones para insertar.")
+        else:
+            print("No options data available.")
+
+        # options = product_detail_data.get('options', {})
+        # for option_id, option_data in options.items():
+        #     # Insertar datos de la opción
+        #     ins_option = product_options_table.insert().values(
+        #         idProduct=product_id,
+        #         option_id_picanova=option_id,
+        #         # name=option_data['name'],
+        #         # is_required=option_data['is_required']
+        #     )
+        #     result = connection.execute(ins_option)
+
+        #     option_db_id = result.inserted_primary_key[0]  # Obtener el ID de la opción insertada
+
+        #     # Insertar valores de la opción
+        #     for value in option_data.get('values', []):
+        #         ins_value = product_option_values_table.insert().values(
+        #             idOption=option_db_id,
+        #             name=value['name'],
+        #             sku=value.get('sku'),
+        #             image_url=value.get('image', {}).get('original'),
+        #             # Añade aquí más campos según tu modelo de datos
+        #         )
+        #         connection.execute(ins_value)

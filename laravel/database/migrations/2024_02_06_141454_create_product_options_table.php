@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('idProduct')->references('id')->on('products')->onDelete('cascade');
             $table->string('option_id_picanova');
+            $table->string('name');
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->boolean('is_required');
