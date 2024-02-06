@@ -70,4 +70,8 @@ table {
     overflow-y: auto;
   }
   
- 
+  .scrollit {
+    overflow:scroll;
+    height:100px;
+    overflow-x: hidden;
+}

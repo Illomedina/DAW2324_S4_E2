@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import Login from '../pages/auth/Login'
 import PageNotFound from '../pages/404/PageNotFound'
-import SectionTable from '../components/sectionTable/SectionTable'
 import DashboardPage from '../pages/dashboard/DashboardPage'
 import BenefitsPage from '../pages/benefits/BenefitsPage';
 import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';

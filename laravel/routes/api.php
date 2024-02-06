@@ -25,4 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/benefits', [BenefitsController::class, 'index']);
+Route::get('/getBenefits', [BenefitsController::class, 'index']);
+Route::delete('/deleteBenefits', 'BenefitsController@delete');

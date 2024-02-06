@@ -23,12 +23,12 @@ export default function AppLayout({ children, Page }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
    
     const navigation = [
-        { name: 'Home',  icon: HomeIcon, current: true },
-        { name: 'Users', icon: UsersIcon, current: false },
-        { name: 'Orders',  icon: FolderIcon, current: false },
-        { name: 'Products', icon: CalendarIcon, current: false },
-        { name: 'Reclamations', icon: DocumentDuplicateIcon, current: false },
-        { name: 'Benefits', icon: ChartPieIcon, current: false },
+        { name: 'Home', href: '#', icon: HomeIcon, current: true },
+        { name: 'Users', href: '#', icon: UsersIcon, current: false },
+        { name: 'Orders', href: '#', icon: FolderIcon, current: false },
+        { name: 'Products', href: '#', icon: CalendarIcon, current: false },
+        { name: 'Claims', href: '#', icon: DocumentDuplicateIcon, current: false },
+        { name: 'Benefits', href: '/benefits', icon: ChartPieIcon, current: false },
     ]
    
     //Lo que hace este script recorrer el objeto navigation para assignar current a true;
@@ -103,7 +103,8 @@ export default function AppLayout({ children, Page }) {
                                                     <ul role="list" className="-mx-2 space-y-1">
                                                         {navigation.map((item) => (
                                                             <li key={item.name}>
-                                                                <a
+                                                                <a  
+                                                                    href={item.href}
                                                                     className={classNames(
                                                                         item.current
                                                                             ? 'bg-gray-800 text-white'
@@ -154,6 +155,7 @@ export default function AppLayout({ children, Page }) {
                                         {navigation.map((item) => (
                                             <li key={item.name}>
                                                 <a
+                                                    href={item.href}
                                                     className={classNames(
                                                         item.current
                                                             ? 'bg-gray-800 text-white'
@@ -234,6 +236,7 @@ export default function AppLayout({ children, Page }) {
                                                 <Menu.Item key={item.name}>
                                                     {({ active }) => (
                                                         <a
+                                                            href={item.href}
                                                             className={classNames(
                                                                 active ? 'bg-gray-50' : '',
                                                                 'block px-3 py-1 text-sm leading-6 text-gray-900'
@@ -261,4 +264,3 @@ export default function AppLayout({ children, Page }) {
         </>
     )
 }
-
