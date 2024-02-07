@@ -4,38 +4,21 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
 import ButtonFetchAPI from '../../components/ButtonFetchAPI';
-import { Link } from 'react-router-dom';
+import ButtonToggle from '../../components/ButtonToggle';
 
 const ImageCellRenderer = ({ data }) => {
     return <img src={data.thumb} style={{ width: 50, height: 50 }} alt={`Image for ${data.name}`} />;
 };
 
-const NameCellRenderer = ({ data }) => {
-    return <Link to={`/products/${data.id}`}>{data.name}</Link>;
-};
-
-const EditProduct = () => {
-    return <a x-data="{ tooltip: 'Edite' }" href="#">
+const EditProduct = ({ data }) => {
+    return <a href={`/products/${data.id}`}>
         <svg style={{
             display: 'flex',
             justifyContent: 'center',
             height: '100%',
             alignItems: 'center',
         }}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-            x-tooltip="tooltip"
-        >
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-            />
-        </svg>
+            sxmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z" /></svg>
     </a>;
 }
 
@@ -68,6 +51,7 @@ export default function ProductsPage() {
             }
         </span>
     );
+
     const colDefs = [
         {
             field: 'thumb',
@@ -76,35 +60,48 @@ export default function ProductsPage() {
         },
         {
             field: 'name',
-            headerName: 'Product Name',
-            cellRenderer: NameCellRenderer
+            headerName: 'Product Name'
         },
         {
             field: 'is_active, boolean',
-            headerName: 'Is Active',
-            width: 120,
+            headerName: 'Active',
             cellRenderer: ProductIsActive,
-            cellEditor: 'agCheckboxCellEditor',
-        }, {
+            cellEditor: 'agCheckboxCellEditor'
+        },
+        {
+            headerName: 'Price Range'
+        },
+        {
+            headerName: 'Benefits Margin'
+        },
+        {
             headerName: 'Actions',
-            cellRenderer: EditProduct
+            cellRenderer: EditProduct,
+            maxWidth: 100,
         }
         // Agrega más columnas según sea necesario
     ];
 
+    const autoSizeStrategy = {
+        type: 'fitCellContents'
+    };
+
     const defaultColDef = useMemo(() => ({
         filter: true,
         editable: true,
+        resizable: true,
     }));
 
     return (
         <AppLayout>
 
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
+                <ButtonToggle />
                 <ButtonFetchAPI />
                 <AgGridReact
                     rowData={rowData}
                     defaultColDef={defaultColDef}
+                    autoSizeStrategy={autoSizeStrategy}
                     columnDefs={colDefs}
                     pagination={true}
                     rowSelection="multiple"
