@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_option_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idOption')->references('id')->on('product_options')->onDelete('cascade');
+            $table->string('idOption');
+            $table->foreign('idOption')->references('option_id_picanova')->on('product_options')->onDelete('cascade');
             $table->string('option_value_id_picanova');
             $table->string('name');
             $table->string('sku');
