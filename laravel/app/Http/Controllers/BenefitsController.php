@@ -22,4 +22,15 @@ class BenefitsController extends Controller
         
         return response()->json(['message' => 'Resource deleted successfully'], 200);
     }
+
+    public function create(Request $request){
+        $benefit = Benefits::create([
+            'month' => $request->month,
+            'income' => $request->income,
+            'expense' => $request->expense,
+            'profit' => $request->profit,
+        ]);
+    
+        return response()->json(['message' => 'Benefit created successfully', 'benefit' => $benefit], 201);
+    }
 }

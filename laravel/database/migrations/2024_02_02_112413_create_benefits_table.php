@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('benefits', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('month');
-            $table->double('income');
-            $table->double('expense');
-            $table->double('profit');
+            $table->integer('income')->default(0);
+            $table->integer('expense')->default(0);
+            $table->integer('profit')->default(0);
             $table->timestamps();
         });
     }

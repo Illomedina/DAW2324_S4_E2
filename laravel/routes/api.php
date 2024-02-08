@@ -3,6 +3,8 @@
 use App\Http\Controllers\BenefitsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+header('Access-Control-Allow-Origin:  *');
+header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,3 +29,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/getBenefits', [BenefitsController::class, 'index']);
 Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
+Route::post('createBenefit', [BenefitsController::class, 'create']);
