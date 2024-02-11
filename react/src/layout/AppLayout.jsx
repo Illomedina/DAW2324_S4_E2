@@ -295,7 +295,7 @@ export default function AppLayout({ children }) {
             </div>
           </div>
 
-          <main className="py-10 h-screen overflow-y-auto">
+          <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
               {children}
             </div>
