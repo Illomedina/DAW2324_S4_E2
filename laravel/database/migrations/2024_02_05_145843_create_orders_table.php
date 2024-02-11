@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idClient')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreignId('idCustomer')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamp('datetime')->nullable();
             $table->enum('orderStatus', ['Pending', 'Accepted', 'Processing', 'Sent', 'Delivered']);
             $table->timestamps();
