@@ -6,8 +6,8 @@ metadata = MetaData()
 # Modelo para la tabla 'orders'
 orders_table = Table(
     'orders', metadata,
-    Column('idOrder', String, primary_key=True),
-    Column('idCustomer', String, nullable=False),
+    Column('id', String, primary_key=True),
+    Column('idCustomer', String, nullable=True),
     Column('datetime', DateTime, default=func.now()),
     Column('orderStatus', ENUM('Pending', 'Accepted', 'Processing', 'Sent', 'Delivered', name='order_status_enum')),
 )

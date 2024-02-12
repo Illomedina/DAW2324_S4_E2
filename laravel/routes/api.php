@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BenefitsController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------

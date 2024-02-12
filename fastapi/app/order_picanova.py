@@ -40,27 +40,23 @@ async def get_order_details_from_api(order_id: int) -> dict:
             return response.json().get('data', {})
         return {}
 
-async def insert_orders(connection, orders_data):
+async def insert_orders(orders_data):
     with engine.connect() as connection:
         for order_data in orders_data:
             try:
-                order_id = order_data.get('id')
-                customer_id = order_data.get('external_id') or None  
-                order_status = order_data.get('status')
-                
                 order_id = insert_order(connection, order_data)
                 insert_order_details(connection, order_id, order_data.get('items', []))
             except Exception as e:
-                print(f"Error al insertar la orden {order_id}: {e}")
+                print(f"Error al insertar la orden {order_data.get('id')}: {e}")
 
-def insert_order(order_data):
-    order_id = order_data.get('id')
+def insert_order(connection, order_data):
+    id = order_data.get('id')
     customer_id = order_data.get('external_id')
     order_status = order_data.get('status')
 
-    if order_id is not None:
+    if id is not None:
         ins_order = orders_table.insert().values(
-            idOrders=order_id,  # Corregido el nombre de la columna aquí
+            id=id,
             idCustomer=customer_id,
             orderStatus=order_status
         )
@@ -72,14 +68,14 @@ def insert_order(order_data):
 def insert_order_details(connection, order_id, items_data):
     for item_data in items_data:
         product_id = item_data.get('variant_id')
-        gi_id = None  # Necesitas determinar cómo obtener el ID del grupo de productos de la respuesta de la API.
-        variant_id = None  # Necesitas determinar cómo obtener el ID de la variante de la respuesta de la API.
+        gi_id = None
+        variant_id = None
         quantity = item_data.get('quantity')
         price_each = item_data.get('price')
-        shipping_price = None  # Necesitas determinar cómo obtener el costo de envío de la respuesta de la API.
+        shipping_price = None
 
         ins_details = order_details_table.insert().values(
-            idOrders=order_id,
+            id=order_id,
             idProduct=product_id,
             idGI=gi_id,
             idVariant=variant_id,

@@ -4,7 +4,7 @@ from fastapi import FastAPI, Form, HTTPException, status, Depends
 from tokenAuth import create_token, get_current_user, verify_credentials
 from picanova import encoded_credentials, fetch_products_from_api, insert_products
 from database import get_connection
-from order_picanova import encoded_credentials, fetch_orders_from_api, insert_order
+from order_picanova import encoded_credentials, fetch_orders_from_api, insert_orders
 import httpx
 
 app = FastAPI()
@@ -45,7 +45,8 @@ async def get_and_insert_products(current_user: dict = Depends(get_current_user)
 async def get_and_insert_orders(current_user: dict = Depends(get_current_user)):
     try:
         orders_data = await fetch_orders_from_api()
+        print(orders_data)
         if orders_data:
-            await insert_order(orders_data)
+            await insert_orders(orders_data)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

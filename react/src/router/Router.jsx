@@ -9,6 +9,7 @@ import { CustomersPage, CustomersCreate } from "../pages/customers";
 import BenefitsPage from "../pages/benefits/BenefitsPage";
 import BenefitsCreate from "../pages/benefits/create/BenefitsCreate";
 import BenefitsEdit from "../pages/benefits/edit/BenefitsEdit";
+import OrdersPage from "../pages/orders/OrdersPage";
 
 export const Router = () => {
   return (
