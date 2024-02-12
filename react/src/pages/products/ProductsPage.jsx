@@ -45,8 +45,26 @@ export default function ProductsPage() {
     const ProductIsActive = props => {
         const { value, context, data } = props;
 
-        const handleChange = (e) => {
+        const handleChange = async (e) => {
             const checked = e.target.checked;
+            try {
+                const response = await fetch('http://localhost:8000/api/products/' + data.id, {
+                    method: 'PUT', // o 'PUT', dependiendo de tu configuración de API
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ is_active: checked }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al actualizar el producto');
+                }
+
+                // Opcional: Actualizar el estado local o manejar la respuesta
+                console.log('Producto actualizado con éxito', await response.json());
+            } catch (error) {
+                console.error('Error al actualizar el producto', error);
+            }
         };
 
         return (
@@ -58,6 +76,7 @@ export default function ProductsPage() {
             />
         );
     };
+
 
     const handleCellClicked = (event) => {
         if (event.colDef.field === 'is_active' && isEditable) {
@@ -110,20 +129,23 @@ export default function ProductsPage() {
             editable: false,
         },
         {
-            headerName: 'Benefits Margin'
+            headerName: 'Benefits Margin',
+            editable: defaultColDef.editable,
         },
         {
-            headerName: 'Sales Price'
+            headerName: 'Sales Price',
+            editable: false,
         },
         {
             headerName: 'Actions',
             cellRenderer: EditProduct,
+            editable: false,
         }
     ], [isEditable]);
 
     return (
-        <AppLayout>
-            <div className="ag-theme-quartz" style={{ width: '100%', height: '70vh' }}>
+        <AppLayout Page={"Products"}>
+            <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
                 <ButtonToggle onToggle={toggleEditable} />
                 <ButtonFetchAPI />
                 <AgGridReact

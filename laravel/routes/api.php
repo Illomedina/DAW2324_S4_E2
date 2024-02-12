@@ -36,3 +36,4 @@ Route::post('createBenefit', [BenefitsController::class, 'create']);
 Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::put('/products/{id}', [ProductController::class, 'update']);
