@@ -14,9 +14,12 @@
     "@heroicons/react": "^2.1.1",
     "ag-grid-community": "^31.0.3",
     "ag-grid-react": "^31.0.3",
+    "axios": "^1.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.3"
+    "react-router-dom": "^6.21.3",
+    "sweetalert2": "^11.6.13",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
@@ -28,6 +31,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.33",
+    "sass": "^1.70.0",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.8"
   }
