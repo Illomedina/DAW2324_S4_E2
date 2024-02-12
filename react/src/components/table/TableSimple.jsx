@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -7,6 +7,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [searchText, setSearchText] = useState('');
+  const [isEditingEnabled, setIsEditingEnabled] = useState(true); // Nuevo estado
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -18,23 +19,22 @@ const AgGridTable = ({ rowData, columnDefs }) => {
     gridApi.setQuickFilter(event.target.value);
   };
 
-  const handleEditClick = (id) => {
-    // Lógica para la edición, por ejemplo, abrir un formulario de edición
-    console.log(`Edit row with ID ${id}`);
-  };
-
-  const handleDeleteClick = (id) => {
-    // Lógica para la eliminación, por ejemplo, mostrar un modal de confirmación
-    console.log(`Delete row with ID ${id}`);
+  const handleToggleEdit = () => {
+    setIsEditingEnabled(!isEditingEnabled);
+    // Puedes agregar lógica adicional aquí según tus necesidades
   };
 
   const frameworkComponents = {
-    editButtonRenderer: (params) => (
-      <button onClick={() => handleEditClick(params.data.id)}>Edit</button>
+    toggleEditButton: () => (
+      <button onClick={handleToggleEdit}>Toggle Edit</button>
     ),
-    deleteButtonRenderer: (params) => (
-      <button onClick={() => handleDeleteClick(params.data.id)}>Delete</button>
-    ),
+  };
+
+  const defaultColDef = {
+    filter: true,
+    editable: isEditingEnabled, // Aquí utilizamos el estado para habilitar o deshabilitar la edición
+    flex: 1,
+    minWidth: 150,
   };
 
   return (
@@ -47,6 +47,10 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           value={searchText}
           onChange={onSearchTextChange}
         />
+        <span className="mr-2">
+          <strong>Editing:</strong> {isEditingEnabled ? 'Enabled' : 'Disabled'}
+        </span>
+        <frameworkComponents.toggleEditButton />
       </div>
 
       <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
@@ -55,16 +59,15 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           columnDefs={columnDefs}
           onGridReady={onGridReady}
           domLayout='autoHeight'
-          defaultColDef={{
-            flex: 1,
-            minWidth: 150,
-          }}
-          frameworkComponents={frameworkComponents}
-          onGridReady={onGridReady}
+          defaultColDef={defaultColDef}
+          reactiveCustomComponents
+          pagination={true}
+          editType="fullRow"
         />
       </div>
     </div>
   );
+  
 };
 
 export default AgGridTable;

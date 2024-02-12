@@ -5,54 +5,68 @@ namespace App\Http\Controllers\setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SettingController extends Controller
 {
     public function index()
     {
-        $settings = Setting::all();
-        return $settings;
+        try {
+            $settings = Setting::all();
+            return $settings;
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener la configuración.'], 500);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $setting = new Setting();
-        $setting->config=$request->config;
-        $setting->value=$request->value;
-        $setting->save();
+        try {
+            $setting = new Setting();
+            $setting->config = $request->config;
+            $setting->value = $request->value;
+            $setting->save();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al almacenar la configuración.'], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-       $setting = Setting::find($id);
-       return $setting;
+        try {
+            $setting = Setting::findOrFail($id);
+            return $setting;
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Configuración no encontrada.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener la configuración.'], 500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        $setting = Setting::findOrFail($request->id);
-        $setting->config=$request->config;
-        $setting->value=$request->value;
-        $setting->save();
-        return $setting;
+        try {
+            $setting = Setting::findOrFail($id);
+            $setting->config = $request->config;
+            $setting->value = $request->value;
+            $setting->save();
+            return $setting;
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Configuración no encontrada.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al actualizar la configuración.'], 500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
-        $setting = Setting::destroy($id);
-        return $setting;
+        try {
+            $setting = Setting::destroy($id);
+            return $setting;
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Configuración no encontrada.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al eliminar la configuración.'], 500);
+        }
     }
 }
