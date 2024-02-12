@@ -2,12 +2,17 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
+
   theme: {
     extend: {
       colors: {
         black: '#191624',
         primaryColor: '#061F41',
         grayBackground: '#E9ECEF',
+        softGray: '#F8FAFC',
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',

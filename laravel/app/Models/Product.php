@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->productImages->first()->thumb ?? null;
     }
+
+    public function productDetails()
+    {
+        return $this->hasMany(ProductDetail::class, 'idProduct');
+    }
 }

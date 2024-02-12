@@ -11,20 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_details', function (Blueprint $table) {
+        Schema::create('product_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idProduct')->references('id')->on('products')->onDelete('cascade');
-            $table->string('code');
-            $table->integer('variant_id')->index();
-            $table->string('variant_code');
-            $table->string('sku');
+            $table->integer('variant_id');
+            $table->foreign('variant_id')->references('variant_id')->on('product_details');
+            $table->string('option_id_picanova')->index();
             $table->string('name');
-            $table->integer('format_width');
-            $table->integer('format_height');
-            $table->float('price');
-            $table->string('currency');
-            $table->string('formatted_price');
-            $table->integer('price_in_subunit');
+            $table->string('image')->nullable();
+            $table->string('description')->nullable();
+            $table->boolean('is_required');
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_details');
+        Schema::dropIfExists('product_options');
     }
 };

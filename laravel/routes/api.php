@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductControllerController;
 use App\Http\Controllers\setting\SettingController;
 
+use App\Http\Controllers\BenefitsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,10 @@ Route::resource('/settings', SettingController::class);
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/customers', [CustomerController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/getBenefits', [BenefitsController::class, 'index']);
+Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
+Route::post('createBenefit', [BenefitsController::class, 'create']);
+Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
+Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
