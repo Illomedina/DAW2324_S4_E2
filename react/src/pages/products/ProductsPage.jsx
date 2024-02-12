@@ -123,7 +123,7 @@ export default function ProductsPage() {
 
     return (
         <AppLayout>
-            <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
+            <div className="ag-theme-quartz" style={{ width: '100%', height: '70vh' }}>
                 <ButtonToggle onToggle={toggleEditable} />
                 <ButtonFetchAPI />
                 <AgGridReact
