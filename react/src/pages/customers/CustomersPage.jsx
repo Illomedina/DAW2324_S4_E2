@@ -3,17 +3,21 @@ import React, { useEffect, useState } from 'react'
 import AppLayout from '../../layout/AppLayout';
 import { CustomersTable } from '../../components/tables/CustomersTable';
 import Spinner from '../../components/Spinner';
+// import { apiService } from "../../api";
 
 
 export const CustomersPage = () => {
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCustomers = async () => {
+            setLoading(true);
             const response = await fetch('http://localhost:8000/api/customers');
             const data = await response.json();
             setCustomers(data);
+            setLoading(false);
         };
 
         fetchCustomers();
@@ -38,12 +42,11 @@ export const CustomersPage = () => {
             </div>
             <div className="flex flex-col my-3">
                 {
-                    customers.length === 0
-                        ? <Spinner />
+                    isLoading
+                        ? <Spinner message='Loading Customers...' />
                         :
-                        < div className="align-middle overflow-x-auto shadow overflow-hidden sm:rounded-lg">
-                            <CustomersTable customers={customers} />
-                        </div>
+                        <CustomersTable customers={customers} />
+
                 }
             </div>
         </AppLayout >
