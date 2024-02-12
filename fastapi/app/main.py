@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 ### IMPORTS FROM OUR FILES ###
 from tokenAuth import create_token, get_current_user, verify_credentials
 from picanova import encoded_credentials, fetch_products_from_api, insert_products
-from database import get_connection
+# from database import get_connection
 
 app = FastAPI()
 
@@ -18,7 +18,7 @@ app.add_middleware(
 
 PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 
-connection = get_connection()
+# connection = get_connection()
 
 @app.post("/token")
 def login(username: str = Form(...), password: str = Form(...)):
