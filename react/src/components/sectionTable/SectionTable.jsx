@@ -36,6 +36,8 @@ function SectionTable({ SectionName }) {
       setLoading(false); 
     }
   };
+  
+ 
 
   return (
     <div className="flex flex-col h-[100vh] divContainer">
@@ -107,20 +109,10 @@ function SectionTable({ SectionName }) {
                     {benefit.profit}€
                   </td>
                   <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                    <button
-                      onClick={() =>
-                        openModal(
-                          benefit.id,
-                          benefit.month,
-                          benefit.income,
-                          benefit.expense,
-                          benefit.profit
-                        )
-                      }
-                      className="text-gray-900"
-                    >
-                      <i className=""></i>Edit
-                    </button>
+                    
+                  <Link to={`/benefits=edit/${benefit.id}`}>
+                      Edit
+                    </Link>
                    <button
                       className="text-gray-900"
                       onClick={() => deleteBenefits(benefit.id)}

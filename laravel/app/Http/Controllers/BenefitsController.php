@@ -19,7 +19,6 @@ class BenefitsController extends Controller
     {
         $benefit = Benefits::findOrFail($id);
         $benefit->delete();
-        
         return response()->json(['message' => 'Resource deleted successfully'], 200);
     }
 
@@ -32,5 +31,24 @@ class BenefitsController extends Controller
         ]);
     
         return response()->json(['message' => 'Benefit created successfully', 'benefit' => $benefit], 201);
+    }
+
+    public function getOne($id){
+        $benefit = Benefits::findOrFail($id);
+        $benefit->get();
+        return response()->json($benefit);
+    }
+
+    public function update(Request $request){
+        $benefit = Benefits::findOrFail($request->input('idBenefit'));
+
+        $benefit->update([
+            'month' => $request->input('month'),
+            'income' => $request->input('income'),
+            'expense' => $request->input('expense'),
+            'profit' => $request->input('profit'),
+        ]);
+
+        return response()->json(['message' => 'Benefit updated successfully', 'data' => $benefit]);
     }
 }

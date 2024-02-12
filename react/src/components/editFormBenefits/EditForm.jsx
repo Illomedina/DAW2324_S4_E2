@@ -1,49 +1,74 @@
-import "./CreateForm.css";
-import React, { useState } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import "./EditForm.css";
+import React, { useState, useEffect } from "react";
+import { Outlet, Link, useNavigate,useParams } from "react-router-dom";
 import { show_alert } from "../alert/alert";
 import axios from "axios";
 import "../sectionTable/alert.scss";
 
-const CreateForm = ({ section }) => {
+
+const EditForm = () => {
+  const [alert, setAlert] = useState(false);
+  const [idBenefit, setId] = useState("");
   const [month, setMonth] = useState("");
   const [income, setIncome] = useState("");
   const [expense, setExpense] = useState("");
   var [profit, setProfit] = useState("");
+  const [loading, setLoading] = useState(false); 
+
+
   profit = income - expense;
-  const [alert, setAlert] = useState(false);
+  let { id } = useParams();
+
+  useEffect(() => {
+    getFields(id);
+  }, []);
+
+  const getFields = async (id) => {
+    setLoading(true); 
+    try {
+      const response = await axios.get(`http://localhost:8000/api/getOneBenefit/${id}`);
+      setId(response.data.id);
+      setMonth(response.data.month);
+      setIncome(response.data.income);
+      setExpense(response.data.expense);
+      setProfit(response.data.profit);
+
+    } catch (error) {
+      console.error('Error deleting resource:', error);
+    } finally {
+      setLoading(false); 
+    }
+  };
+
 
   const validate = () => {
     if (month === "") {
     } else if (income == null) {
       show_alert("Invalid income", "info");
     } else {
-      handleCreate(month, income, expense, profit);
+      handleUpdate(idBenefit,month, income, expense, profit);
     }
   };
 
-  const handleCreate = async (month, income, expense, profit) => {
+  const handleUpdate = async (idBenefit, month, income, expense, profit) => {
     setAlert(false);
-    const url = "http://localhost:8000/api/createBenefit";
-    await axios({
-      method: "POST",
-      url: url,
-      data: { month, income, expense, profit },
-    })
-      .then(function (response) {
-        if (response.status === 200) {
-        }
-      })
-      .catch(function (error) {
-        console.error("Error:", error);
-      })
-      .finally(function () {
-        setAlert(true);
-        setMonth('');
-        setIncome('');
-        setExpense('');
-        setProfit('');
+    const url = "http://localhost:8000/api/UpdateBenefit";
+    try {
+      const response = await axios.post(url, {
+        idBenefit: idBenefit,
+        month: month,
+        income: income,
+        expense: expense,
+        profit: profit
       });
+  
+      if (response.status === 200) {
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setAlert(true);
+    }
   };
 
   return (
@@ -54,19 +79,25 @@ const CreateForm = ({ section }) => {
             <section>
               <div class="alert alert-2-success">
                 <h3 class="alert-title">Succes</h3>
-                <p class="alert-content">Data inserted correctly</p>
+                <p class="alert-content">Data edited correctly</p>
               </div>
             </section>
           </main>
         )}
+
+    {loading && (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
         <div className="flex items-center space-x-5">
           <div className="h-14 w-14 bg-yellow-200 rounded-full flex flex-shrink-0 justify-center items-center text-yellow-500 text-2xl font-mono">
             i
           </div>
           <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
-            <h2 className="leading-relaxed">Form Creation</h2>
+            <h2 className="leading-relaxed">Form Edition</h2>
             <p className="text-sm text-gray-500 font-normal leading-relaxed">
-              Create a form for {section}
+              Edit form for Benefits
             </p>
           </div>
         </div>
@@ -104,6 +135,7 @@ const CreateForm = ({ section }) => {
               />
             </div>
           </div>
+          
           <div className="pt-4 flex items-center space-x-4">
             <Link
               to="/benefits"
@@ -115,7 +147,7 @@ const CreateForm = ({ section }) => {
               className="buttonCreate flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
               onClick={() => validate()}
             >
-              Create
+              Update
             </button>
           </div>
         </div>
@@ -124,4 +156,4 @@ const CreateForm = ({ section }) => {
   );
 };
 
-export default CreateForm;
+export default EditForm;
