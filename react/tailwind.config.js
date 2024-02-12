@@ -8,6 +8,7 @@ export default {
         black: '#191624',
         primaryColor: '#061F41',
         grayBackground: '#E9ECEF',
+        softGray: '#F8FAFC',
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',
