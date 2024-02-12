@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Form, HTTPException, status, Depends
+from fastapi.middleware.cors import CORSMiddleware
 
 ### IMPORTS FROM OUR FILES ###
 from tokenAuth import create_token, get_current_user, verify_credentials
@@ -8,6 +9,14 @@ from order_picanova import encoded_credentials, fetch_orders_from_api, insert_or
 import httpx
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"],
+)
 
 PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 

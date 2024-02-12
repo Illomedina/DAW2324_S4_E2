@@ -48,3 +48,36 @@ product_details_table = Table(
     Column('created_at', DateTime, default=datetime.now),
     Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),
 )
+
+### TAULA OPCIONS PRODUCTES ###
+product_options_table = Table(
+    'product_options', metadata,
+    Column('id', Integer),
+    Column('idProduct', Integer),
+    Column('variant_id', Integer),
+    Column('option_id_picanova', String(255)),
+    Column('name', String(255)),
+    Column('image', String(255), nullable=True),
+    Column('description', String(255), nullable=True),
+    Column('is_required', Boolean),
+    Column('created_at', DateTime, default=datetime.now),
+    Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),
+)
+
+### TAULA VALORS OPCIONS PRODUCTES ###
+product_option_values_table = Table(
+    'product_option_values', metadata,
+    Column('id', Integer),
+    Column('idOption', Integer),
+    Column('option_value_id_picanova', String(255)),
+    Column('name', String(255)),
+    Column('sku', String(255)),
+    Column('image_id', String(255)),
+    Column('image_original', String(255)),
+    Column('price', Float),
+    Column('currency', String(255)),
+    Column('formatted_price', String(255)),
+    Column('price_in_subunit', Integer),
+    Column('created_at', DateTime, default=datetime.now),
+    Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),
+)

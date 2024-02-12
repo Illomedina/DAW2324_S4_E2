@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/customers', [CustomerController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/getBenefits', [BenefitsController::class, 'index']);
 Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
 Route::post('createBenefit', [BenefitsController::class, 'create']);
@@ -37,3 +38,4 @@ Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 
 Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
