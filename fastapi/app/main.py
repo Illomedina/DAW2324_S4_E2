@@ -1,59 +1,40 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form, HTTPException, status, Depends
 
-from sqlalchemy import DateTime, create_engine, Column, Boolean, Integer, String, MetaData, Table, ForeignKey, Float, insert
-from datetime import datetime
-
-from database import get_connection 
+### IMPORTS FROM OUR FILES ###
+from tokenAuth import create_token, get_current_user, verify_credentials
+from picanova import encoded_credentials, fetch_products_from_api, insert_products
+from database import get_connection
 
 app = FastAPI()
 
-@app.get("/")
-async def root():
-    connection = get_connection()  # Usa la función para obtener una conexión
-    # Aquí puedes realizar operaciones con la base de datos usando `connection`
-    return {"message": "Hola, FastAPI con conexión a base de datos!"}
+PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 
-# connection.close()
+connection = get_connection()
 
-metadata = MetaData()
+@app.post("/token")
+def login(username: str = Form(...), password: str = Form(...)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        if verify_credentials(username, password):
+            data = {"sub": username}
+            access_token = create_token(data)
+            return {"access_token": access_token, "token_type": "bearer"}
+        else:
+            raise credentials_exception
+    except Exception as e:
+        return {"message": f"Error : {str(e)}"}
 
-### TAULA PRODUCTES ###
-products_table = Table(
-    'products', metadata,
-    Column('idProduct', Integer, primary_key=True),
-    Column('idPicanova', Integer),  # Asumiendo que es un String, ajusta según sea necesario
-    Column('name', String(255)),
-    Column('sku', String(255)),
-    Column('dpi', Integer),
-    Column('type', String(255)),
-    Column('is_active', Boolean, default=False),  # Asume un valor predeterminado de True
-    Column('created_at', DateTime, default=datetime.now),  # Automáticamente pone la fecha actual al insertar
-    Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),  # Actualiza automáticamente al modificar
-)
 
-### TAULA IMATGES PRODUCTES ###
-products_images_table = Table(
-    'productImages', metadata,
-    Column('idProductImage', Integer),
-    Column('original', String(255)),
-    Column('thumb', String(255)),
-    Column('idProduct', Integer),
-)
-
-### TAULA DETALLS PRODUCTES ###
-product_details_table = Table(
-    'productDetails', metadata,
-    Column('idProductDetail', Integer),
-    Column('idProduct', Integer),  # Clave foránea que apunta al ID del producto
-    Column('code', String(255)),
-    Column('variant_id', Integer),
-    Column('variant_code', String(255)),
-    Column('sku', String(255)),
-    Column('name', String(255)),
-    Column('format_width', Integer),
-    Column('format_height', Integer),
-    Column('price', Float),
-    Column('currency', String(3)),
-    Column('formatted_price', String(20)),
-    Column('price_in_subunit', Integer),
-)
+@app.get("/products")
+async def get_and_insert_products(current_user: dict = Depends(get_current_user)):
+    try:
+        products_data = await fetch_products_from_api()
+        if products_data:
+            await insert_products(products_data)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    

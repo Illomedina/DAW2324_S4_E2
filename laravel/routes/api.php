@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\BenefitsController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BenefitsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,7 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/getBenefits', [BenefitsController::class, 'index']);
 Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
 Route::post('createBenefit', [BenefitsController::class, 'create']);
