@@ -10,6 +10,8 @@ import BenefitsPage from '../pages/benefits/BenefitsPage';
 import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
 import BenefitsEdit from '../pages/benefits/edit/BenefitsEdit';
 
+import User from '../pages/users/User'
+import RegisterForm from '../pages/users/RegisterForm';
 export const Router = () => {
 
   return (
@@ -27,6 +29,9 @@ export const Router = () => {
       <Route path="/benefits" element={<BenefitsPage></BenefitsPage>} />
       <Route path="/benefits=create" element={<BenefitsCreate></BenefitsCreate>} />
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
+
+      <Route path="/user" element={<User />} />
+      <Route path="/user/create-user" element={<RegisterForm />} />
 
       <Route path="/*" element={<PageNotFound />} />
     </Routes>

@@ -1,11 +1,11 @@
 <?php
-
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BenefitsController;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,3 +34,8 @@ Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
 Route::post('createBenefit', [BenefitsController::class, 'create']);
 Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+
+// Ruta para el crear un usuario
+Route::post('createUser',  [UserController::class, 'store']);
+//Ruta para eliminar un usuario
+//Route::delete('delete/{id}', [UserController::class, 'delete']);
