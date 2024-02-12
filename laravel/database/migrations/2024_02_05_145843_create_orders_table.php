@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('idCustomer')->references('id')->on('customers')->onDelete('cascade');
+            $table->id('idOrders');
+            $table->foreignId('idCustomer')->references('idCustomer')->on('customers')->onDelete('cascade');
             $table->timestamp('datetime')->nullable();
             $table->enum('orderStatus', ['Pending', 'Accepted', 'Processing', 'Sent', 'Delivered']);
             $table->timestamps();

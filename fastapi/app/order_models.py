@@ -6,25 +6,25 @@ metadata = MetaData()
 # Modelo para la tabla 'orders'
 orders_table = Table(
     'orders', metadata,
-    Column('idOrder', Integer, primary_key=True, autoincrement=True),
-    Column('idClient', Integer, nullable=False),
+    Column('idOrder', String, primary_key=True),
+    Column('idCustomer', String, nullable=False),
     Column('datetime', DateTime, default=func.now()),
     Column('orderStatus', ENUM('Pending', 'Accepted', 'Processing', 'Sent', 'Delivered', name='order_status_enum')),
 )
 
 # Modelo para la tabla 'orderDetails'
 order_details_table = Table(
-    'orderDetails', metadata,
-    Column('idOD', Integer, primary_key=True, autoincrement=True),
-    Column('idOrder', Integer, nullable=False),
+    'order_details', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('idOrders', String, nullable=False),
     Column('idProduct', Integer, nullable=False),
-    Column('idGI', Integer, nullable=False),
+    #Column('idGI', Integer, nullable=False),
     Column('idVariant', Integer, nullable=False),
     Column('quantity', Integer, nullable=False),
     Column('priceEach', Float, nullable=False),
     Column('shippingPrice', Float),
-    ForeignKeyConstraint(['idOrder'], ['orders.idOrder']),
+    ForeignKeyConstraint(['idOrders'], ['orders.idOrders']),
     ForeignKeyConstraint(['idProduct'], ['products.id']),
-    ForeignKeyConstraint(['idGI'], ['some_other_table.id']),
+    #ForeignKeyConstraint(['idGI'], ['some_other_table.id']),
     ForeignKeyConstraint(['idVariant'], ['variants.id'])
 )

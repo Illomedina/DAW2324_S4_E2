@@ -44,7 +44,7 @@ const EditProduct = () => {
 
 export default function OrdersPage() {
   useEffect(() => {
-    fetch("https://thronesapi.com/api/v2/Characters")
+    fetch("http://localhost:8000/api/orders")
       .then((result) => result.json())
       .then((data) => setRowData(data))
       .catch((error) => console.error("Error fetching data: ", error));
@@ -77,7 +77,7 @@ export default function OrdersPage() {
       headerName: "Image",
       cellRenderer: ImageCellRenderer,
     },
-    { field: "name", headerName: "Product Name" },
+    { field: "name", headerName: "Order Name" },
     {
       field: "is_active",
       headerName: "Is Active",
