@@ -11,10 +11,18 @@ import BenefitsPage from '../pages/benefits/BenefitsPage';
 import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
 import BenefitsEdit from '../pages/benefits/edit/BenefitsEdit';
 
+import SettingPage from '../pages/setting/SettingPage'
+
+
 export const Router = () => {
 
   return (
     <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/*" element={<PageNotFound />} />
+        <Route path="/settings" element={<SettingPage />} />
+        <Route path="/products" element={<ProductsPage />} />
       <Route path="/" element={<Login />} />
       <Route path="/dashboard" element={<DashboardPage />} />
 
