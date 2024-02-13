@@ -2,8 +2,8 @@ from fastapi import FastAPI, Form, HTTPException, status, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 ### IMPORTS FROM OUR FILES ###
-from tokenAuth import create_token, get_current_user, verify_credentials
-from picanova import encoded_credentials, fetch_products_from_api, insert_products
+from app.tokenAuth import create_token, get_current_user, verify_credentials
+from app.picanova.products_picanova import encoded_credentials, fetch_products_from_api, insert_products
 # from database import get_connection
 
 app = FastAPI()

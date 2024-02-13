@@ -2,9 +2,10 @@ from fastapi import Depends, HTTPException
 import httpx, base64
 
 ### IMPORTS FROM OUR FILES ###
-from tokenAuth import get_current_user
-from database import engine
-from models import metadata, products_table, products_images_table, product_details_table, product_options_table, product_option_values_table
+from app.tokenAuth import get_current_user
+from app.database import engine
+# from models import metadata, products_table, products_images_table, product_details_table, product_options_table, product_option_values_table
+from app.models.product_models import metadata, products_table, products_images_table, product_details_table, product_options_table, product_option_values_table
 
 PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 

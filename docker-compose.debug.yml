@@ -8,12 +8,12 @@ services:
       - 8003:8003
       - 5678:5678
     volumes:
-      - ./fastapi/app:/app
+      - ./fastapi/app:/code/app
     command:
       [
         "sh",
         "-c",
-        "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn main:app --host 0.0.0.0 --port 8003 --reload"
+        "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.main:app --host 0.0.0.0 --port 8003 --reload"
       ]
     environment:
       - APP_MESSAGE=Hello debugger

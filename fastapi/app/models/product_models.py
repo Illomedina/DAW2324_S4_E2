@@ -25,6 +25,7 @@ products_images_table = Table(
     Column('idPicanova', String(255)),
     Column('original', String(255)),
     Column('thumb', String(255)),
+    Column('benefits_margin', Float(8, 2)),
     Column('created_at', DateTime, default=datetime.now),
     Column('updated_at', DateTime, default=datetime.now, onupdate=datetime.now),
 )
