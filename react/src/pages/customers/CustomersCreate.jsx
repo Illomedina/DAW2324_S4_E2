@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 
-
+const steps = [
+  { name: 'Customers', href: '/customers', current: false },
+  { name: 'Create Customer', href: '/customers/create', current: true },
+]
 
 export const CustomersCreate = () => {
   const navigate = useNavigate();
@@ -65,7 +68,7 @@ export const CustomersCreate = () => {
 
   return (
 
-    <AppLayout>
+    <AppLayout Page={'Create Customer'} Steps={steps}>
       <div className="pb-16 space-y-10 divide-y divide-gray-900/10">
         <form>
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">

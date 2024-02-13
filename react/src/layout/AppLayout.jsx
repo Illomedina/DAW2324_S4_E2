@@ -13,13 +13,14 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Breadcrumb } from '../components/Breadcrumb'
 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function AppLayout({ children, Page }) {
+export default function AppLayout({ children, Page, Steps }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
    
     const navigation = [
@@ -138,7 +139,7 @@ export default function AppLayout({ children, Page }) {
                 </Transition.Root>
 
                 {/* Static sidebar for desktop */}
-                <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+                <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-56 lg:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
                     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
                         <div className="flex h-16 shrink-0 items-center">
@@ -184,7 +185,7 @@ export default function AppLayout({ children, Page }) {
                     </div>
                 </div>
 
-        <div className="lg:pl-72">
+        <div className="lg:pl-56">
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
               <span className="sr-only">Open sidebar</span>
@@ -256,6 +257,7 @@ export default function AppLayout({ children, Page }) {
 
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
+                <Breadcrumb steps={Steps} />
               {children}
             </div>
           </main>

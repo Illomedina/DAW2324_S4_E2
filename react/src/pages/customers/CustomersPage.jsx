@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import AppLayout from '../../layout/AppLayout';
 import { CustomersTable } from '../../components/tables/CustomersTable';
 import Spinner from '../../components/Spinner';
-// import { apiService } from "../../api";
 
-
+const steps = [
+    { name: 'Customers', href: '/customers', current: true },
+  ]
 export const CustomersPage = () => {
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
@@ -24,7 +25,7 @@ export const CustomersPage = () => {
     }, []);
 
     return (
-        <AppLayout Page={"Customers"}>
+        <AppLayout Page={"Customers"} Steps={steps}>
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
                     <div className="sm:flex-auto">

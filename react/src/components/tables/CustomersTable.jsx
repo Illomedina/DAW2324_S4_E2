@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const showCustomer = ({ data }) => {
   const navigate = useNavigate();
 
-  console.log(data);
-
   return (
     <button onClick={() => navigate(`/customers/${data.id}`, {state: {customer: data}})}>
       <svg style={{
@@ -29,11 +27,11 @@ export const CustomersTable = ({ customers }) => {
 
   const colDefs = [
     { field: 'name', headerName: 'Name', filter: true },
-    { field: 'mail', headerName: 'Email' },
-    { field: 'username', headerName: 'Username' },
-    { field: 'postcode', headerName: 'PostalCode' },
-    { field: 'is_validated', headerName: 'Validated' },
-    { field: 'customerStatus', headerName: 'Status' },
+    { field: 'mail', headerName: 'Email', filter: true  },
+    { field: 'username', headerName: 'Username', filter: true  },
+    { field: 'postcode', headerName: 'PostalCode', filter: true  },
+    { field: 'is_validated', headerName: 'Validated', filter: true  },
+    { field: 'customerStatus', headerName: 'Status', filter: true  },
     // { field: 'phone', headerName: 'Phone' },
     // { field: 'address', headerName: 'Address' },
     { headerName: 'Show', cellRenderer: showCustomer }
