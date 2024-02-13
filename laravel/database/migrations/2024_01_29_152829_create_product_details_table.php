@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('currency');
             $table->string('formatted_price');
             $table->integer('price_in_subunit');
-            $table->float('benefits_margin', 8, 2)->nullable();
+            $table->float('benefits_margin', 8, 2)->default(20);
             $table->timestamps();
         });
     }
