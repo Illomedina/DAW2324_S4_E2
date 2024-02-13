@@ -24,7 +24,7 @@ export const CustomersPage = () => {
     }, []);
 
     return (
-        <AppLayout>
+        <AppLayout Page={"Customers"}>
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
                     <div className="sm:flex-auto">
@@ -46,7 +46,6 @@ export const CustomersPage = () => {
                         ? <Spinner message='Loading Customers...' />
                         :
                         <CustomersTable customers={customers} />
-
                 }
             </div>
         </AppLayout >

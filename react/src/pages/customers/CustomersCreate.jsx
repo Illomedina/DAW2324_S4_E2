@@ -30,18 +30,7 @@ export const CustomersCreate = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log('Form data:', formData);
-    const url = 'http://localhost:8000/api/customers/create';
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Indica que el cuerpo de la solicitud es un JSON
-      },
-      body: JSON.stringify(formData) // Convierte los datos a una cadena JSON
-    })
-      .then(response => response.json()) // Convierte la respuesta a JSON
-      .then(data => console.log(formData)) // Maneja los datos de la respuesta
-      .catch(error => console.error('Error:', error)); // Maneja errores
   }
 
 
