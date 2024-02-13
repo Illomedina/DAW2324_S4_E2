@@ -1,13 +1,32 @@
 import React, { useState } from "react";
 import './Login.css'
-// import './App.css
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errors, setErrors] = useState({});
+  var isValid = false;
+  
+  
   const onSubmit = () => {
-    console.log("username", username);
+    isValid = false;
+    const newErrors = {};
+    
+    if(username === null || username === ""){
+      newErrors.username = "Username is required";
+      isValid = false;
+
+    }else if(password === null || password === ""){
+      newErrors.password = "Password is required";
+      isValid = false;
+    }else{
+      isValid = true;
+    }
+
+    if(!isValid){
+      setErrors(newErrors);
+    }
+    
   };
 
 
@@ -55,6 +74,7 @@ export const Login = () => {
                     placeholder="Please insert your username"
                     className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryColor focus:shadow-lg"
                   />
+                  {errors.username && <div className="error">{errors.username}</div>}
                 </div>
                 <div id="input" className="flex flex-col w-full my-5">
                   <label htmlFor="password" className="text-primaryColor mb-2">
@@ -63,9 +83,13 @@ export const Login = () => {
                   <input
                     type="password"
                     id="password"
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
                     placeholder="Please insert your password"
                     className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryColor focus:shadow-lg"
-                  />
+                 />
+                  {errors.password && <div className="error">{errors.password}</div>}
+                   
                 </div>
                 <div  className="flex flex-col w-full my-5">
                   <button id="button"

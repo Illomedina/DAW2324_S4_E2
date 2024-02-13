@@ -48,7 +48,7 @@ function SectionTable({ SectionName }) {
         </div>
       )}
       
-      <div className="relative flex max-w-[550px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+      <div className="relative flex max-w-[600px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
         <div className="headerContainer">
           <h4 className="text-lg font-bold text-primaryColor columns-3">
             {SectionName}
@@ -57,7 +57,7 @@ function SectionTable({ SectionName }) {
               <Link className="buttonCreate"to="/benefits=create">Create</Link>
           </div>
         </div>
-        <div className="scrollit relative flex max-w-[550px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+        <div className="scrollit relative flex max-w-[600px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
           <table className="table divide-y divide-gray-200">
             <thead className="bg-gray-100">
               <tr>
@@ -111,7 +111,7 @@ function SectionTable({ SectionName }) {
                   <td className="py-4 px-6 text-sm font-medium text-gray-900">
                     
                   <Link to={`/benefits=edit/${benefit.id}`}>
-                      Edit
+                      Edit <br />
                     </Link>
                    <button
                       className="text-gray-900"

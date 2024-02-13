@@ -1,7 +1,6 @@
 import "./CreateForm.css";
 import React, { useState } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { show_alert } from "../alert/alert";
 import axios from "axios";
 import "../sectionTable/alert.scss";
 
@@ -16,7 +15,6 @@ const CreateForm = ({ section }) => {
   const validate = () => {
     if (month === "") {
     } else if (income == null) {
-      show_alert("Invalid income", "info");
     } else {
       handleCreate(month, income, expense, profit);
     }

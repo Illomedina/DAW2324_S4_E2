@@ -1,13 +1,12 @@
 import "./EditForm.css";
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate,useParams } from "react-router-dom";
-import { show_alert } from "../alert/alert";
 import axios from "axios";
 import "../sectionTable/alert.scss";
 
-
 const EditForm = () => {
-  const [alert, setAlert] = useState(false);
+  const [alertSucces, setAlertSucces] = useState(false);
+  const [alertError, setAlertError] = useState(false);
   const [idBenefit, setId] = useState("");
   const [month, setMonth] = useState("");
   const [income, setIncome] = useState("");
@@ -42,16 +41,33 @@ const EditForm = () => {
 
 
   const validate = () => {
-    if (month === "") {
-    } else if (income == null) {
-      show_alert("Invalid income", "info");
-    } else {
-      handleUpdate(idBenefit,month, income, expense, profit);
+    let isValid = true;
+
+    if (month.trim() === "") {
+      alert('Please enter your username');
+
+        isValid = false;
     }
-  };
+
+    if (isNaN(parseFloat(income)) || !isFinite(income) || parseFloat(income) <= 0) {
+        isValid = false;
+    }
+
+    if (isNaN(parseFloat(expense)) || !isFinite(expense) || parseFloat(expense) <= 0) {
+        isValid = false;
+    }
+
+    if (parseFloat(income) < parseFloat(expense)) {
+        isValid = false;
+    }
+
+      if (isValid) {
+        handleUpdate(idBenefit, month, parseFloat(income), parseFloat(expense), parseFloat(income) - parseFloat(expense));
+    }
+};
 
   const handleUpdate = async (idBenefit, month, income, expense, profit) => {
-    setAlert(false);
+    setAlertSucces(false);
     const url = "http://localhost:8000/api/UpdateBenefit";
     try {
       const response = await axios.post(url, {
@@ -65,21 +81,33 @@ const EditForm = () => {
       if (response.status === 200) {
       }
     } catch (error) {
+      setAlertError(true);
       console.error("Error:", error);
     } finally {
-      setAlert(true);
+      setAlertSucces(true);
     }
   };
 
   return (
     <div className="popup">
       <div className="popup-inner">
-        {alert && (
+        {alertSucces && (
           <main>
             <section>
-              <div class="alert alert-2-success">
-                <h3 class="alert-title">Succes</h3>
-                <p class="alert-content">Data edited correctly</p>
+              <div className="alert alert-2-success">
+                <h3 className="alert-title">Succes</h3>
+                <p className="alert-content">Data edited correctly</p>
+              </div>
+            </section>
+          </main>
+        )}
+
+{alertError && (
+          <main>
+            <section>
+              <div className="alert alert-1-warning">
+                <h3 className="alert-title">Error</h3>
+                <p className="alert-content">Something went wrong</p>
               </div>
             </section>
           </main>
