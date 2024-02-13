@@ -12,6 +12,7 @@ import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
 import BenefitsEdit from '../pages/benefits/edit/BenefitsEdit';
 
 import SettingPage from '../pages/setting/SettingPage'
+import SettingForm from '../pages/setting/SettingForm'
 
 
 export const Router = () => {
@@ -22,6 +23,7 @@ export const Router = () => {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/*" element={<PageNotFound />} />
         <Route path="/settings" element={<SettingPage />} />
+        <Route path="/settings/create" element={<SettingForm />} />
         <Route path="/products" element={<ProductsPage />} />
       <Route path="/" element={<Login />} />
       <Route path="/dashboard" element={<DashboardPage />} />

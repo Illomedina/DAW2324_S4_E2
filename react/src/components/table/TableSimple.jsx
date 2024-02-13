@@ -26,7 +26,17 @@ const AgGridTable = ({ rowData, columnDefs }) => {
 
   const frameworkComponents = {
     toggleEditButton: () => (
-      <button onClick={handleToggleEdit}>Toggle Edit</button>
+      <div className="flex items-center"> {/* Nuevo contenedor para alinear elementos verticalmente */}
+        <button
+          onClick={handleToggleEdit}
+          className="bg-blue-500 text-white py-2 px-4 rounded" // Estilo de botón azul
+        >
+          Toggle Edit
+        </button>
+        <span className="ml-2">
+          <strong>Editing:</strong> {isEditingEnabled ? 'Enabled' : 'Disabled'}
+        </span>
+      </div>
     ),
   };
 
@@ -35,22 +45,23 @@ const AgGridTable = ({ rowData, columnDefs }) => {
     editable: isEditingEnabled, // Aquí utilizamos el estado para habilitar o deshabilitar la edición
     flex: 1,
     minWidth: 150,
+    paginationPageSize: 10,
+    paginationPageSizeSelector: [10, 25, 50,100],
   };
 
   return (
     <div className="p-4 border rounded-md">
-      <div className="mb-4 flex items-center justify-end">
-        <input
-          className="border p-2 mr-2 rounded"
-          type="text"
-          placeholder="Search..."
-          value={searchText}
-          onChange={onSearchTextChange}
-        />
-        <span className="mr-2">
-          <strong>Editing:</strong> {isEditingEnabled ? 'Enabled' : 'Disabled'}
-        </span>
+      <div className="mb-4 flex items-start justify-between">
         <frameworkComponents.toggleEditButton />
+        <div className="flex items-end">
+          <input
+            className="border p-2 rounded"
+            type="text"
+            placeholder="Search..."
+            value={searchText}
+            onChange={onSearchTextChange}
+          />
+        </div>
       </div>
 
       <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
@@ -62,6 +73,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           defaultColDef={defaultColDef}
           reactiveCustomComponents
           pagination={true}
+          paginationPageSize={defaultColDef.paginationPageSize}
           editType="fullRow"
         />
       </div>

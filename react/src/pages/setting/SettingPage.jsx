@@ -42,8 +42,6 @@ const SettingPage = () => {
         <AgGridTable
           rowData={jsonData}
           columnDefs={columnDefs}
-          pagination={true}
-
         />
       </div>
     </AppLayout>
