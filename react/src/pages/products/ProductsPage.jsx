@@ -48,6 +48,13 @@ export default function ProductsPage() {
         return (salesPrice / 100).toFixed(2) + ' €';
     }
 
+    function benefitsMarginValueGetter(params) {
+        if (params.data.product_details && params.data.product_details.length > 0) {
+            return params.data.product_details[0].benefits_margin + " %";
+        }
+        return null;
+    }
+
     const SalesPriceCellRenderer = ({ data }) => {
         if (data.product_details && data.product_details.length > 0) {
             const benefitsMargin = data.product_details[0].benefits_margin;
@@ -88,11 +95,16 @@ export default function ProductsPage() {
         },
         {
             headerName: "Benefits Margin",
-            valueGetter: (params) => {
+            valueGetter: benefitsMarginValueGetter,
+            valueSetter: (params) => {
                 if (params.data.product_details && params.data.product_details.length > 0) {
-                    return params.data.product_details[0].benefits_margin + " %";
+                    const newValue = parseFloat(params.newValue.replace(' %', ''));
+                    if (!isNaN(newValue) && params.data.product_details[0].benefits_margin !== newValue) {
+                        params.data.product_details[0].benefits_margin = newValue;
+                        return true;
+                    }
                 }
-                return null;
+                return false;
             },
             editable: defaultColDef.editable,
         },
