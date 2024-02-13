@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_images', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idProduct')->references('id')->on('products')->onDelete('cascade');
-            $table->string('idPicanova');
-            $table->string('original');
-            $table->string('thumb');
+            $table->string('config');
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('settings');
     }
 };
