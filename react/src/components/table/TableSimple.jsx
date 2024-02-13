@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -7,7 +7,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [searchText, setSearchText] = useState('');
-  const [isEditingEnabled, setIsEditingEnabled] = useState(false); // Nuevo estado
+  const [isEditingEnabled, setIsEditingEnabled] = useState(false);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -21,47 +21,29 @@ const AgGridTable = ({ rowData, columnDefs }) => {
 
   const handleToggleEdit = () => {
     setIsEditingEnabled(!isEditingEnabled);
-    // Puedes agregar lógica adicional aquí según tus necesidades
-  };
-
-  const frameworkComponents = {
-    toggleEditButton: () => (
-      <div className="flex items-center"> {/* Nuevo contenedor para alinear elementos verticalmente */}
-        <button
-          onClick={handleToggleEdit}
-          className="bg-blue-500 text-white py-2 px-4 rounded" // Estilo de botón azul
-        >
-          Toggle Edit
-        </button>
-        <span className="ml-2">
-          <strong>Editing:</strong> {isEditingEnabled ? 'Enabled' : 'Disabled'}
-        </span>
-      </div>
-    ),
   };
 
   const defaultColDef = {
     filter: true,
-    editable: isEditingEnabled, // Aquí utilizamos el estado para habilitar o deshabilitar la edición
+    editable: isEditingEnabled,
     flex: 1,
     minWidth: 150,
     paginationPageSize: 10,
-    paginationPageSizeSelector: [10, 25, 50,100],
+    paginationPageSizeSelector: [10, 25, 50, 100],
   };
 
   return (
     <div className="p-4 border rounded-md">
-      <div className="mb-4 flex items-start justify-between">
-        <frameworkComponents.toggleEditButton />
-        <div className="flex items-end">
-          <input
-            className="border p-2 rounded"
-            type="text"
-            placeholder="Search..."
-            value={searchText}
-            onChange={onSearchTextChange}
-          />
-        </div>
+      <div className="mb-4 flex items-center">
+        <button
+          onClick={handleToggleEdit}
+          className={`bg-${isEditingEnabled ? 'blue' : 'yellow'}-500 text-white py-2 px-4 rounded cursor-pointer`}
+        >
+          {isEditingEnabled ? 'Disable Edit' : 'Toggle Edit'}
+        </button>
+        <span className={`ml-2 text-sm ${isEditingEnabled ? 'text-red-500' : 'text-green-500'}`}>
+          <strong>Editing:</strong> {isEditingEnabled ? 'Enabled' : 'Disabled'}
+        </span>
       </div>
 
       <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
@@ -69,9 +51,8 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           rowData={rowData}
           columnDefs={columnDefs}
           onGridReady={onGridReady}
-          domLayout='autoHeight'
+          domLayout="autoHeight"
           defaultColDef={defaultColDef}
-          reactiveCustomComponents
           pagination={true}
           paginationPageSize={defaultColDef.paginationPageSize}
           editType="fullRow"
@@ -79,8 +60,6 @@ const AgGridTable = ({ rowData, columnDefs }) => {
       </div>
     </div>
   );
-  
 };
 
 export default AgGridTable;
-
