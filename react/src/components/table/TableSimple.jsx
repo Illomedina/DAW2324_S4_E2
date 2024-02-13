@@ -7,7 +7,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [searchText, setSearchText] = useState('');
-  const [isEditingEnabled, setIsEditingEnabled] = useState(true); // Nuevo estado
+  const [isEditingEnabled, setIsEditingEnabled] = useState(false); // Nuevo estado
 
   const onGridReady = (params) => {
     setGridApi(params.api);

@@ -24,15 +24,19 @@ const SettingPage = () => {
   }, []);
 
   const columnDefs = [
-    { headerName: 'Nom', field: 'config' },
+    { headerName: 'Nom', 
+      field: 'config',
+    },
     { headerName: 'value', field: 'value' },
     {
       headerName: 'Edit',
       cellRenderer: EditButton,
+      editable: false,
     },
     {
       headerName: 'Delete',
       cellRenderer: DeleteButton,
+      editable: false,
     },
   ];
 
