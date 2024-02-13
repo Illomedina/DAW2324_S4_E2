@@ -28,7 +28,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/products', [ProductController::class, 'index']);
+
+// CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index']);
+Route::post('/customers/create', [CustomerController::class, 'store']);
+
 Route::get('/getBenefits', [BenefitsController::class, 'index']);
 Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
 Route::post('createBenefit', [BenefitsController::class, 'create']);

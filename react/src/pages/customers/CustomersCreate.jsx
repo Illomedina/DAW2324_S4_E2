@@ -1,17 +1,32 @@
 import AppLayout from '../../layout/AppLayout';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react'
+import { useState } from 'react';
+import axios from 'axios';
 
 
 
 export const CustomersCreate = () => {
   const navigate = useNavigate();
 
+  const checkPassword = () => {
+    const password = formData.password;
+    const passwordConfirm = formData.passwordConfirm;
+    console.log(password, passwordConfirm);
+    if (password !== passwordConfirm) {
+      document.getElementById('passwordConfirm').setCustomValidity('Passwords do not match');
+      return false;
+    } else {
+      document.getElementById('passwordConfirm').setCustomValidity('');
+      return true;
+    }
+  }
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     username: '',
     password: '',
+    passwordConfirm: '',
     email: '',
     phone: '',
     address: '',
@@ -19,7 +34,7 @@ export const CustomersCreate = () => {
     postalCode: '',
     // country: '',
     status: '',
-    validated: ''
+    is_validated: false
   });
 
   const handleChange = (e) => {
@@ -27,9 +42,23 @@ export const CustomersCreate = () => {
     setFormData({ ...formData, [name]: value });
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data:', formData);
+    if (!checkPassword()) {
+      return;
+    }
+
+    const url = 'http://localhost:8000/api/customers/create';
+
+    try {
+      console.log('formData:', formData);
+      const response = await axios.post(url, formData);
+      console.log('Success:', response.data);
+      navigate('/customers');
+    } catch (error) {
+      console.error('Error:', error.response.data);
+      // Manejar el error aquí
+    }
 
   }
 
@@ -217,14 +246,16 @@ export const CustomersCreate = () => {
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label htmlFor="password-confirm" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label htmlFor="passwordConfirm" className="block text-sm font-medium leading-6 text-gray-900">
                         Confirm Password
                       </label>
                       <div className="mt-2">
                         <input
                           type="password"
-                          name="password-confirm"
-                          id="password-confirm"
+                          name="passwordConfirm"
+                          value={formData.passwordConfirm}
+                          onChange={handleChange}
+                          id="passwordConfirm"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -241,9 +272,9 @@ export const CustomersCreate = () => {
                         <input
                           name="status"
                           type="radio"
-                          value="active"
+                          value="Active"
                           onChange={handleChange}
-                          checked={formData.status === 'active'}
+                          checked={formData.status === 'Active'}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-everything" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
@@ -254,9 +285,9 @@ export const CustomersCreate = () => {
                         <input
                           name="status"
                           type="radio"
-                          value="inactive"
+                          value="Inactive"
                           onChange={handleChange}
-                          checked={formData.status === 'inactive'}
+                          checked={formData.status === 'Inactive'}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-email" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
@@ -267,9 +298,9 @@ export const CustomersCreate = () => {
                         <input
                           name="status"
                           type="radio"
-                          value="banned"
+                          value="Banned"
                           onChange={handleChange}
-                          checked={formData.status === 'banned'}
+                          checked={formData.status === 'Banned'}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-nothing" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
@@ -281,9 +312,9 @@ export const CustomersCreate = () => {
                         <input
                           name="status"
                           type="radio"
-                          value="deleted"
+                          value="Deleted"
                           onChange={handleChange}
-                          checked={formData.status === 'deleted'}
+                          checked={formData.status === 'Deleted'}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-nothing" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
@@ -301,10 +332,10 @@ export const CustomersCreate = () => {
                     <div className="mt-2 flex gap-x-3">
                       <div className="flex items-center">
                         <input
-                          name="validated"
-                          value="yes"
+                          name="is_validated"
+                          value="1"
                           onChange={handleChange}
-                          checked={formData.validated === 'yes'}
+                          checked={formData.is_validated === '1'}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
@@ -314,10 +345,10 @@ export const CustomersCreate = () => {
                       </div>
                       <div className="flex items-center">
                         <input
-                          name="validated"
-                          value="no"
+                          name="is_validated"
+                          value="0"
                           onChange={handleChange}
-                          checked={formData.validated === 'no'}
+                          checked={formData.is_validated === '0'}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
