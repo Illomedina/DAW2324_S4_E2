@@ -27,16 +27,19 @@ const SettingPage = () => {
     { headerName: 'Nom', 
       field: 'config',
     },
-    { headerName: 'value', field: 'value' },
+    { headerName: 'value', field: 'value', },
     {
       headerName: 'Edit',
       cellRenderer: EditButton,
       editable: false,
+      cellStyle: { 'fontWeight': 'bold', 'color': 'green', } 
     },
     {
       headerName: 'Delete',
       cellRenderer: DeleteButton,
       editable: false,
+      cellStyle: { 'fontWeight': 'bold', 'color': 'red', } 
+
     },
   ];
 

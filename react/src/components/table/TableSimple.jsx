@@ -30,6 +30,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
     minWidth: 150,
     paginationPageSize: 10,
     paginationPageSizeSelector: [10, 25, 50, 100],
+    rowStyle: { background: 'white', textAlign: 'center' },
   };
 
   return (
@@ -54,6 +55,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           domLayout="autoHeight"
           defaultColDef={defaultColDef}
           pagination={true}
+          rowStyle={defaultColDef.rowStyle}
           paginationPageSize={defaultColDef.paginationPageSize}
           editType="fullRow"
         />
