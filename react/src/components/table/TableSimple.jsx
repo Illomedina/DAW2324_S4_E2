@@ -36,17 +36,17 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   return (
     <div className="p-4 border rounded-md relative">
       <div className="mb-4 flex items-center">
-        <a href="/settingsadd/create" className="ml-2 bg-green-500 text-white py-2 px-5 rounded cursor-pointer">
+        <a href="/settings/create" className="ml-2 bg-green-500 text-white py-2 px-5 rounded cursor-pointer">
           Crear
         </a>  
         <button
           onClick={handleToggleEdit}
-          className={`bg-${isEditingEnabled ? 'blue' : 'yellow'}-500 text-white py-2 px-4 ml-10 rounded cursor-pointer`}
+          className={`${isEditingEnabled ? 'bg-blue-500' : 'bg-yellow-500'} text-black py-2 px-4 ml-10 rounded cursor-pointer`}
         >
-          {isEditingEnabled ? 'Disable Edit' : 'Toggle Edit'}
+          {isEditingEnabled ? 'Disable Edit' : 'Enabled Edit'}
         </button>
         <span className={`ml-2 text-sm ${isEditingEnabled ? 'text-red-500' : 'text-green-500'}`}>
-          <strong>Editing:</strong> {isEditingEnabled ? 'Enabled' : 'Disabled'}
+          <strong>Editing:</strong> {isEditingEnabled ? ' is Enabled' : 'is Disabled'}
         </span> 
       </div>
     
