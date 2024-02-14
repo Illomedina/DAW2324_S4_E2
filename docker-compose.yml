@@ -50,7 +50,7 @@ services:
     ports:
       - "8003:8003"
     volumes:
-      - ./fastapi/app:/app
+      - ./fastapi/app:/code/app
 
 volumes:
   mysql_data:
