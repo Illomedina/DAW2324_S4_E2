@@ -11,22 +11,10 @@ class UserController extends Controller
 
     //métodos para controlar rutas
     public function index(){
+        $users = User::all();
 
-        if(auth()->check()){
-            $user =auth()->user();
-            //Verifica si el usuario autenticado es un administrador
-            if ($user()->isAdmin()) {
-                // Si es un admin ve una lista de usuarios
-                $users = User::all();
-                // Devuelve la vista con la lista de usuarios
-                return view('users.index', compact('users'));
-            }else{
-                // Si no es un admin, obtén el perfil del usuario autenticado
-                $user = auth()->user();
-                // Devuelve la vista con el perfil del usuario autenticado
-                return view('users.show', compact('user'));
-            }
-        }
+        return $users;
+      
     }
 
     public function create(){

@@ -46,6 +46,10 @@ Route::post('createBenefit', [BenefitsController::class, 'create']);
 Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 
+
+
+Route::get('/users', [UserController::class, 'index']);
+
 // Ruta para el crear un usuario
 Route::post('createUser',  [UserController::class, 'store']);
 //Ruta para eliminar un usuario
