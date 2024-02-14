@@ -9,6 +9,7 @@ use App\Http\Controllers\setting\SettingController;
 
 use App\Http\Controllers\BenefitsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +54,4 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
 
 Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);

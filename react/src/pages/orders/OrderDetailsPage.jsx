@@ -4,76 +4,14 @@ import { AgGridReact } from "ag-grid-react";
 import AppLayout from "../../layout/AppLayout";
 
 const ProductDetailsPage = () => {
-  const { productId } = useParams();
-  const [product, setProduct] = useState(null);
-
-  // Estados para los detalles del producto
-  const [detailColumnDefs, setDetailColumnDefs] = useState([]);
-  const [detailRowData, setDetailRowData] = useState([]);
-
-  // Estados para las imágenes del producto
-  const [imageColumnDefs, setImageColumnDefs] = useState([]);
-  const [imageRowData, setImageRowData] = useState([]);
+  const { orderId } = useParams();
+  const [OrderDetails, setOrderDetails] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/products/${productId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProduct(data);
-
-        // Configurar columnas y filas para detalles del producto
-        setDetailColumnDefs([
-          { field: "name", headerName: "Name", sortable: true, filter: true },
-          {
-            field: "format_width",
-            headerName: "Width (cm)",
-            sortable: true,
-            filter: true,
-          },
-          {
-            field: "format_height",
-            headerName: "Height (cm)",
-            sortable: true,
-            filter: true,
-          },
-          {
-            field: "formatted_price",
-            headerName: "Price",
-            sortable: true,
-            filter: true,
-          },
-        ]);
-        setDetailRowData(data.product_details);
-
-        // Configurar columnas y filas para imágenes del producto
-        setImageColumnDefs([
-          {
-            field: "thumb",
-            headerName: "Thumbnail",
-            cellRenderer: (params) =>
-              `<img src="${params.value}" style="width: 50px; height: 50px;" alt="Product Image" />`,
-          },
-          {
-            field: "original",
-            headerName: "Original URL",
-            sortable: true,
-            filter: true,
-          },
-        ]);
-        setImageRowData(data.product_images);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, [productId]);
-
-  const defaultColDef = {
-    flex: 1,
-    minWidth: 100,
-    resizable: true,
-  };
-
-  if (!product) {
-    return <div>Loading...</div>;
-  }
+    fetch(`${import.meta.env.VITE_API_URL}/OrderDetails`)
+      .then((result) => result.json())
+      .catch((error) => console.error("Error fetching data: ", error));
+  }, []);
 
   return (
     <AppLayout>
