@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
 
+const steps = [
+    { name: 'Products', href: '/products', current: false },
+    { name: 'Product Details', href: '', current: true },
+]
 const ProductDetailsPage = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
@@ -55,7 +59,7 @@ const ProductDetailsPage = () => {
     }
 
     return (
-        <AppLayout Page={"Products"}>
+        <AppLayout Page={"Product Details"} Steps={steps}>
             <div style={{ height: '500px', overflowY: 'auto' }}>
                 <div className="ag-theme-quartz" style={{ width: '100%' }}>
                     <h1>{product.name}</h1>

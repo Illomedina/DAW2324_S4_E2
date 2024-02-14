@@ -9,6 +9,9 @@ import { PriceRangeCellRenderer } from '../../components/tables/products/cellRen
 import { ImageCellRenderer } from '../../components/tables/products/cellRenderers/ImageCellRenderer';
 import { EditProductCellRenderer } from '../../components/tables/products/cellRenderers/EditProductCellRenderer';
 import { ProductIsActiveCellRenderer } from '../../components/tables/products/cellRenderers/ProductIsActiveCellRenderer';
+const steps = [
+    { name: 'Products', href: '/products', current: true },
+]
 
 export default function ProductsPage() {
     const [rowData, setRowData] = useState([]);
@@ -121,7 +124,7 @@ export default function ProductsPage() {
     ], [isEditable]);
 
     return (
-        <AppLayout Page={"Products"}>
+        <AppLayout Page={"Products"} Steps={steps}>
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
                 <ButtonToggle onToggle={toggleEditable} />
                 <ButtonFetchProductsAPI />
