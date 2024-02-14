@@ -55,7 +55,7 @@ const ProductDetailsPage = () => {
     }
 
     return (
-        <AppLayout>
+        <AppLayout Page={"Products"}>
             <div style={{ height: '500px', overflowY: 'auto' }}>
                 <div className="ag-theme-quartz" style={{ width: '100%' }}>
                     <h1>{product.name}</h1>

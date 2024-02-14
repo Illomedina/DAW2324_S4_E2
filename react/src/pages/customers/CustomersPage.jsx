@@ -4,23 +4,28 @@ import AppLayout from '../../layout/AppLayout';
 import { CustomersTable } from '../../components/tables/CustomersTable';
 import Spinner from '../../components/Spinner';
 
-
+const steps = [
+    { name: 'Customers', href: '/customers', current: true },
+  ]
 export const CustomersPage = () => {
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCustomers = async () => {
+            setLoading(true);
             const response = await fetch('http://localhost:8000/api/customers');
             const data = await response.json();
             setCustomers(data);
+            setLoading(false);
         };
 
         fetchCustomers();
     }, []);
 
     return (
-        <AppLayout>
+        <AppLayout Page={"Customers"} Steps={steps}>
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
                     <div className="sm:flex-auto">
@@ -38,12 +43,10 @@ export const CustomersPage = () => {
             </div>
             <div className="flex flex-col my-3">
                 {
-                    customers.length === 0
-                        ? <Spinner />
+                    isLoading
+                        ? <Spinner message='Loading Customers...' />
                         :
-                        < div className="align-middle overflow-x-auto shadow overflow-hidden sm:rounded-lg">
-                            <CustomersTable customers={customers} />
-                        </div>
+                        <CustomersTable customers={customers} />
                 }
             </div>
         </AppLayout >
