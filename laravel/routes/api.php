@@ -35,7 +35,6 @@ Route::resource('/settings', SettingController::class);
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
-
 // CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/customers/create', [CustomerController::class, 'store']);
