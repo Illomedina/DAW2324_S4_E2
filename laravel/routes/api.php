@@ -30,17 +30,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// SETTINGS
 Route::resource('/settings', SettingController::class);
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
-Route::get('/products', [ProductController::class, 'index']);
+
+// CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::post('/customers/create', [CustomerController::class, 'store']);
+
+// BENEFITS
 Route::get('/getBenefits', [BenefitsController::class, 'index']);
 Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
 Route::post('createBenefit', [BenefitsController::class, 'create']);
 Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+
+// PRODUCTS
+Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
