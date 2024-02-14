@@ -19,7 +19,7 @@ export default function ProductsPage() {
     const [isEditable, setIsEditable] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/products')
+        fetch(`${import.meta.env.VITE_API_URL}/products`)
             .then((result) => result.json())
             .then((data) => setRowData(data))
             .catch((error) => console.error('Error fetching data: ', error));
