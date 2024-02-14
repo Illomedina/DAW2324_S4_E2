@@ -51,11 +51,9 @@ export const CustomersCreate = () => {
       return;
     }
 
-    const url = 'http://localhost:8000/api/customers/create';
-
     try {
       console.log('formData:', formData);
-      const response = await axios.post(url, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/customers/create`, formData);
       console.log('Success:', response.data);
       navigate('/customers');
     } catch (error) {

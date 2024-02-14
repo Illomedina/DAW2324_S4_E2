@@ -8,8 +8,14 @@ const EditButton = (props) => {
     const dataToSend = {
       config: props.data.config,
       value: props.data.value,
-      // ... otros datos que necesitas enviar
     };
+
+    // Mostrar una ventana de confirmación
+    const userConfirmed = window.confirm('¿Estás seguro de que deseas guardar los cambios?');
+
+    if (!userConfirmed) {
+      return; // No guardar si el usuario no confirmó
+    }
 
     try {
       const response = await fetch(`http://localhost:8000/api/settings/${id}`, {
@@ -19,7 +25,6 @@ const EditButton = (props) => {
         },
         body: JSON.stringify(dataToSend),
       });
-      console.log(dataToSend)
 
       if (response.ok) {
         alert('Datos guardados correctamente');
@@ -34,7 +39,7 @@ const EditButton = (props) => {
   };
 
   return (
-    <span className="total-value-renderer">
+    <span >
       <button onClick={handleSaveClick}>
         Save
       </button>
