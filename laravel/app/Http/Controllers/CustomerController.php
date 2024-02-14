@@ -32,7 +32,7 @@ class CustomerController extends Controller
             'address' => 'nullable|max:255',
             'postalCode' => 'nullable|max:255',
             'idCountry' => 'nullable|integer|exists:countries,id',
-            'validated' => 'sometimes|boolean',
+            'is_validated' => 'sometimes|boolean',
             'status' => 'required|in:Active,Inactive,Banned,Deleted',
         ]);
 
@@ -48,7 +48,7 @@ class CustomerController extends Controller
             'address' => $validatedData['address'],
             'postcode' => $validatedData['postalCode'],
             'idCountry' => 1,
-            'is_validated' => $validatedData['validated'] ?? false,
+            'is_validated' => $validatedData['is_validated'] ?? false,
             'membershipDate' => $validatedData['membershipDate'],
             'customerStatus' => $validatedData['status'],
         
