@@ -44,8 +44,6 @@ const EditForm = () => {
     let isValid = true;
 
     if (month.trim() === "") {
-      alert('Please enter your username');
-
         isValid = false;
     }
 

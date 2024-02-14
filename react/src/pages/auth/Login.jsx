@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import './Login.css'
+import axios from "axios";
+import { useNavigate  } from "react-router-dom";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   var isValid = false;
-  
+  const  navigate = useNavigate();
   
   const onSubmit = () => {
     isValid = false;
@@ -25,8 +27,30 @@ export const Login = () => {
 
     if(!isValid){
       setErrors(newErrors);
+    }else{
+      handleLogin(username, password);
     }
-    
+
+    }
+
+    const handleLogin = async (username, password) => {
+      const url = "http://localhost:8000/api/login";
+      try {
+        const response = await axios.post(url, {
+          username: username,
+          password: password
+        });
+        if (response.status === 200) {
+          console.log("Login successful");
+            //ruta funciona
+            navigate("/dashboard");
+        }
+
+      } catch (error) {
+        //TODO Añadir alerta
+      } finally {
+
+      }
   };
 
 
@@ -94,7 +118,7 @@ export const Login = () => {
                 <div  className="flex flex-col w-full my-5">
                   <button id="button"
                     type="button"
-                    onClick={onSubmit}
+                    onClick={()=>onSubmit()}
                     className="w-full py-4 rounded-lg text-black-100"
                   >
                     <div className="flex flex-row items-center justify-center">
