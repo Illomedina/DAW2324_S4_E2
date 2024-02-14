@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../layout/AppLayout';
 
 
-
-
 export const CustomersShow = () => {
+  const navigate = useNavigate();
+
   const { state } = useLocation();
   const customer = state?.customer;
   const {
@@ -24,7 +24,7 @@ export const CustomersShow = () => {
 
   const steps = [
     { name: 'Customers', href: '/customers', current: true },
-    { name: `${name} ${surname}`, href: `/customers/${id}`, current: true },
+    { name: `${name} ${surname}`, href: `/customers/1`, current: true },
   ]
 
   return (
@@ -37,7 +37,7 @@ export const CustomersShow = () => {
             </div>
             <div className="ml-4 mt-2 flex-shrink-0">
               <button
-                type="button"
+                type="button" onClick={() => navigate(`/customers/${id}/edit`, { state: { customer } })}
                 className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Edit Customer
