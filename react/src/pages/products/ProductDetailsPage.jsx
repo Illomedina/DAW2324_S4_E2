@@ -101,7 +101,6 @@ const ProductDetailsPage = () => {
                     {product && (
                         <>
                             <h1>{product.name}</h1>
-                            <h2>Product Details</h2>
                             <AgGridReact
                                 rowData={details}
                                 columnDefs={detailColumnDefs}
