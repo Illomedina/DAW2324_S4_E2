@@ -24,15 +24,22 @@ const SettingPage = () => {
   }, []);
 
   const columnDefs = [
-    { headerName: 'Nom', field: 'config' },
-    { headerName: 'value', field: 'value' },
+    { headerName: 'Nom', 
+      field: 'config',
+    },
+    { headerName: 'value', field: 'value', },
     {
       headerName: 'Edit',
       cellRenderer: EditButton,
+      editable: false,
+      cellStyle: { 'fontWeight': 'bold', 'color': 'green', } 
     },
     {
       headerName: 'Delete',
       cellRenderer: DeleteButton,
+      editable: false,
+      cellStyle: { 'fontWeight': 'bold', 'color': 'red', } 
+
     },
   ];
 
@@ -42,8 +49,6 @@ const SettingPage = () => {
         <AgGridTable
           rowData={jsonData}
           columnDefs={columnDefs}
-          pagination={true}
-
         />
       </div>
     </AppLayout>

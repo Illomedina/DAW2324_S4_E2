@@ -12,17 +12,21 @@ import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
 import BenefitsEdit from '../pages/benefits/edit/BenefitsEdit';
 
 import SettingPage from '../pages/setting/SettingPage'
+import SettingForm from '../pages/setting/SettingForm'
 
 
 export const Router = () => {
 
   return (
     <Routes>
+      <Route path="/*" element={<PageNotFound />} />
+    
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/" element={<Login />} />
 
       // SETTINGS
       <Route path="/settings" element={<SettingPage />} />
+      <Route path="/settings/create" element={<SettingForm />} />
 
       // CUSTOMERS
       <Route path="/customers" element={<CustomersPage />} />

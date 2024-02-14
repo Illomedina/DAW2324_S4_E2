@@ -4,6 +4,13 @@ const DeleteButton = (props) => {
   const id = props.data.id;
 
   const handleDeleteClick = async () => {
+    // Mostrar una ventana de confirmación con el mensaje personalizado
+    const userConfirmed = window.confirm(`¿Estás seguro de que deseas borrar "${props.data.config}"?`);
+
+    if (!userConfirmed) {
+      return; // No borrar si el usuario no confirmó
+    }
+
     try {
       const response = await fetch(`http://localhost:8000/api/settings/${id}`, {
         method: 'DELETE',
@@ -25,7 +32,7 @@ const DeleteButton = (props) => {
   };
 
   return (
-    <span className="total-value-renderer">
+    <span >
       <button onClick={handleDeleteClick}>
         Delete
       </button>
