@@ -60,36 +60,43 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-    
-        //validate, validacion de usuarios proporcionada por Laravel
+        
+        /*validate, validacion de usuarios proporcionada por Laravel
         $request->validate([
             'name' => 'required|string|max:50',
             'surname' => 'required|string|max:50',
             'user' => 'required|string|max:30',
             'password' => 'required|string|max:12',
             'email' => 'required|email|unique:users|max:255',
+        ]);*/
+        $user = User::create([
+            'idRole' =>1,
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'user' => $request->user,
+            'email' => $request->email,
+            'password' => $request->password,
         ]);
-
-        //se obtienen los datos del formulario
-
-
+        
+    
+   
         //$userData = $request->all();
-        $user = new User();
+      /*  $user = new User();
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
         $user->user = $request->input('user');
         $user->password = $request->input('password');
         $user->email = $request->input('email');
-
+*/
 
 
         // Cifra la contraseña antes de almacenarla en la base de datos
-        $userData['password'] = bcrypt($request->password);
+        //$userData['password'] = bcrypt($request->password);
 
         // Crea un nuevo usuario en la base de datos
-        User::create($userData);
+       // $user->save();
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
+        //return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
     }
 
     public function edit($id){

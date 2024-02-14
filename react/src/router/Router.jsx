@@ -31,7 +31,7 @@ export const Router = () => {
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
 
       <Route path="/user" element={<User />} />
-      <Route path="/user/create-user" element={<RegisterForm />} />
+      <Route path="/user/create" element={<RegisterForm />} />
 
       <Route path="/*" element={<PageNotFound />} />
     </Routes>
