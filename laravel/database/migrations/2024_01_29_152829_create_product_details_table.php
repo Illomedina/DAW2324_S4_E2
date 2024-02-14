@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('idProduct')->references('id')->on('products')->onDelete('cascade');
             $table->string('code');
-            $table->integer('variant_id');
+            $table->integer('variant_id')->index();
             $table->string('variant_code');
             $table->string('sku');
             $table->string('name');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('currency');
             $table->string('formatted_price');
             $table->integer('price_in_subunit');
+            $table->float('benefits_margin', 8, 2)->default(20);
             $table->timestamps();
         });
     }

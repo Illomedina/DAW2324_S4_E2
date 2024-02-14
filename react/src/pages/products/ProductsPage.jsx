@@ -3,37 +3,17 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
-
-const ImageCellRenderer = ({ data }) => {
-    return <img src={data.thumb} style={{ width: 50, height: 50 }} alt={`Image for ${data.name}`} />;
-};
-
-const EditProduct = () => {
-    return <a x-data="{ tooltip: 'Edite' }" href="#">
-        <svg style={{
-            display: 'flex',
-            justifyContent: 'center',
-            height: '100%',
-            alignItems: 'center',
-        }}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-            x-tooltip="tooltip"
-        >
-            <path
-                strokeLinecap="round"
-                stroke-linejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-            />
-        </svg>
-    </a>;
-}
+import ButtonFetchProductsAPI from '../../components/ButtonFetchProductsAPI';
+import ButtonToggle from '../../components/ButtonToggle';
+import { PriceRangeCellRenderer } from '../../components/tables/products/cellRenderers/PriceRangeCellRenderer';
+import { ImageCellRenderer } from '../../components/tables/products/cellRenderers/ImageCellRenderer';
+import { EditProductCellRenderer } from '../../components/tables/products/cellRenderers/EditProductCellRenderer';
+import { ProductIsActiveCellRenderer } from '../../components/tables/products/cellRenderers/ProductIsActiveCellRenderer';
 
 export default function ProductsPage() {
+    const [rowData, setRowData] = useState([]);
+
+    const [isEditable, setIsEditable] = useState(false);
 
     useEffect(() => {
         fetch('http://localhost:8000/api/products')
@@ -42,63 +22,120 @@ export default function ProductsPage() {
             .catch((error) => console.error('Error fetching data: ', error));
     }, []);
 
-    const [rowData, setRowData] = useState([]);
-    const ProductIsActive = ({ value }) => (
-        <span
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                height: '100%',
-                alignItems: 'center',
-            }}
-        >
-            {
-                <img
-                    alt={`${value}`}
-                    src={`https://www.ag-grid.com/example-assets/icons/${value ? 'tick-in-circle' : 'cross-in-circle'
-                        }.png`}
-                    style={{ width: 'auto', height: 'auto' }}
-                />
-            }
-        </span>
-    );
-    const colDefs = [
-        {
-            field: 'thumb',
-            headerName: 'Image',
-            cellRenderer: ImageCellRenderer,
-        },
-        { field: 'name', headerName: 'Product Name' },
-        {
-            field: 'is_active',
-            headerName: 'Is Active',
-            width: 120,
-            cellRenderer: ProductIsActive,
-            field: 'boolean',
-            cellEditor: 'agCheckboxCellEditor',
-        }, {
-            headerName: 'Actions',
-            cellRenderer: EditProduct
-        }
-        // Agrega más columnas según sea necesario
-    ];
+    const toggleEditable = () => setIsEditable(!isEditable);
 
     const defaultColDef = useMemo(() => ({
         filter: true,
-        editable: true,
-    }));
+        editable: isEditable,
+        resizable: true,
+    }), [isEditable]);
+
+    const handleCellClicked = (event) => {
+        if (event.colDef.field === 'is_active' && isEditable) {
+            const newData = rowData.map((row) => {
+                if (row.id === event.data.id) {
+                    return { ...row, is_active: !row.is_active };
+                }
+                return row;
+            });
+            setRowData(newData);
+        }
+    };
+
+    function calculateSalesPrice(priceInSubunit, benefitsMarginPercentage) {
+        const benefitsMargin = benefitsMarginPercentage / 100;
+        const salesPrice = priceInSubunit + (priceInSubunit * benefitsMargin);
+        return (salesPrice / 100).toFixed(2) + ' €';
+    }
+
+    function benefitsMarginValueGetter(params) {
+        if (params.data.product_details && params.data.product_details.length > 0) {
+            return params.data.product_details[0].benefits_margin + " %";
+        }
+        return null;
+    }
+
+    const SalesPriceCellRenderer = ({ data }) => {
+        if (data.product_details && data.product_details.length > 0) {
+            const benefitsMargin = data.product_details[0].benefits_margin;
+            const firstPrice = calculateSalesPrice(data.product_details[0].price_in_subunit, benefitsMargin);
+            const lastPrice = calculateSalesPrice(data.product_details[data.product_details.length - 1].price_in_subunit, benefitsMargin);
+            return <span>{firstPrice} - {lastPrice}</span>;
+        }
+        return <span>No Price Data</span>;
+    };
+
+    const autoSizeStrategy = {
+        type: 'fitCellContents'
+    };
+
+    const colDefs = useMemo(() => [
+        {
+            cellRenderer: ImageCellRenderer,
+            field: 'thumb',
+            headerName: 'Image',
+            editable: false,
+        },
+        {
+            field: 'name',
+            headerName: 'Product Name',
+            editable: false,
+        },
+        {
+            cellRenderer: ProductIsActiveCellRenderer,
+            field: 'is_active',
+            headerName: 'Active',
+            cellEditor: 'agCheckboxCellEditor',
+            editable: defaultColDef.editable,
+        },
+        {
+            cellRenderer: PriceRangeCellRenderer,
+            headerName: 'Price Range',
+            editable: false,
+        },
+        {
+            headerName: "Benefits Margin",
+            valueGetter: benefitsMarginValueGetter,
+            valueSetter: (params) => {
+                if (params.data.product_details && params.data.product_details.length > 0) {
+                    const newValue = parseFloat(params.newValue.replace(' %', ''));
+                    if (!isNaN(newValue) && params.data.product_details[0].benefits_margin !== newValue) {
+                        params.data.product_details[0].benefits_margin = newValue;
+                        return true;
+                    }
+                }
+                return false;
+            },
+            editable: defaultColDef.editable,
+        },
+        {
+            cellRenderer: SalesPriceCellRenderer,
+            headerName: 'Sales Price',
+            editable: false,
+        },
+        {
+            cellRenderer: EditProductCellRenderer,
+            headerName: 'Actions',
+            editable: false,
+        }
+    ], [isEditable]);
 
     return (
-        <AppLayout>
+        <AppLayout Page={"Products"}>
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
+                <ButtonToggle onToggle={toggleEditable} />
+                <ButtonFetchProductsAPI />
                 <AgGridReact
                     rowData={rowData}
                     defaultColDef={defaultColDef}
                     columnDefs={colDefs}
                     pagination={true}
                     rowSelection="multiple"
+                    context={{ isEditable }}
+                    onCellClicked={handleCellClicked}
+                    autoSizeStrategy={autoSizeStrategy}
                 />
             </div>
         </AppLayout>
     );
-}
+};
