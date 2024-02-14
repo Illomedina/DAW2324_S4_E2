@@ -19,24 +19,25 @@ export const Router = () => {
 
   return (
     <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/*" element={<PageNotFound />} />
-        <Route path="/settings" element={<SettingPage />} />
-        <Route path="/settings/create" element={<SettingForm />} />
-        <Route path="/products" element={<ProductsPage />} />
-      <Route path="/" element={<Login />} />
+      <Route path="/*" element={<PageNotFound />} />
+    
       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/" element={<Login />} />
+
+      // SETTINGS
+      <Route path="/settings" element={<SettingPage />} />
+      <Route path="/settings/create" element={<SettingForm />} />
 
       // CUSTOMERS
       <Route path="/customers" element={<CustomersPage />} />
       <Route path="/customers/create" element={<CustomersCreate />} />
       <Route path="/customers/:customerId" element={<CustomersShow />} />
-      
+
+      // PRODUCTS
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/products/:productId" element={<ProductDetailsPage />} />
 
-      // Benefits
+      // BENEFITS
       <Route path="/benefits" element={<BenefitsPage></BenefitsPage>} />
       <Route path="/benefits=create" element={<BenefitsCreate></BenefitsCreate>} />
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
