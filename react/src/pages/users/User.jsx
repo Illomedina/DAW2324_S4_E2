@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AgGridTable from '../../components/table/TableSimple';
 import AppLayout from '../../layout/AppLayout';
-import EditButton from '../../components/table/EditButton';
-import DeleteButton from '../../components/table/DeleteButton';
+import EditButton from './EditButton';
+import DeleteButton from './DeleteButton';
 
 const User = () => {
         const [userData, setUsersData] = useState([]);     
@@ -10,7 +10,7 @@ const User = () => {
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const response = await fetch('http://localhost:8000/api/users');
+              const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
               const data = await response.json();
               setUsersData(data);
             } catch (error) {

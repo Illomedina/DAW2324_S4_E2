@@ -53,7 +53,7 @@ Route::get('/users', [UserController::class, 'index']);
 // Ruta para el crear un usuario
 Route::post('createUser',  [UserController::class, 'store']);
 //Ruta para eliminar un usuario
-//Route::delete('delete/{id}', [UserController::class, 'delete']);
+Route::delete('users/{id}', [UserController::class, 'destroy']);
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
