@@ -36,10 +36,9 @@ const EditProduct = ({ data }) => {
     </a>
   );
 };
-
 export default function OrdersPage() {
   useEffect(() => {
-    fetch("http://localhost:8000/api/orders")
+    fetch(`${import.meta.env.VITE_API_URL}/orders`)
       .then((result) => result.json())
       .then((data) => setRowData(data))
       .catch((error) => console.error("Error fetching data: ", error));

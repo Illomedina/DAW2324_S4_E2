@@ -5,8 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.tokenAuth import create_token, get_current_user, verify_credentials
 from app.picanova.products_picanova import encoded_credentials, fetch_products_from_api, insert_products
 # from database import get_connection
-from order_picanova import encoded_credentials, fetch_orders_from_api, insert_orders
-import httpx
+from app.picanova.order_picanova import fetch_orders_from_api, insert_orders
 
 app = FastAPI()
 

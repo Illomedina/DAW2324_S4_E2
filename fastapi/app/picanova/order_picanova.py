@@ -3,9 +3,9 @@ import httpx
 import base64
 
 ### IMPORTS FROM OUR FILES ###
-from tokenAuth import get_current_user
-from database import engine
-from order_models import metadata, orders_table, order_details_table
+from app.tokenAuth import get_current_user
+from app.database import engine
+from app.models.order_models import metadata, orders_table, order_details_table
 
 PICANOVA_ORDERS_URL = "https://api.picanova.com/api/beta/orders"
 
@@ -57,7 +57,7 @@ def insert_order(connection, order_data):
     if id is not None:
         ins_order = orders_table.insert().values(
             idOrderPicanova=id,
-            idCustomer=customer_id,
+            idCustomer="customer_id",
             orderStatus=order_status
         )
         result = connection.execute(ins_order)
