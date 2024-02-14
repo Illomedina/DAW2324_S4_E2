@@ -56,7 +56,7 @@ def insert_order(connection, order_data):
 
     if id is not None:
         ins_order = orders_table.insert().values(
-            id=id,
+            idOrderPicanova=id,
             idCustomer=customer_id,
             orderStatus=order_status
         )
@@ -75,9 +75,9 @@ def insert_order_details(connection, order_id, items_data):
         shipping_price = None
 
         ins_details = order_details_table.insert().values(
-            id=order_id,
+            idOrder=order_id,
             idProduct=product_id,
-            idGI=gi_id,
+            #idGI=gi_id,
             idVariant=variant_id,
             quantity=quantity,
             priceEach=price_each,

@@ -11,6 +11,7 @@ import BenefitsPage from "../pages/benefits/BenefitsPage";
 import BenefitsCreate from "../pages/benefits/create/BenefitsCreate";
 import BenefitsEdit from "../pages/benefits/edit/BenefitsEdit";
 import OrdersPage from "../pages/orders/OrdersPage";
+import OrderDetailsPage from "../pages/orders/OrderDetailsPage";
 
 export const Router = () => {
   return (
@@ -33,6 +34,7 @@ export const Router = () => {
       <Route path="/*" element={<PageNotFound />} />
       // ORDERS
       <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
     </Routes>
   );
 };

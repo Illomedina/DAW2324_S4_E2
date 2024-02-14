@@ -20,7 +20,7 @@ app.add_middleware(
 
 PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 
-connection = get_connection()
+# connection = get_connection()
 
 @app.post("/token")
 def login(username: str = Form(...), password: str = Form(...)):

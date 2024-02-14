@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('idCustomer')->references('id')->on('customers')->onDelete('cascade');
+            $table->id();
+            $table->string('idOrderPicanova');
+            $table->foreignId('idCustomer')->references('id')->on('customers')->onDelete('cascade')->nullable();
             $table->timestamp('datetime')->nullable();
-            $table->enum('orderStatus', ['Pending', 'Accepted', 'Processing', 'Sent', 'Delivered']);
+            $table->string('orderStatus');
             $table->timestamps();
         });
     }

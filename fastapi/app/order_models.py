@@ -6,24 +6,25 @@ metadata = MetaData()
 # Modelo para la tabla 'orders'
 orders_table = Table(
     'orders', metadata,
-    Column('id', String, primary_key=True),
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('idOrderPicanova', String),
     Column('idCustomer', String, nullable=True),
     Column('datetime', DateTime, default=func.now()),
-    Column('orderStatus', ENUM('Pending', 'Accepted', 'Processing', 'Sent', 'Delivered', name='order_status_enum')),
+    Column('orderStatus', String),
 )
 
 # Modelo para la tabla 'orderDetails'
 order_details_table = Table(
     'order_details', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('idOrders', String, nullable=False),
+    Column('idOrder', Integer, nullable=False),
     Column('idProduct', Integer, nullable=False),
     #Column('idGI', Integer, nullable=False),
-    Column('idVariant', Integer, nullable=False),
+    Column('idVariant', Integer, nullable=True),
     Column('quantity', Integer, nullable=False),
     Column('priceEach', Float, nullable=False),
     Column('shippingPrice', Float),
-    ForeignKeyConstraint(['idOrders'], ['orders.idOrders']),
+    ForeignKeyConstraint(['idOrder'], ['orders.idOrders']),
     ForeignKeyConstraint(['idProduct'], ['products.id']),
     #ForeignKeyConstraint(['idGI'], ['some_other_table.id']),
     ForeignKeyConstraint(['idVariant'], ['variants.id'])
