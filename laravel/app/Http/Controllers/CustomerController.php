@@ -37,7 +37,7 @@ class CustomerController extends Controller
             'status' => 'required|in:Active,Inactive,Banned,Deleted',
         ]);
 
-        $validatedData['membershipDate'] = now(); 
+        $validatedData['membershipDate'] = now();
 
         $customer = Customer::create([
             'name' => $validatedData['name'],
@@ -53,7 +53,7 @@ class CustomerController extends Controller
             'is_validated' => $validatedData['is_validated'] ?? false,
             'membershipDate' => $validatedData['membershipDate'],
             'customerStatus' => $validatedData['status'],
-        
+
         ]);
 
         // Devolver una respuesta
@@ -110,8 +110,16 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+    public function destroy($id)
     {
-        //
+        $customer = Customer::find($id);
+        if ($customer) {
+            $customer->delete();
+            return response()->json(['message' => 'Customer deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Customer not found'], 404);
+        }
     }
+
 }
