@@ -3,58 +3,32 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 
-export const CustomerEdit = () => {
+const steps = [
+  { name: 'Customers', href: '/customers', current: false },
+  { name: 'Edit Customer', href: '/customers/create', current: true },
+]
+
+export const CustomersEdit = () => {
   const navigate = useNavigate();
 
   const { state } = useLocation();
 
-  const {
-    id,
-    name = '-',
-    surname = '-',
-    address = '-',
-    created_at_formatted,
-    customerStatus = '-',
-    is_validated = '-',
-    mail = '-',
-    username = '-',
-    phone = '-',
-    postcode = '-'
-  } = state?.customer;
-
-  const steps = [
-    { name: 'Customers', href: '/customers', current: false },
-    { name: `${name} ${surname}`, href: `/customers/1`, current: false },
-    { name: `Edit`, href: `/customers/1`, current: false },
-  ]
-
-  const checkPassword = () => {
-    const password = formData.password;
-    const passwordConfirm = formData.passwordConfirm;
-    console.log(password, passwordConfirm);
-    if (password !== passwordConfirm) {
-      document.getElementById('passwordConfirm').setCustomValidity('Passwords do not match');
-      return false;
-    } else {
-      document.getElementById('passwordConfirm').setCustomValidity('');
-      return true;
-    }
-  }
+  const customer = state?.customer;
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    password: '',
-    passwordConfirm: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    // country: '',
-    status: '',
-    is_validated: false
+    name: customer.name || '',
+    surname: customer.surname || '',
+    username: customer.username || '',
+    newPassword: '',
+    newPasswordConfirm: '',
+    mail: customer.mail || '',
+    phone: customer.phone || '',
+    address: customer.address || '',
+    city: customer.city || '',
+    postcode: customer.postcode || '',
+    // country: customer,
+    status: customer.customerStatus,
+    is_validated: customer.is_validated,
   });
 
   const handleChange = (e) => {
@@ -64,21 +38,14 @@ export const CustomerEdit = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!checkPassword()) {
-      return;
-    }
 
-    const url = 'http://localhost:8000/api/customers/create';
-
-    try {
-      console.log('formData:', formData);
-      const response = await axios.post(url, formData);
-      console.log('Success:', response.data);
-      navigate('/customers');
-    } catch (error) {
-      console.error('Error:', error.response.data);
-      // Manejar el error aquí
-    }
+    axios.put(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`, formData)
+      .then(response => {
+        const { data } = response;
+        alert('Customer updated successfully!');
+        navigate(`/customers/${data.id}`, { state: { customer: response.data.data } });
+      })
+      .catch(error => console.error('Error:', error));
 
   }
 
@@ -98,15 +65,15 @@ export const CustomerEdit = () => {
               <div className="px-4 py-6 sm:p-8">
                 <div className="grid max-w-3xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-2">
-                    <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                       First name
                     </label>
                     <div className="mt-2">
                       <input
                         type="text"
-                        name="firstName"
-                        id="firstName"
-                        value={formData.firstName}
+                        name="name"
+                        id="name"
+                        value={formData.name}
                         onChange={handleChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -114,15 +81,15 @@ export const CustomerEdit = () => {
                   </div>
 
                   <div className="sm:col-span-4">
-                    <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="surname" className="block text-sm font-medium leading-6 text-gray-900">
                       Last name
                     </label>
                     <div className="mt-2">
                       <input
                         type="text"
-                        name="lastName"
-                        id="lastName"
-                        value={formData.lastName}
+                        name="surname"
+                        id="surname"
+                        value={formData.surname}
                         onChange={handleChange}
                         autoComplete="family-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -131,15 +98,15 @@ export const CustomerEdit = () => {
                   </div>
 
                   <div className="sm:col-span-4">
-                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="mail" className="block text-sm font-medium leading-6 text-gray-900">
                       Email
                     </label>
                     <div className="mt-2">
                       <input
-                        id="email"
-                        name="email"
+                        id="mail"
+                        name="mail"
                         type="email"
-                        value={formData.email}
+                        value={formData.mail}
                         onChange={handleChange}
                         autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -199,15 +166,15 @@ export const CustomerEdit = () => {
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label htmlFor="postalCode" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="postcode" className="block text-sm font-medium leading-6 text-gray-900">
                       ZIP / Postal code
                     </label>
                     <div className="mt-2">
                       <input
                         type="number"
-                        name="postalCode"
-                        id="postalCode"
-                        value={formData.postalCode}
+                        name="postcode"
+                        id="postcode"
+                        value={formData.postcode}
                         onChange={handleChange}
                         autoComplete="postal-code"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -257,7 +224,7 @@ export const CustomerEdit = () => {
                         <input
                           type="password"
                           name="password"
-                          value={formData.password}
+                          value={formData.newPassword}
                           onChange={handleChange}
                           id="password"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -273,7 +240,7 @@ export const CustomerEdit = () => {
                         <input
                           type="password"
                           name="passwordConfirm"
-                          value={formData.passwordConfirm}
+                          value={formData.newPasswordConfirm}
                           onChange={handleChange}
                           id="passwordConfirm"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -355,7 +322,7 @@ export const CustomerEdit = () => {
                           name="is_validated"
                           value="1"
                           onChange={handleChange}
-                          checked={formData.is_validated === '1'}
+                          checked={formData.is_validated == true}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
@@ -368,7 +335,7 @@ export const CustomerEdit = () => {
                           name="is_validated"
                           value="0"
                           onChange={handleChange}
-                          checked={formData.is_validated === '0'}
+                          checked={formData.is_validated == false}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
@@ -384,7 +351,7 @@ export const CustomerEdit = () => {
           </div>
 
           <div className="px-4 py-4 text-right sm:px-6">
-            <button type="button" onClick={() => navigate('/customers')}
+            <button type="button" onClick={() => navigate(-1)}
               className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
     hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
     focus-visible:outline-gray-900"
@@ -394,7 +361,7 @@ export const CustomerEdit = () => {
 
             <button type="submit" onClick={onSubmit}
               className="inline-flex justify-center rounded-md ml-2 bg-teal-400 px-3 py-2 text-md font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
-              Create
+              Update
             </button>
           </div>
         </form>

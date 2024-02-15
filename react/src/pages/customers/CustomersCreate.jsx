@@ -25,16 +25,16 @@ export const CustomersCreate = () => {
   }
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
+    surname: '',
     username: '',
     password: '',
     passwordConfirm: '',
-    email: '',
+    mail: '',
     phone: '',
     address: '',
     city: '',
-    postalCode: '',
+    postcode: '',
     // country: '',
     status: '',
     is_validated: false
@@ -51,12 +51,10 @@ export const CustomersCreate = () => {
       return;
     }
 
-    const url = 'http://localhost:8000/api/customers/create';
+    const url = `${import.meta.env.VITE_API_URL}/customers/create`;
 
     try {
-      console.log('formData:', formData);
       const response = await axios.post(url, formData);
-      console.log('Success:', response.data);
       navigate('/customers');
     } catch (error) {
       console.error('Error:', error.response.data);
@@ -81,15 +79,15 @@ export const CustomersCreate = () => {
               <div className="px-4 py-6 sm:p-8">
                 <div className="grid max-w-3xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-2">
-                    <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                       First name
                     </label>
                     <div className="mt-2">
                       <input
                         type="text"
-                        name="firstName"
-                        id="firstName"
-                        value={formData.firstName}
+                        name="name"
+                        id="name"
+                        value={formData.name}
                         onChange={handleChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -97,15 +95,15 @@ export const CustomersCreate = () => {
                   </div>
 
                   <div className="sm:col-span-4">
-                    <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="surname" className="block text-sm font-medium leading-6 text-gray-900">
                       Last name
                     </label>
                     <div className="mt-2">
                       <input
                         type="text"
-                        name="lastName"
-                        id="lastName"
-                        value={formData.lastName}
+                        name="surname"
+                        id="surname"
+                        value={formData.surname}
                         onChange={handleChange}
                         autoComplete="family-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -114,15 +112,15 @@ export const CustomersCreate = () => {
                   </div>
 
                   <div className="sm:col-span-4">
-                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="mail" className="block text-sm font-medium leading-6 text-gray-900">
                       Email
                     </label>
                     <div className="mt-2">
                       <input
-                        id="email"
-                        name="email"
+                        id="mail"
+                        name="mail"
                         type="email"
-                        value={formData.email}
+                        value={formData.mail}
                         onChange={handleChange}
                         autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -182,15 +180,15 @@ export const CustomersCreate = () => {
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label htmlFor="postalCode" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="postcode" className="block text-sm font-medium leading-6 text-gray-900">
                       ZIP / Postal code
                     </label>
                     <div className="mt-2">
                       <input
                         type="number"
-                        name="postalCode"
-                        id="postalCode"
-                        value={formData.postalCode}
+                        name="postcode"
+                        id="postcode"
+                        value={formData.postcode}
                         onChange={handleChange}
                         autoComplete="postal-code"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

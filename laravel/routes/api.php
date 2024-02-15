@@ -38,6 +38,9 @@ Route::resource('/settings', SettingController::class);
 // CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/customers/create', [CustomerController::class, 'store']);
+Route::put('/customers/{id}', [CustomerController::class, 'update']);
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
+
 
 // BENEFITS
 Route::get('/getBenefits', [BenefitsController::class, 'index']);

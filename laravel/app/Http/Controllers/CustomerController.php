@@ -24,13 +24,14 @@ class CustomerController extends Controller
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
-            'firstName' => 'required|max:255',
-            'lastName' => 'required|max:255',
+            'name' => 'required|max:255',
+            'surname' => 'required|max:255',
             'username' => 'required|max:255|unique:customers,username',
-            'email' => 'required|email|max:255|unique:customers,mail',
+            'mail' => 'required|email|max:255|unique:customers,mail',
             'phone' => 'nullable|max:255',
             'address' => 'nullable|max:255',
-            'postalCode' => 'nullable|max:255',
+            'city' => 'nullable|max:255',
+            'postcode' => 'nullable|max:255',
             'idCountry' => 'nullable|integer|exists:countries,id',
             'is_validated' => 'sometimes|boolean',
             'status' => 'required|in:Active,Inactive,Banned,Deleted',
@@ -39,14 +40,15 @@ class CustomerController extends Controller
         $validatedData['membershipDate'] = now(); 
 
         $customer = Customer::create([
-            'name' => $validatedData['firstName'],
-            'surname' => $validatedData['lastName'],
+            'name' => $validatedData['name'],
+            'surname' => $validatedData['surname'],
             'username' => $validatedData['username'],
             'password' => bcrypt('password'),
-            'mail' => $validatedData['email'],
+            'mail' => $validatedData['mail'],
+            'city' => $validatedData['city'],
             'phone' => $validatedData['phone'],
             'address' => $validatedData['address'],
-            'postcode' => $validatedData['postalCode'],
+            'postcode' => $validatedData['postcode'],
             'idCountry' => 1,
             'is_validated' => $validatedData['is_validated'] ?? false,
             'membershipDate' => $validatedData['membershipDate'],
@@ -72,7 +74,37 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'surname' => 'required|max:255,',
+            'username' => 'required|max:255|unique:customers,username,' . $id,
+            'mail' => 'required|email|max:255|unique:customers,mail,' . $id,
+            'phone' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+            'city' => 'nullable|max:255',
+            'postcode' => 'nullable|max:255',
+            'idCountry' => 'nullable|integer|exists:countries,id',
+            'is_validated' => 'sometimes|boolean',
+            'status' => 'required|in:Active,Inactive,Banned,Deleted',
+        ]);
+
+        $customer = Customer::find($id);
+
+        $customer->name = $validatedData['name'];
+        $customer->surname = $validatedData['surname'];
+        $customer->username = $validatedData['username'];
+        $customer->mail = $validatedData['mail'];
+        $customer->city = $validatedData['city'];
+        $customer->phone = $validatedData['phone'];
+        $customer->address = $validatedData['address'];
+        $customer->postcode = $validatedData['postcode'];
+        $customer->idCountry = $validatedData['idCountry'] ?? 1;
+        $customer->is_validated = $validatedData['is_validated'] ?? false;
+        $customer->customerStatus = $validatedData['status'];
+
+        $customer->save();
+
+        return response()->json(['message' => 'Customer updated successfully', 'data' => $customer, 'id' => $id]);
     }
 
     /**

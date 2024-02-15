@@ -15,7 +15,7 @@ export const CustomersPage = () => {
     useEffect(() => {
         const fetchCustomers = async () => {
             setLoading(true);
-            const response = await fetch('http://localhost:8000/api/customers');
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/customers`);
             const data = await response.json();
             setCustomers(data);
             setLoading(false);

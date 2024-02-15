@@ -5,7 +5,7 @@ import Login from '../pages/auth/Login'
 import PageNotFound from '../pages/404/PageNotFound'
 import DashboardPage from '../pages/dashboard/DashboardPage'
 import ProductsPage from '../pages/products/ProductsPage';
-import { CustomersPage, CustomersCreate, CustomersShow, CustomerEdit } from '../pages/customers';
+import { CustomersPage, CustomersCreate, CustomersShow, CustomersEdit } from '../pages/customers';
 import ProductDetailsPage from '../pages/products/ProductDetailsPage';
 import BenefitsPage from '../pages/benefits/BenefitsPage';
 import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
@@ -28,7 +28,7 @@ export const Router = () => {
       <Route path="/customers" element={<CustomersPage />} />
       <Route path="/customers/create" element={<CustomersCreate />} />
       <Route strict path="/customers/:customerId" element={<CustomersShow />} />
-      <Route path="/customers/:customerId/edit" element={<CustomerEdit />} />
+      <Route path="/customers/:customerId/edit" element={<CustomersEdit />} />
 
       // PRODUCTS
       <Route path="/products" element={<ProductsPage />} />
