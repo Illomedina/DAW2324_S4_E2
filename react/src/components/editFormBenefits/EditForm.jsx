@@ -13,7 +13,8 @@ const EditForm = () => {
   const [expense, setExpense] = useState("");
   var [profit, setProfit] = useState("");
   const [loading, setLoading] = useState(false); 
-
+  const token = localStorage.getItem('token');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
   profit = income - expense;
   let { id } = useParams();

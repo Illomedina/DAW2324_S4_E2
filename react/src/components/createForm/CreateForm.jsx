@@ -12,7 +12,10 @@ const CreateForm = ({ section }) => {
   profit = income - expense;
   const [alert, setAlert] = useState(false);
   const [errors, setErrors] = useState({});
+  const token = localStorage.getItem('token');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
+  
   const validate = () => {
     let isValid = true;
     const newErrors = {};

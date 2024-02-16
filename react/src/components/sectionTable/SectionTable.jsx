@@ -3,9 +3,13 @@ import "./SectionTable.css";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
 
+
+
 function SectionTable({ SectionName }) {
   const [benefits, setBenefits] = useState([]);
   const [loading, setLoading] = useState(false); 
+  const token = localStorage.getItem('token');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
   useEffect(() => {
     getBenefits();
@@ -15,8 +19,15 @@ function SectionTable({ SectionName }) {
     setLoading(true); 
     try {
       const url = "http://localhost:8000/api/getBenefits";
-      const response = await axios.get(url);
-      setBenefits(response.data);
+      const response = await axios.get(url,
+        {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      });
+      if(response.status===200){
+        setBenefits(response.data);
+      }
+
     } catch (error) {
       console.error('Error fetching benefits:', error);
     } finally {

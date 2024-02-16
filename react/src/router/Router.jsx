@@ -1,5 +1,5 @@
-import React, { Children } from 'react'
-import { Navigate, Route, Routes } from "react-router-dom";
+import React, {useEffect} from 'react'
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 import Login from '../pages/auth/Login'
 import PageNotFound from '../pages/404/PageNotFound'
@@ -10,9 +10,24 @@ import ProductDetailsPage from '../pages/products/ProductDetailsPage';
 import BenefitsPage from '../pages/benefits/BenefitsPage';
 import BenefitsCreate from '../pages/benefits/create/BenefitsCreate';
 import BenefitsEdit from '../pages/benefits/edit/BenefitsEdit';
+import axios from "axios";
 
 export const Router = () => {
+  const navigate = useNavigate();
 
+  const checkRoute = () => {
+
+    if(!localStorage.getItem('token')){
+      const url = window.location.href;
+      if(url!=='http://localhost:3000/'){
+        navigate('/');
+      }
+    }
+  }
+
+ useEffect(() => {
+   checkRoute();
+ })
   return (
     <Routes>
       <Route path="/" element={<Login />} />

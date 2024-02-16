@@ -2,55 +2,62 @@ import React, { useState } from "react";
 import './Login.css'
 import axios from "axios";
 import { useNavigate  } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  var isValid = false;
-  const  navigate = useNavigate();
+  const [token, setToken] = useState('');
   
-  const onSubmit = () => {
-    isValid = false;
-    const newErrors = {};
-    
-    if(username === null || username === ""){
-      newErrors.username = "Username is required";
-      isValid = false;
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/login", {
+        username,
+        password
+      }, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+  
+      if (response.status === 200) {
+        const { token } = response.data;
+        const { user } = response.data;
+  
+        if (!token) {
+          console.error('No token found in the response');
+          return;
+        }else if(!user) {
+          console.error('No user found in the response');
+        }
+  
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        setToken(token);
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
 
-    }else if(password === null || password === ""){
-      newErrors.password = "Password is required";
-      isValid = false;
-    }else{
-      isValid = true;
+  const onSubmit = () => {
+    const newErrors = {};
+
+    if (!username) {
+      newErrors.username = "Username is required";
     }
 
-    if(!isValid){
-      setErrors(newErrors);
-    }else{
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+
+    if (!newErrors.username && !newErrors.password) {
       handleLogin(username, password);
     }
-
-    }
-
-    const handleLogin = async (username, password) => {
-      const url = "http://localhost:8000/api/login";
-      try {
-        const response = await axios.post(url, {
-          username: username,
-          password: password
-        });
-        if (response.status === 200) {
-          console.log("Login successful");
-            //ruta funciona
-            navigate("/dashboard");
-        }
-
-      } catch (error) {
-        //TODO Añadir alerta
-      } finally {
-
-      }
   };
 
 

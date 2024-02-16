@@ -29,8 +29,6 @@ class LoginController extends Controller
             "password"=> $request->password
         ];
         
-        //En caso de que se quiera añadir el check de remeber
-        // $remember = $request->has('remember') ? true : false;
 
         if(Auth::attempt($credentias)){
             return response()->json(['message' => 'Login successful'], 200);
@@ -39,22 +37,6 @@ class LoginController extends Controller
         }
     }
 
-    // public function login(Request $request){
-    //     $credentias =[
-    //         "username"=> $request->username,
-    //         "password"=> $request->password
-    //     ];
-        
-    //     //En caso de que se quiera añadir el check de remeber
-    //     // $remember = $request->has('remember') ? true : false;
-
-    //     if(Auth::attempt($credentias)){
-    //         $request->session()->regenerate();
-    //         return response()->json(['message' => 'Login successful'], 200);
-    //     }else{
-    //         return response()->json(['message'=>'Login failed'], 401);
-    //     }
-    // }
 
     public function logout(Request $request){
         Auth::logout();

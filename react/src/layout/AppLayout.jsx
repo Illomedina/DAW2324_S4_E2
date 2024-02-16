@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -13,6 +13,9 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useNavigate  } from "react-router-dom";
+import axios from "axios";
+
 
 
 function classNames(...classes) {
@@ -20,6 +23,15 @@ function classNames(...classes) {
 }
 
 export default function AppLayout({ children, Page }) {
+    const navigate = useNavigate();
+    const user = localStorage.getItem("user");
+    let data;
+    if(user){
+         data = JSON.parse(user);
+    }else{
+         data = '';
+    }
+ 
     const [sidebarOpen, setSidebarOpen] = useState(false);
    
     const navigation = [
@@ -37,13 +49,39 @@ export default function AppLayout({ children, Page }) {
         if(navigation[i].name==Page){navigation[i].current = true;}
     }
 
-    
-    const userNavigation = [
-        { name: 'Your profile', href: '#' },
-        { name: 'Sign out', href: '#' },
-    ]
+    // const handleNavigation = async (action) => {
+    //     if (action === 'Sign out') {
+    //       const url = "http://localhost:8000/api/logout";
+    //       await axios({
+    //         method: "POST",
+    //         url: url,
+    //       })
+    //         .then(function (response) {
+    //           if (response.status === 200) {
+    //             localStorage.removeItem("token");
+    //             navigate('/')
+    //           }
+    //         })
+    //         .catch(function (error) {
+    //           console.error("Error:", error);
+    //         })
+    //         .finally(function () {
+    //         });
+    //     } else {
+    //       console.log('Navigating to:', action);
+    //     }
+    //   };
 
-    
+const userNavigation = [
+  { name: 'Your profile', action: 'Profile' },
+  { name: 'Sign out', action: 'Sign out'},  
+]
+
+const UserNavigation = () => {
+    handleNavigation(action);
+};
+
+
     return (
         <>
             <div>
@@ -217,7 +255,7 @@ export default function AppLayout({ children, Page }) {
                     />
                     <span className="hidden lg:flex lg:items-center">
                       <span className="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
-                        Tom Cook
+                        {data.name}
                       </span>
                       <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                     </span>
@@ -236,7 +274,11 @@ export default function AppLayout({ children, Page }) {
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <a
-                              href={item.href}
+                              href={item.action}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleNavigation(item.action);
+                              }}
                               className={classNames(
                                 active ? 'bg-gray-50' : '',
                                 'block px-3 py-1 text-sm leading-6 text-gray-900'

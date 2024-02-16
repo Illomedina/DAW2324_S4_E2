@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -32,16 +33,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::get('/getBenefits', [BenefitsController::class, 'index']);
-Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
-Route::post('createBenefit', [BenefitsController::class, 'create']);
-Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
-Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
-
-Route::post('login', [LoginController::class, 'login']);
 
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
-// Route::group(['middleware' => ['web']], function () {
-    
-// });
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/getBenefits', [AuthController::class, 'getAll']);
+    Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
+    Route::post('createBenefit', [BenefitsController::class, 'create']);
+    Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
+    Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+});
