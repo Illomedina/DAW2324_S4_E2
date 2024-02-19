@@ -34,9 +34,6 @@ export const CustomersCreate = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!checkPassword()) {
-      return;
-    }
 
     const url = `${import.meta.env.VITE_API_URL}/customers/create`;
 
