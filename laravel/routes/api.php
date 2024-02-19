@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductControllerController;
 use App\Http\Controllers\setting\SettingController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BenefitsController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 /*
 /*
