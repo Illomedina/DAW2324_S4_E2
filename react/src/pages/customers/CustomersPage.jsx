@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import AppLayout from '../../layout/AppLayout';
 import { CustomersTable } from '../../components/tables/CustomersTable';
 import Spinner from '../../components/Spinner';
+import axios from 'axios';
 
 const steps = [
     { name: 'Customers', href: '/customers', current: true },
-  ]
+]
 export const CustomersPage = () => {
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
@@ -15,12 +16,14 @@ export const CustomersPage = () => {
     useEffect(() => {
         const fetchCustomers = async () => {
             setLoading(true);
-            const response = await fetch('http://localhost:8000/api/customers');
-            const data = await response.json();
-            setCustomers(data);
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
+                setCustomers(response.data);
+            } catch (error) {
+                console.error("There was an error fetching the customers:", error);
+            }
             setLoading(false);
         };
-
         fetchCustomers();
     }, []);
 

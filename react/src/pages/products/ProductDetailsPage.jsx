@@ -3,46 +3,42 @@ import { useParams } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
 
+const steps = [
+    { name: 'Products', href: '/products', current: false },
+    { name: 'Product Details', href: '/', current: true },
+]
+
 const ProductDetailsPage = () => {
     const { productId } = useParams();
-    const [product, setProduct] = useState(null);
-
-    // Estados para los detalles del producto
-    const [detailColumnDefs, setDetailColumnDefs] = useState([]);
-    const [detailRowData, setDetailRowData] = useState([]);
-
-    // Estados para las imágenes del producto
-    const [imageColumnDefs, setImageColumnDefs] = useState([]);
-    const [imageRowData, setImageRowData] = useState([]);
+    const [productData, setProductData] = useState({
+        product: null,
+        details: [],
+        images: [],
+        isLoading: true,
+        error: null,
+    });
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/products/${productId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setProduct(data);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`);
+                const data = await response.json();
+                setProductData({
+                    ...productData,
+                    product: data,
+                    details: data.product_details || [],
+                    images: data.product_images || [],
+                    isLoading: false,
+                });
+            } catch (error) {
+                setProductData({ ...productData, error, isLoading: false });
+            }
+        };
 
-                // Configurar columnas y filas para detalles del producto
-                setDetailColumnDefs([
-                    { field: 'name', headerName: 'Name', sortable: true, filter: true },
-                    { field: 'format_width', headerName: 'Width (cm)', sortable: true, filter: true },
-                    { field: 'format_height', headerName: 'Height (cm)', sortable: true, filter: true },
-                    { field: 'formatted_price', headerName: 'Price', sortable: true, filter: true },
-                ]);
-                setDetailRowData(data.product_details);
-
-                // Configurar columnas y filas para imágenes del producto
-                setImageColumnDefs([
-                    {
-                        field: 'thumb',
-                        headerName: 'Thumbnail',
-                        cellRenderer: params => `<img src="${params.value}" style="width: 50px; height: 50px;" alt="Product Image" />`,
-                    },
-                    { field: 'original', headerName: 'Original URL', sortable: true, filter: true }
-                ]);
-                setImageRowData(data.product_images);
-            })
-            .catch((error) => console.error('Error:', error));
+        fetchData();
     }, [productId]);
+
+    const { product, details, images, isLoading, error } = productData;
 
     const defaultColDef = {
         flex: 1,
@@ -50,29 +46,70 @@ const ProductDetailsPage = () => {
         resizable: true,
     };
 
-    if (!product) {
+    const imageColumnDefs = [
+        {
+            field: 'thumb',
+            headerName: 'Thumbnail',
+            cellRenderer: params => `<img src="${params.value}" style="width: 50px; height: 50px;" alt="Product Image" />`,
+        },
+        { field: 'original', headerName: 'Original URL', sortable: true, filter: true },
+    ];
+
+    function calculateSalesPrice(priceInSubunit, benefitsMarginPercentage) {
+        const benefitsMargin = benefitsMarginPercentage / 100;
+        const salesPrice = priceInSubunit + (priceInSubunit * benefitsMargin);
+        return (salesPrice / 100).toFixed(2) + ' €';
+    }
+
+    const SalesPriceCellRenderer = ({ data }) => {
+        if (data) {
+            const benefitsMargin = data.benefits_margin;
+            const salesPrice = calculateSalesPrice(data.price_in_subunit, benefitsMargin);
+            return <span>{salesPrice}</span>;
+        }
+        return <span>No Price Data</span>;
+    };
+
+    function benefitsMarginValueGetter(params) {
+        if (params.data && params.data.benefits_margin !== undefined) {
+            return params.data.benefits_margin + " %";
+        }
+        return null;
+    }
+
+    const detailColumnDefs = [
+        { field: 'name', headerName: 'Name', sortable: true, filter: true },
+        { field: 'format_width', headerName: 'Width (cm)', sortable: true, filter: true },
+        { field: 'format_height', headerName: 'Height (cm)', sortable: true, filter: true },
+        { field: 'formatted_price', headerName: 'Price', sortable: true, filter: true },
+        { valueGetter: benefitsMarginValueGetter, headerName: 'Benefits margin', sortable: true, filter: true },
+        { cellRenderer: SalesPriceCellRenderer, headerName: 'Sales price', sortable: true, filter: true },
+    ];
+
+    if (isLoading) {
         return <div>Loading...</div>;
     }
 
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
     return (
-        <AppLayout Page={"Products"}>
-            <div style={{ height: '500px', overflowY: 'auto' }}>
-                <div className="ag-theme-quartz" style={{ width: '100%' }}>
-                    <h1>{product.name}</h1>
-                    <h2>Product Details</h2>
-                    <AgGridReact
-                        rowData={detailRowData}
-                        columnDefs={detailColumnDefs}
-                        defaultColDef={defaultColDef}
-                        domLayout='autoHeight'
-                    />
-                    <h2>Product Images</h2>
-                    <AgGridReact
-                        rowData={imageRowData}
-                        columnDefs={imageColumnDefs}
-                        defaultColDef={defaultColDef}
-                        domLayout='autoHeight'
-                    />
+        <AppLayout Page={"Product Details"} Steps={steps}>
+            <div style={{ height: '80vh', width: '100%', overflowY: 'auto' }}>
+                <div className="ag-theme-quartz" style={{ height: '80vh', width: '100%' }}>
+                    {product && (
+                        <>
+                            <h1>{product.name}</h1>
+                            <AgGridReact
+                                rowData={details}
+                                columnDefs={detailColumnDefs}
+                                defaultColDef={defaultColDef}
+                                domLayout='autoHeight'
+                                pagination={true}
+                            />
+                        </>
+                    )}
                 </div>
             </div>
         </AppLayout>

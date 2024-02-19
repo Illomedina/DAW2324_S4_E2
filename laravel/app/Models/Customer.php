@@ -14,8 +14,6 @@ class Customer extends Model
     protected $appends = ['created_at_formatted'];
 
 
-    protected $primaryKey = 'idCustomer'; // Clave primaria personalizada
-
     protected $fillable = [
         'name',
         'surname',
@@ -23,6 +21,7 @@ class Customer extends Model
         'password',
         'mail',
         'phone',
+        'city',
         'address',
         'postcode',
         'idCountry',

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import AgGridTable from '../../components/table/TableSimple';
 import AppLayout from '../../layout/AppLayout';
-import EditButton from '../../components/table/EditButton';
+import EditButton from '../users/EditButton';
 import DeleteButton from '../../components/table/DeleteButton';
 
 

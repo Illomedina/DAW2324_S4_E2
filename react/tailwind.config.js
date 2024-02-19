@@ -13,6 +13,7 @@ export default {
         primaryColor: '#061F41',
         grayBackground: '#E9ECEF',
         softGray: '#F8FAFC',
+        violet: '#5857AA',
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',

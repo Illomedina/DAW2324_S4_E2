@@ -23,21 +23,15 @@ PICANOVA_PRODUCTS_URL = "https://api.picanova.com/api/beta/products"
 
 @app.post("/token")
 def login(username: str = Form(...), password: str = Form(...)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        if verify_credentials(username, password):
-            data = {"sub": username}
-            access_token = create_token(data)
-            return {"access_token": access_token, "token_type": "bearer"}
-        else:
-            raise credentials_exception
-    except Exception as e:
-        return {"message": f"Error : {str(e)}"}
-
+    if not verify_credentials(username, password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    data = {"sub": username}
+    access_token = create_token(data)
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/products")
 async def get_and_insert_products(current_user: dict = Depends(get_current_user)):

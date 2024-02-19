@@ -18,7 +18,7 @@ const EditButton = (props) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/settings/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

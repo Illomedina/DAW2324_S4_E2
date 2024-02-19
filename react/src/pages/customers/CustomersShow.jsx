@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../layout/AppLayout';
 
 
-
-
 export const CustomersShow = () => {
+  const navigate = useNavigate();
+
   const { state } = useLocation();
   const customer = state?.customer;
   const {
@@ -13,6 +13,7 @@ export const CustomersShow = () => {
     name = '-',
     surname = '-',
     address = '-',
+    city = '-',
     created_at_formatted,
     customerStatus = '-',
     is_validated = '-',
@@ -24,7 +25,7 @@ export const CustomersShow = () => {
 
   const steps = [
     { name: 'Customers', href: '/customers', current: true },
-    { name: `${name} ${surname}`, href: `/customers/${id}`, current: true },
+    { name: `${name} ${surname}`, href: `/customers/1`, current: true },
   ]
 
   return (
@@ -37,8 +38,8 @@ export const CustomersShow = () => {
             </div>
             <div className="ml-4 mt-2 flex-shrink-0">
               <button
-                type="button"
-                className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                type="button" onClick={() => navigate(`/customers/${id}/edit`, { state: { customer } })}
+                className="relative inline-flex items-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Edit Customer
               </button>
@@ -62,6 +63,10 @@ export const CustomersShow = () => {
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-900">Address</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{address}</dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-900">City</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{city}</dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-900">Created at</dt>
