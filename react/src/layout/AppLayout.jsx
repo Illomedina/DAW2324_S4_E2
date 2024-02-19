@@ -49,28 +49,28 @@ export default function AppLayout({ children, Page }) {
         if(navigation[i].name==Page){navigation[i].current = true;}
     }
 
-    // const handleNavigation = async (action) => {
-    //     if (action === 'Sign out') {
-    //       const url = "http://localhost:8000/api/logout";
-    //       await axios({
-    //         method: "POST",
-    //         url: url,
-    //       })
-    //         .then(function (response) {
-    //           if (response.status === 200) {
-    //             localStorage.removeItem("token");
-    //             navigate('/')
-    //           }
-    //         })
-    //         .catch(function (error) {
-    //           console.error("Error:", error);
-    //         })
-    //         .finally(function () {
-    //         });
-    //     } else {
-    //       console.log('Navigating to:', action);
-    //     }
-    //   };
+    const handleNavigation = async (action) => {
+        if (action === 'Sign out') {
+          const url = "http://localhost:8000/api/logout";
+          await axios({
+            method: "POST",
+            url: url,
+          })
+            .then(function (response) {
+              if (response.status === 200) {
+                localStorage.removeItem("token");
+                navigate('/')
+              }
+            })
+            .catch(function (error) {
+              console.error("Error:", error);
+            })
+            .finally(function () {
+            });
+        } else {
+          console.log('Navigating to:', action);
+        }
+      };
 
 const userNavigation = [
   { name: 'Your profile', action: 'Profile' },
