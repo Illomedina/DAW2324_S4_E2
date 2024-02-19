@@ -32,7 +32,7 @@ export const Router = () => {
   }
 
  useEffect(() => {
-   checkRoute();
+  //  checkRoute();
  })
   return (
     <Routes>
