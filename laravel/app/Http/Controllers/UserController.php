@@ -68,7 +68,7 @@ class UserController extends Controller
             $user->idRole=1;
             $user->name -> $request->name;
             $user->surname -> $request->surname;
-            $user->user -> $request->user;
+            $user->username-> $request->user;
             $user->email -> $request->email;
             $user->password -> $request->password;
             $user->save();

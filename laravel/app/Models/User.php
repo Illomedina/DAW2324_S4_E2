@@ -24,7 +24,7 @@ class User extends Authenticatable
         'idRole',
         'name',
         'surname',
-        'user',
+        'username',
         'password',
         'email',
         'email_verified_at',
