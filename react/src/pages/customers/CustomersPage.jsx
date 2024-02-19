@@ -3,24 +3,33 @@ import React, { useEffect, useState } from 'react'
 import AppLayout from '../../layout/AppLayout';
 import { CustomersTable } from '../../components/tables/CustomersTable';
 import Spinner from '../../components/Spinner';
+import axios from 'axios';
 
-
+const steps = [
+    { name: 'Customers', href: '/customers', current: true },
+]
 export const CustomersPage = () => {
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCustomers = async () => {
-            const response = await fetch('http://localhost:8000/api/customers');
-            const data = await response.json();
-            setCustomers(data);
+            setLoading(true);
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
+                setCustomers(response.data);
+            } catch (error) {
+                console.error("There was an error fetching the customers:", error);
+                // Maneja el error como consideres necesario
+            }
+            setLoading(false);
         };
-
         fetchCustomers();
     }, []);
 
     return (
-        <AppLayout>
+        <AppLayout Page={"Customers"} Steps={steps}>
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
                     <div className="sm:flex-auto">
@@ -38,12 +47,10 @@ export const CustomersPage = () => {
             </div>
             <div className="flex flex-col my-3">
                 {
-                    customers.length === 0
-                        ? <Spinner />
+                    isLoading
+                        ? <Spinner message='Loading Customers...' />
                         :
-                        < div className="align-middle overflow-x-auto shadow overflow-hidden sm:rounded-lg">
-                            <CustomersTable customers={customers} />
-                        </div>
+                        <CustomersTable customers={customers} />
                 }
             </div>
         </AppLayout >

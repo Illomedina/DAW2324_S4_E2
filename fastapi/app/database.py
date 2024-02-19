@@ -14,5 +14,5 @@ database_user_uri = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT
 
 engine = create_engine(database_user_uri)
 
-def get_connection():
-    return engine.connect()
+# def get_connection():
+#     return engine.connect()
