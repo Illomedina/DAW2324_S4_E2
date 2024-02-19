@@ -10,8 +10,8 @@ function SectionTable({ SectionName }) {
   const [loading, setLoading] = useState(false); 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
-  // const [chartData] = useState([]);
-  const [chartData, setChartData] = useState([112, 10, 225, 134, 101, 80, 50, 100, 200]);
+  const [chartData] = useState([]);
+  // const [chartData, setChartData] = useState([112, 10, 225, 134, 101, 80, 50, 100, 200]);
   const [labels] = useState(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']);
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -48,29 +48,28 @@ function SectionTable({ SectionName }) {
       });
       if(response.status===200){
         setBenefits(response.data);
-        console.log(response.data);
 
-        // for (let i = 0; i < response.data.length; i++) {
-        //   if(response.data[i].month === 'January'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'February'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'March'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'April'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'May'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'June'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'July'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'August'){
-        //     chartData[i] = response.data[i].profit;
-        //   }else if(response.data[i].month === 'September'){
-        //     chartData[i] = response.data[i].profit;
-        //   }
-        // }
+        for (let i = 0; i < response.data.length; i++) {
+          if(response.data[i].month === 'January'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'February'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'March'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'April'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'May'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'June'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'July'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'August'){
+            chartData[i] = response.data[i].profit;
+          }else if(response.data[i].month === 'September'){
+            chartData[i] = response.data[i].profit;
+          }
+        }
       }
 
     } catch (error) {
@@ -212,7 +211,7 @@ function SectionTable({ SectionName }) {
               {chartData.map((data, index) => (
                 <div key={index} className="px-2 w-1/6">
                   <div
-                    style={{ height: `${data}px` }}
+                    style={{ height: `${data / 10}px` }}
                     className="transition ease-in duration-200 bg-violet hover:bg-blue-400 relative"
                     onMouseEnter={showTooltip}
                     onMouseLeave={hideTooltip}
