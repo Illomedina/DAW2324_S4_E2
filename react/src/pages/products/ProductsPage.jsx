@@ -9,6 +9,9 @@ import { PriceRangeCellRenderer } from '../../components/tables/products/cellRen
 import { ImageCellRenderer } from '../../components/tables/products/cellRenderers/ImageCellRenderer';
 import { EditProductCellRenderer } from '../../components/tables/products/cellRenderers/EditProductCellRenderer';
 import { ProductIsActiveCellRenderer } from '../../components/tables/products/cellRenderers/ProductIsActiveCellRenderer';
+const steps = [
+    { name: 'Products', href: '/products', current: true },
+]
 
 export default function ProductsPage() {
     const [rowData, setRowData] = useState([]);
@@ -16,7 +19,7 @@ export default function ProductsPage() {
     const [isEditable, setIsEditable] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/products')
+        fetch(`${import.meta.env.VITE_API_URL}/products`)
             .then((result) => result.json())
             .then((data) => setRowData(data))
             .catch((error) => console.error('Error fetching data: ', error));
@@ -121,10 +124,13 @@ export default function ProductsPage() {
     ], [isEditable]);
 
     return (
-        <AppLayout Page={"Products"}>
-            <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
+        <AppLayout Page={"Products"} Steps={steps}>
+            <div className="flex justify-end">
                 <ButtonToggle onToggle={toggleEditable} />
                 <ButtonFetchProductsAPI />
+            </div>
+            <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
+
                 <AgGridReact
                     rowData={rowData}
                     defaultColDef={defaultColDef}

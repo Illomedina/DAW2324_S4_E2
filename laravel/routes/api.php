@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductControllerController;
 use App\Http\Controllers\setting\SettingController;
 
 use App\Http\Controllers\BenefitsController;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,6 +38,9 @@ Route::resource('/settings', SettingController::class);
 // CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/customers/create', [CustomerController::class, 'store']);
+Route::put('/customers/{id}', [CustomerController::class, 'update']);
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
+
 
 // BENEFITS
 Route::get('/getBenefits', [BenefitsController::class, 'index']);
@@ -46,6 +49,14 @@ Route::post('createBenefit', [BenefitsController::class, 'create']);
 Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 
+
+
+Route::get('/users', [UserController::class, 'index']);
+
+// Ruta para el crear un usuario
+Route::post('createUser',  [UserController::class, 'store']);
+//Ruta para eliminar un usuario
+Route::delete('users/{id}', [UserController::class, 'destroy']);
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
