@@ -18,7 +18,7 @@ const EditButton = (props) => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/settings/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const EditButton = (props) => {
 
       if (response.ok) {
         alert('Datos guardados correctamente');
-        // Puedes realizar otras acciones después de guardar, si es necesario
+        window.location.reload();
       } else {
         alert('Error al guardar los datos');
       }

@@ -10,7 +10,20 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   const [searchText, setSearchText] = useState('');
   const [isEditingEnabled, setIsEditingEnabled] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      // Lógica para obtener los nuevos datos de la API
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/tu-ruta-de-api`);
+      const newData = await response.json();
 
+      // Actualizar el estado de los datos de la tabla
+      setTableData(newData);
+    } catch (error) {
+      console.error('Error al cargar los datos:', error);
+    }
+  };
+
+  
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
@@ -38,11 +51,6 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   return (
     <div className="p-4 border rounded-md relative">
       <div className="mb-4 flex items-center">
-        <a href="/settings/create" className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
-              hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-              focus-visible:outline-gray-900 mr-4">
-          Create
-        </a>  
         <ButtonToggle
           onToggle={handleToggleEdit}
         />
@@ -68,6 +76,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           rowStyle={defaultColDef.rowStyle}
           paginationPageSize={defaultColDef.paginationPageSize}
           editType="fullRow"
+          fetchData={fetchData}        
         />
       </div>
     </div>
