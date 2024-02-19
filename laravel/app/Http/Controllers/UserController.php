@@ -43,7 +43,7 @@ class UserController extends Controller
 
 
     public function store(Request $request){
-        try{
+        
             $user = User::create([
                 'idRole' =>1,
                 'name' => $request->name,
@@ -54,9 +54,7 @@ class UserController extends Controller
             ]);
     
             $user->save();
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'error getting the configuration'], 500);
-        }
+       
         
         
     }
