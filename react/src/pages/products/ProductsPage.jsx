@@ -127,7 +127,7 @@ export default function ProductsPage() {
         <AppLayout Page={"Products"} Steps={steps}>
             <div className="flex justify-end">
                 <ButtonToggle onToggle={toggleEditable} />
-                <ButtonFetchProductsAPI />
+                {/* <ButtonFetchProductsAPI /> */}
             </div>
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
 
