@@ -45,7 +45,7 @@ export const Router = () => {
       <Route path="/*" element={<PageNotFound />} />
       // ORDERS
       <Route path="/orders" element={<OrdersPage />} />
-      <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+      <Route path="/orders/:idOrder" element={<OrderDetailsPage />} />
     </Routes>
   );
 };

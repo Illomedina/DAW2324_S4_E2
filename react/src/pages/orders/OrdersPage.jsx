@@ -6,10 +6,6 @@ import AppLayout from "../../layout/AppLayout";
 import { Link } from "react-router-dom";
 
 const EditOrder = ({ data }) => {
-  const handleDetailsClick = () => {
-    window.location.href = `/OrderDetails/${data.idOrder}`;
-  };
-
   return (
     <a href={`/orders/${data.id}`}>
       <svg

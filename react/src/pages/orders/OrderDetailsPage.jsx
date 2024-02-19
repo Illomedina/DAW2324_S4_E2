@@ -6,30 +6,32 @@ const OrderDetailsPage = () => {
   const { idOrder } = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetch(
-          `${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`
-        );
-        if (result.ok) {
-          const data = await result.json();
-          console.log("Data received:", data);
-          setOrderDetails(data);
-          console.log(data);
-          //Error de Too many Requests.
-        } else if (result.status === 429) {
-          console.log("Too Many Requests. Retrying in 5 seconds...");
-          setTimeout(() => fetchData(), 5000);
-        } else {
-          console.error("Error fetching data. Status:", result.status);
-        }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
+  const fetchData = async () => {
+    try {
+      const result = await fetch(
+        `${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`
+      );
+      if (result.ok) {
+        const data = await result.json();
+        console.log("Data received:", data);
+        setOrderDetails(data);
+        console.log(data);
+      } else if (result.status === 429) {
+        console.log("Too Many Requests. Retrying in 5 seconds...");
+        setTimeout(() => fetchData(), 5000);
+      } else {
+        console.error("Error fetching data. Status:", result.status);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    // Verificar que idOrder tenga un valor antes de realizar la solicitud
+    if (idOrder) {
+      fetchData();
+    }
   }, [idOrder]);
 
   return (
@@ -45,75 +47,62 @@ const OrderDetailsPage = () => {
             <h4 className="font-semibold">CustomAIze</h4>
             <p className="text-xs"></p>
           </div>
-          <div className="flex flex-col gap-3 border-b py-6 text-xs">
-            <p className="flex justify-between">
-              <span className="text-gray-400">Order Number:</span>
-              <span>{orderDetails.idOrder}</span>
-            </p>
-            <p className="flex justify-between">
-              <span className="text-gray-400">Shipping Price:</span>
-              <span>{orderDetails.shippingPrice}</span>
-            </p>
-            <p className="flex justify-between">
-              <span className="text-gray-400">Customer:</span>
-              <span>John Doe</span>
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 pb-6 pt-2 text-xs">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="flex">
-                  <th className="w-full py-2">Product</th>
-                  <th className="min-w-[44px] py-2">QTY</th>
-                  <th className="min-w-[44px] py-2">VAR</th>
-                  <th className="min-w-[44px] py-2">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="flex">
-                  <td className="flex-1 py-1">{orderDetails.idProduct}</td>
-                  <td className="min-w-[44px]">{orderDetails.quantity}</td>
-                  <td className="min-w-[44px]">{orderDetails.idVariant}</td>
-                  <td className="min-w-[44px]">{orderDetails.priceEach}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div className=" border-b border border-dashed"></div>
-            <div className="py-4 justify-center items-center flex flex-col gap-2">
-              <p className="flex gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M21.3 12.23h-3.48c-.98 0-1.85.54-2.29 1.42l-.84 1.66c-.2.4-.6.65-1.04.65h-3.28c-.31 0-.75-.07-1.04-.65l-.84-1.65a2.567 2.567 0 0 0-2.29-1.42H2.7c-.39 0-.7.31-.7.7v3.26C2 19.83 4.18 22 7.82 22h8.38c3.43 0 5.54-1.88 5.8-5.22v-3.85c0-.38-.31-.7-.7-.7ZM12.75 2c0-.41-.34-.75-.75-.75s-.75.34-.75.75v2h1.5V2Z"
-                    fill="#000"
-                  ></path>
-                  <path
-                    d="M22 9.81v1.04a2.06 2.06 0 0 0-.7-.12h-3.48c-1.55 0-2.94.86-3.63 2.24l-.75 1.48h-2.86l-.75-1.47a4.026 4.026 0 0 0-3.63-2.25H2.7c-.24 0-.48.04-.7.12V9.81C2 6.17 4.17 4 7.81 4h3.44v3.19l-.72-.72a.754.754 0 0 0-1.06 0c-.29.29-.29.77 0 1.06l2 2c.01.01.02.01.02.02a.753.753 0 0 0 .51.2c.1 0 .19-.02.28-.06.09-.03.18-.09.25-.16l2-2c.29-.29.29-.77 0-1.06a.754.754 0 0 0-1.06 0l-.72.72V4h3.44C19.83 4 22 6.17 22 9.81Z"
-                    fill="#000"
-                  ></path>
-                </svg>{" "}
-                CusmtomAIze@info.com
+          {orderDetails.map((order, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-3 border-b py-6 text-xs"
+            >
+              <p className="flex justify-between">
+                <span className="text-gray-400">Order Number:</span>
+                <span>{order.idOrder}</span>
               </p>
-              <p className="flex gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    fill="#000"
-                    d="M11.05 14.95L9.2 16.8c-.39.39-1.01.39-1.41.01-.11-.11-.22-.21-.33-.32a28.414 28.414 0 01-2.79-3.27c-.82-1.14-1.48-2.28-1.96-3.41C2.24 8.67 2 7.58 2 6.54c0-.68.12-1.33.36-1.93.24-.61.62-1.17 1.15-1.67C4.15 2.31 4.85 2 5.59 2c.28 0 .56.06.81.18.26.12.49.3.67.56l2.32 3.27c.18.25.31.48.4.7.09.21.14.42.14.61 0 .24-.07.48-.21.71-.13.23-.32.47-.56.71l-.76.79c-.11.11-.16.24-.16.4 0 .08.01.15.03.23.03.08.06.14.08.2.18.33.49.76.93 1.28.45.52.93 1.05 1.45 1.58.1.1.21.2.31.3.4.39.41 1.03.01 1.43zM21.97 18.33a2.54 2.54 0 01-.25 1.09c-.17.36-.39.7-.68 1.02-.49.54-1.03.93-1.64 1.18-.01 0-.02.01-.03.01-.59.24-1.23.37-1.92.37-1.02 0-2.11-.24-3.26-.73s-2.3-1.15-3.44-1.98c-.39-.29-.78-.58-1.15-.89l3.27-3.27c.28.21.53.37.74.48.05.02.11.05.18.08.08.03.16.04.25.04.17 0 .3-.06.41-.17l.76-.75c.25-.25.49-.44.72-.56.23-.14.46-.21.71-.21.19 0 .39.04.61.13.22.09.45.22.7.39l3.31 2.35c.26.18.44.39.55.64.1.25.16.5.16.78z"
-                  ></path>
-                </svg>{" "}
-                +40 67362777
+              <p className="flex justify-between">
+                <span className="text-gray-400">Shipping Price:</span>
+                <span>{order.shippingPrice}</span>
               </p>
+              <p className="flex justify-between">
+                <span className="text-gray-400">Customer:</span>
+                <span>Roger Arques</span>
+              </p>
+              <table className="w-full text-left mt-4">
+                <thead>
+                  <tr className="flex">
+                    <th className="w-full py-2">Product</th>
+                    <th className="min-w-[44px] py-2">QTY</th>
+                    <th className="min-w-[44px] py-2">VAR</th>
+                    <th className="min-w-[44px] py-2">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Asumiendo que orderDetails ahora incluye un array de productos en cada pedido */}
+                  {orderDetails.map((product, productIndex) => (
+                    <tr key={productIndex} className="flex">
+                      <td className="flex-1 py-1">{product.idProduct}</td>
+                      <td className="min-w-[44px]">{product.quantity}</td>
+                      <td className="min-w-[44px]">{product.idVariant}</td>
+                      <td className="min-w-[44px]">{product.priceEach}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+          <div className="py-4 justify-center items-right flex flex-col gap-2 ">
+            <div className="flex justify-end">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                />
+              </svg>
             </div>
           </div>
         </div>
