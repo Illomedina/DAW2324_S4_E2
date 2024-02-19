@@ -3,21 +3,13 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import AppLayout from "../../layout/AppLayout";
+import { Link } from "react-router-dom";
 
-const ImageCellRenderer = ({ data }) => {
-  return (
-    <img
-      src={data.thumb}
-      style={{ width: 50, height: 50 }}
-      alt={`Image for ${data.name}`}
-    />
-  );
-};
-
-const EditProduct = ({ data }) => {
+const EditOrder = ({ data }) => {
   const handleDetailsClick = () => {
     window.location.href = `/OrderDetails/${data.idOrder}`;
   };
+
   return (
     <a href={`/orders/${data.id}`}>
       <svg
@@ -70,7 +62,7 @@ export default function OrdersPage() {
     },
     {
       headerName: "Details",
-      cellRenderer: EditProduct,
+      cellRenderer: EditOrder,
     },
   ];
 

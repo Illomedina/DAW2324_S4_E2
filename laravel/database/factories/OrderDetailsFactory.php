@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\OrderDetails;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderDetailsFactory extends Factory
@@ -11,8 +12,11 @@ class OrderDetailsFactory extends Factory
 
     public function definition()
     {
+    
+        $order = OrderDetails::inRandomOrder()->first();
+
         return [
-            'idOrder' => $this->faker->numberBetween(1, 50),
+            'idOrder' => Order::factory(),
             'idProduct' => $this->faker->numberBetween(1, 50),
             'idVariant' => $this->faker->randomNumber(4),
             'quantity' => $this->faker->numberBetween(1, 10),

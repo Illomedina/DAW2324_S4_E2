@@ -10,7 +10,7 @@ const OrderDetailsPage = () => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `${import.meta.env.VITE_API_URL}/OrderDetails/${22}`
+          `${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`
         );
         if (result.ok) {
           const data = await result.json();
@@ -30,7 +30,7 @@ const OrderDetailsPage = () => {
     };
 
     fetchData();
-  }, [22]);
+  }, [idOrder]);
 
   return (
     <AppLayout>
