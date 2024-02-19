@@ -11,6 +11,7 @@ import {
     HomeIcon,
     UsersIcon,
     XMarkIcon,
+    CogIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Breadcrumb } from '../components/Breadcrumb'
@@ -30,6 +31,7 @@ export default function AppLayout({ children, Page, Steps }) {
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
         { name: 'Claims', href: '#', icon: DocumentDuplicateIcon, current: false },
         { name: 'Benefits', href: '/benefits', icon: ChartPieIcon, current: false },
+        { name: 'Settings', href: '/settings', icon: CogIcon, current: false },
     ]
 
     //Lo que hace este script recorrer el objeto navigation para assignar current a true;
