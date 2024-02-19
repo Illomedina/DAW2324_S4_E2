@@ -55,3 +55,4 @@ Route::put('/products/{id}', [ProductController::class, 'update']);
 
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);
+Route::get('/OrderDetails/{id}', [OrderDetailsController::class, 'show']);

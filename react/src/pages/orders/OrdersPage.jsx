@@ -15,6 +15,9 @@ const ImageCellRenderer = ({ data }) => {
 };
 
 const EditProduct = ({ data }) => {
+  const handleDetailsClick = () => {
+    window.location.href = `/OrderDetails/${data.idOrder}`;
+  };
   return (
     <a href={`/orders/${data.id}`}>
       <svg
@@ -45,26 +48,6 @@ export default function OrdersPage() {
   }, []);
 
   const [rowData, setRowData] = useState([]);
-  const ProductIsActive = ({ value }) => (
-    <span
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "100%",
-        alignItems: "center",
-      }}
-    >
-      {
-        <img
-          alt={`${value}`}
-          src={`https://www.ag-grid.com/example-assets/icons/${
-            value ? "tick-in-circle" : "cross-in-circle"
-          }.png`}
-          style={{ width: "auto", height: "auto" }}
-        />
-      }
-    </span>
-  );
   const colDefs = [
     {
       field: "idOrderPicanova",
