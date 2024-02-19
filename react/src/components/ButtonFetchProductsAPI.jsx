@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-function ButtonFetchAPI() {
+function ButtonFetchProductsAPI() {
     const [token, setToken] = useState('');
 
     const obtenerToken = async () => {
@@ -57,4 +57,4 @@ function ButtonFetchAPI() {
     );
 }
 
-export default ButtonFetchAPI;
+export default ButtonFetchProductsAPI;

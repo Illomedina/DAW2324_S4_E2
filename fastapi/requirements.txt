@@ -8,3 +8,6 @@ cryptography
 python-multipart
 python-jose[pyjwt]
 httpx
+pytest
+pytest-asyncio
+requests

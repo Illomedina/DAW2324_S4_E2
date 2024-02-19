@@ -11,7 +11,8 @@ class Customer extends Model
 
     protected $table = 'customers'; // Nombre de la tabla en la base de datos
 
-    protected $primaryKey = 'idCustomer'; // Clave primaria personalizada
+    protected $appends = ['created_at_formatted'];
+
 
     protected $fillable = [
         'name',
@@ -20,6 +21,7 @@ class Customer extends Model
         'password',
         'mail',
         'phone',
+        'city',
         'address',
         'postcode',
         'idCountry',
@@ -37,4 +39,19 @@ class Customer extends Model
         'is_validated' => 'boolean',
         'membershipDate' => 'datetime',
     ];
+
+    public function getCreatedAtFormattedAttribute() {
+        $createdAt = $this->created_at;
+    
+        return [
+            'year' => $createdAt->year,
+            'month' => $createdAt->month,
+            'day' => $createdAt->day,
+            'hour' => $createdAt->hour,
+            'minute' => $createdAt->minute,
+            'second' => $createdAt->second,
+            'formatted' => $createdAt->format('H:i d-m-Y'),
+        ];
+    }
+    
 }
