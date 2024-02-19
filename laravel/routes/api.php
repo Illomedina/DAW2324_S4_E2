@@ -50,13 +50,18 @@ Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
 Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 
 
-
+//USERS-Show all the users
 Route::get('/users', [UserController::class, 'index']);
-
-// Ruta para el crear un usuario
+//Route to edit 
+Route::put('/users/{id}', [UserController::class, 'update']);
+// Route to create 
 Route::post('createUser',  [UserController::class, 'store']);
 //Ruta para eliminar un usuario
 Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+
+
+
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
