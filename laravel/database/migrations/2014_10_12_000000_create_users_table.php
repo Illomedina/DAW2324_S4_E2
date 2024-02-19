@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idRole');
+            $table->unsignedBigInteger('idRole')->nullable();
             $table->string('name', 50);
+            $table->string('user', 50);
             $table->string('surname', 50);
-            $table->string('user', 30);
             $table->string('password', 12);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
              //clave foranea
-             $table->foreign('idRole')->references('id')->on('roles');
+            //  $table->foreign('idRole')->references('id')->on('roles');
         });
     }
 

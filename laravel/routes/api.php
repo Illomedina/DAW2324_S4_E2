@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
@@ -6,9 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductControllerController;
 use App\Http\Controllers\setting\SettingController;
-
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BenefitsController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\UserController;
+/*
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,26 +34,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// SETTINGS
+
+
 Route::resource('/settings', SettingController::class);
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
-// CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/customers/create', [CustomerController::class, 'store']);
 Route::put('/customers/{id}', [CustomerController::class, 'update']);
 Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
 
-
-// BENEFITS
-Route::get('/getBenefits', [BenefitsController::class, 'index']);
-Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
-Route::post('createBenefit', [BenefitsController::class, 'create']);
-Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
-Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
 
 
+// Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/getBenefits', [AuthController::class, 'getAll']);
+    Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
+    Route::post('createBenefit', [BenefitsController::class, 'create']);
+    Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
+    Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+});
 
 Route::get('/users', [UserController::class, 'index']);
 
@@ -61,3 +71,7 @@ Route::delete('users/{id}', [UserController::class, 'destroy']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
+
+Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);
+Route::get('/OrderDetails/{id}', [OrderDetailsController::class, 'show']);

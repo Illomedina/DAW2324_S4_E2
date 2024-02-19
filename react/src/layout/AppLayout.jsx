@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
@@ -9,12 +9,16 @@ import {
     DocumentDuplicateIcon,
     FolderIcon,
     HomeIcon,
+    UserGroupIcon,
     UsersIcon,
     XMarkIcon,
     CogIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Breadcrumb } from '../components/Breadcrumb'
+import { useNavigate  } from "react-router-dom";
+import axios from "axios";
+
 
 
 function classNames(...classes) {
@@ -22,14 +26,23 @@ function classNames(...classes) {
 }
 
 export default function AppLayout({ children, Page, Steps }) {
+    const navigate = useNavigate();
+    const user = localStorage.getItem("user");
+    let data;
+    if(user){
+         data = JSON.parse(user);
+    }else{
+         data = '';
+    }
+ 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const navigation = [
         { name: 'Home', href: '#', icon: HomeIcon, current: true },
         { name: 'Users', href: '#', icon: UsersIcon, current: false },
-        { name: 'Customers', href: '/customers', icon: FolderIcon, current: false },
+        { name: 'Customers', href: '/customers', icon: UserGroupIcon, current: false },
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
-        { name: 'Claims', href: '#', icon: DocumentDuplicateIcon, current: false },
+        { name: 'Orders', href: '/orders', icon: DocumentDuplicateIcon, current: false },
         { name: 'Benefits', href: '/benefits', icon: ChartPieIcon, current: false },
         { name: 'Settings', href: '/settings', icon: CogIcon, current: false },
     ]
@@ -40,11 +53,37 @@ export default function AppLayout({ children, Page, Steps }) {
         if (navigation[i].name == Page) { navigation[i].current = true; }
     }
 
+    const handleNavigation = async (action) => {
+        if (action === 'Sign out') {
+          const url = "http://localhost:8000/api/logout";
+          await axios({
+            method: "POST",
+            url: url,
+          })
+            .then(function (response) {
+              if (response.status === 200) {
+                localStorage.removeItem("token");
+                navigate('/')
+              }
+            })
+            .catch(function (error) {
+              console.error("Error:", error);
+            })
+            .finally(function () {
+            });
+        } else {
+          console.log('Navigating to:', action);
+        }
+      };
 
-    const userNavigation = [
-        { name: 'Your profile', href: '#' },
-        { name: 'Sign out', href: '#' },
-    ]
+const userNavigation = [
+  { name: 'Your profile', action: 'Profile' },
+  { name: 'Sign out', action: 'Sign out'},  
+]
+
+const UserNavigation = () => {
+    handleNavigation(action);
+};
 
 
     return (
@@ -220,7 +259,7 @@ export default function AppLayout({ children, Page, Steps }) {
                                         />
                                         <span className="hidden lg:flex lg:items-center">
                                             <span className="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
-                                                Tom Cook
+                                                {data.name}
                                             </span>
                                             <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                                         </span>
@@ -239,7 +278,11 @@ export default function AppLayout({ children, Page, Steps }) {
                                                 <Menu.Item key={item.name}>
                                                     {({ active }) => (
                                                         <a
-                                                            href={item.href}
+                                                            href={item.action}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleNavigation(item.action);
+                              }}
                                                             className={classNames(
                                                                 active ? 'bg-gray-50' : '',
                                                                 'block px-3 py-1 text-sm leading-6 text-gray-900'

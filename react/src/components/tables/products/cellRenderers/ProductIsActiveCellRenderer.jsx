@@ -4,7 +4,7 @@ export const ProductIsActiveCellRenderer = props => {
     const handleChange = async (e) => {
         const checked = e.target.checked;
         try {
-            const response = await fetch('http://localhost:8000/api/products/' + data.id, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/products/` + data.id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
