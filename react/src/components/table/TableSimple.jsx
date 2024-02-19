@@ -10,6 +10,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   const [searchText, setSearchText] = useState('');
   const [isEditingEnabled, setIsEditingEnabled] = useState(false);
 
+
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
@@ -43,8 +44,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           Create
         </a>  
         <ButtonToggle
-          isEditingEnabled={isEditingEnabled}
-          onToggleEdit={handleToggleEdit}
+          onToggle={handleToggleEdit}
         />
       </div>
     
