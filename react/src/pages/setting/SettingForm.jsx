@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SettingForm = () => {
@@ -7,10 +8,7 @@ const SettingForm = () => {
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || '');
 
   // Función para manejar la autenticación y almacenar el token
-  const handleAuthentication = (token) => {
-    setAuthToken(token);
-    localStorage.setItem('authToken', token);
-  };
+  const navigate = useNavigate();
 
   // Efecto para cargar el token automáticamente al montar el componente
   useEffect(() => {
@@ -84,9 +82,17 @@ const SettingForm = () => {
             <div>
             <button
                 type="submit"
-                className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white focus:outline-none"
-            >
+                className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
+                hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                focus-visible:outline-gray-900 mr-2"            >
                 Submit
+            </button>
+            <button type="button" onClick={() => navigate('/settings')}
+              className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
+              hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+              focus-visible:outline-gray-900"
+            >
+              Cancel
             </button>
             </div>
 
