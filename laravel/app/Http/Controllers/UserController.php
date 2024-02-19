@@ -63,7 +63,21 @@ class UserController extends Controller
 
 
     public function update(Request $request, $id){
-        
+        try {
+            $user = User::find($id);
+            $user->idRole=1;
+            $user->name -> $request->name;
+            $user->surname -> $request->surname;
+            $user->user -> $request->user;
+            $user->email -> $request->email;
+            $user->password -> $request->password;
+            $user->save();
+            return $user;
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Configuración no encontrada.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al actualizar la configuración.'], 500);
+        }
     }
 
     public function destroy($id)
