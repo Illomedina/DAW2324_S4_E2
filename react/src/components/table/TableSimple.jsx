@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import ButtonToggle from '../ButtonToggle';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -36,18 +37,15 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   return (
     <div className="p-4 border rounded-md relative">
       <div className="mb-4 flex items-center">
-        <a href="/settings/create" className="ml-2 bg-green-500 text-white py-2 px-5 rounded cursor-pointer">
-          Crear
+        <a href="/settings/create" className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
+              hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+              focus-visible:outline-gray-900 mr-4">
+          Create
         </a>  
-        <button
-          onClick={handleToggleEdit}
-          className={`${isEditingEnabled ? 'bg-blue-500' : 'bg-yellow-500'} text-black py-2 px-4 ml-10 rounded cursor-pointer`}
-        >
-          {isEditingEnabled ? 'Disable Edit' : 'Enabled Edit'}
-        </button>
-        <span className={`ml-2 text-sm ${isEditingEnabled ? 'text-red-500' : 'text-green-500'}`}>
-          <strong>Editing:</strong> {isEditingEnabled ? ' is Enabled' : 'is Disabled'}
-        </span> 
+        <ButtonToggle
+          isEditingEnabled={isEditingEnabled}
+          onToggleEdit={handleToggleEdit}
+        />
       </div>
     
       <div className="absolute top-2 right-4">
