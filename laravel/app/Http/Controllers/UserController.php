@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 //Request proporciona métodos para examinar la solicitud HTTP
+
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Exceptions\Exception;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -43,16 +46,21 @@ class UserController extends Controller
 
 
     public function store(Request $request){
-        $user = User::create([
-            'idRole' =>1,
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'user' => $request->user,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
 
-        $user->save();
+      
+            $user = User::create([
+                'idRole' =>1,
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'user' => $request->user,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
+
+             $user->save();
+            
+            
+
     }
 
     public function edit($id){
@@ -68,7 +76,7 @@ class UserController extends Controller
             $user->idRole=1;
             $user->name -> $request->name;
             $user->surname -> $request->surname;
-            $user->username-> $request->user;
+            $user->user-> $request->user;
             $user->email -> $request->email;
             $user->password -> $request->password;
             $user->save();

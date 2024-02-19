@@ -6,8 +6,10 @@ const EditButton = (props) => {
   const handleSaveClick = async () => {
     // Aquí debes obtener los datos que deseas enviar a la API
     const dataToSend = {
-      config: props.data.config,
-      value: props.data.value,
+      name: '',
+      surname: '',
+      user: '',
+      email: ''
     };
 
     // Mostrar una ventana de confirmación
@@ -18,7 +20,7 @@ const EditButton = (props) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/settings/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
