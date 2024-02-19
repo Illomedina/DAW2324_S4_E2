@@ -11,19 +11,6 @@ const steps = [
 export const CustomersCreate = () => {
   const navigate = useNavigate();
 
-  const checkPassword = () => {
-    const password = formData.password;
-    const passwordConfirm = formData.passwordConfirm;
-    console.log(password, passwordConfirm);
-    if (password !== passwordConfirm) {
-      document.getElementById('passwordConfirm').setCustomValidity('Passwords do not match');
-      return false;
-    } else {
-      document.getElementById('passwordConfirm').setCustomValidity('');
-      return true;
-    }
-  }
-
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
@@ -47,9 +34,6 @@ export const CustomersCreate = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!checkPassword()) {
-      return;
-    }
 
     const url = `${import.meta.env.VITE_API_URL}/customers/create`;
 

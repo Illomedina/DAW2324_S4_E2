@@ -43,20 +43,22 @@ class UserController extends Controller
 
 
     public function store(Request $request){
-        
-            $user = User::create([
-                'idRole' =>1,
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'user' => $request->user,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
-    
-            $user->save();
-       
-        
-        
+        $user = User::create([
+            'idRole' =>1,
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'user' => $request->user,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        $user->save();
+    }
+
+    public function edit($id){
+
+        $user = User::find($id);
+        return view('users.edit', compact('user'));
     }
 
 
