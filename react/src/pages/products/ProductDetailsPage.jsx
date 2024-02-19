@@ -96,8 +96,8 @@ const ProductDetailsPage = () => {
 
     return (
         <AppLayout Page={"Product Details"} Steps={steps}>
-            <div style={{ height: '500px', width: '100%', overflowY: 'auto' }}>
-                <div className="ag-theme-quartz" style={{ height: '100%', width: '100%' }}>
+            <div style={{ height: '80vh', width: '100%', overflowY: 'auto' }}>
+                <div className="ag-theme-quartz" style={{ height: '80vh', width: '100%' }}>
                     {product && (
                         <>
                             <h1>{product.name}</h1>
@@ -106,6 +106,7 @@ const ProductDetailsPage = () => {
                                 columnDefs={detailColumnDefs}
                                 defaultColDef={defaultColDef}
                                 domLayout='autoHeight'
+                                pagination={true}
                             />
                         </>
                     )}
