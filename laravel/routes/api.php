@@ -46,7 +46,7 @@ Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
 
-Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {

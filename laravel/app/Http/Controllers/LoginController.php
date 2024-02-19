@@ -25,7 +25,7 @@ class LoginController extends Controller
     
     public function login(Request $request){
         $credentias =[
-            "username"=> $request->username,
+            "user"=> $request->username,
             "password"=> $request->password
         ];
         

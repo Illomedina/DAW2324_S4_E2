@@ -48,15 +48,6 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        
-        /*validate, validacion de usuarios proporcionada por Laravel
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'surname' => 'required|string|max:50',
-            'user' => 'required|string|max:30',
-            'password' => 'required|string|max:12',
-            'email' => 'required|email|unique:users|max:255',
-        ]);*/
         $user = User::create([
             'idRole' =>1,
             'name' => $request->name,
@@ -65,26 +56,8 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ]);
-        
-    
-   
-        //$userData = $request->all();
-      /*  $user = new User();
-        $user->name = $request->input('name');
-        $user->surname = $request->input('surname');
-        $user->user = $request->input('user');
-        $user->password = $request->input('password');
-        $user->email = $request->input('email');
-*/
 
-
-        // Cifra la contraseña antes de almacenarla en la base de datos
-        //$userData['password'] = bcrypt($request->password);
-
-        // Crea un nuevo usuario en la base de datos
-       // $user->save();
-
-        //return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
+        $user->save();
     }
 
     public function edit($id){
@@ -98,7 +71,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'surname' => 'required|string|max:50',
-            'username' => 'required|string|max:30',
+            'user' => 'required|string|max:30',
             'password' => 'required|string|max:400',
             'email' => 'required|email|max:255|unique:users,email,' . $id,
         ]);

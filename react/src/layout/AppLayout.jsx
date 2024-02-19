@@ -14,7 +14,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Breadcrumb } from '../components/Breadcrumb'
-import { Breadcrumb } from '../components/Breadcrumb'
 import { useNavigate  } from "react-router-dom";
 import axios from "axios";
 

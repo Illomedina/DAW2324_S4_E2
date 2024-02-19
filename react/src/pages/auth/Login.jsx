@@ -5,19 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [token, setToken] = useState("");
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
-  const handleLogin = async (username, password) => {
+  const handleLogin = async (user, password) => {
     setAlert(false);
     try {
       const response = await axios.post(
         "http://localhost:8000/api/login",
         {
-          username,
+          user,
           password,
         },
         {
@@ -55,8 +55,8 @@ export const Login = () => {
   const onSubmit = () => {
     const newErrors = {};
 
-    if (!username) {
-      newErrors.username = "Username is required";
+    if (!user) {
+      newErrors.user = "user is required";
     }
 
     if (!password) {
@@ -65,8 +65,8 @@ export const Login = () => {
 
     setErrors(newErrors);
 
-    if (!newErrors.username && !newErrors.password) {
-      handleLogin(username, password);
+    if (!newErrors.user && !newErrors.password) {
+      handleLogin(user, password);
     }
   };
 
@@ -115,19 +115,19 @@ export const Login = () => {
               </h2>
               <form action="" className="w-full">
                 <div id="input" className="flex flex-col w-full my-5">
-                  <label htmlFor="username" className="text-primaryColor mb-2">
-                    Username
+                  <label htmlFor="user" className="text-primaryColor mb-2">
+                    user
                   </label>
                   <input
                     type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Please insert your username"
+                    id="user"
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
+                    placeholder="Please insert your user"
                     className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryColor focus:shadow-lg"
                   />
-                  {errors.username && (
-                    <div className="error">{errors.username}</div>
+                  {errors.user && (
+                    <div className="error">{errors.user}</div>
                   )}
                 </div>
                 <div id="input" className="flex flex-col w-full my-5">
