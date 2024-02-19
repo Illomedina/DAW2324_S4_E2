@@ -9,6 +9,7 @@ import {
     DocumentDuplicateIcon,
     FolderIcon,
     HomeIcon,
+    UserGroupIcon,
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
@@ -38,9 +39,9 @@ export default function AppLayout({ children, Page, Steps }) {
     const navigation = [
         { name: 'Home', href: '#', icon: HomeIcon, current: true },
         { name: 'Users', href: '#', icon: UsersIcon, current: false },
-        { name: 'Customers', href: '/customers', icon: FolderIcon, current: false },
+        { name: 'Customers', href: '/customers', icon: UserGroupIcon, current: false },
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
-        { name: 'Claims', href: '#', icon: DocumentDuplicateIcon, current: false },
+        { name: 'Orders', href: '/orders', icon: DocumentDuplicateIcon, current: false },
         { name: 'Benefits', href: '/benefits', icon: ChartPieIcon, current: false },
     ]
 

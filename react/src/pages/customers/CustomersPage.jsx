@@ -21,7 +21,6 @@ export const CustomersPage = () => {
                 setCustomers(response.data);
             } catch (error) {
                 console.error("There was an error fetching the customers:", error);
-                // Maneja el error como consideres necesario
             }
             setLoading(false);
         };
