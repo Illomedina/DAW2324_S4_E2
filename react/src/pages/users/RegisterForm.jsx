@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AppLayout from '../../layout/AppLayout';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegisterFormContent = () => {
@@ -10,7 +11,7 @@ const RegisterFormContent = () => {
     email: '',
     password: ''
   });
-
+  const navigate= useNavigate();
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -20,7 +21,7 @@ const RegisterFormContent = () => {
     event.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:8000/api/createUser', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/createUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -29,8 +30,7 @@ const RegisterFormContent = () => {
       });
 
       if (response.ok) {
-        // Aquí puedes manejar el caso en que la solicitud sea exitosa
-        console.log('Registro exitoso');
+        navigate('/user');
       } else {
         // Aquí puedes manejar el caso en que la solicitud falle
         console.error('Error al registrar');
@@ -42,6 +42,7 @@ const RegisterFormContent = () => {
   };
 
   return (
+    
     <div className="bg-gray-100 p-10 overfl flex items-center justify-center overflow-y-scroll">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full ">
         <div className="flex justify-center mb-6">

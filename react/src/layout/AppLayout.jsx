@@ -39,7 +39,7 @@ export default function AppLayout({ children, Page, Steps }) {
 
     const navigation = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
-        { name: 'Users', href: '#', icon: UsersIcon, current: false },
+        { name: 'Users', href: '/user', icon: UsersIcon, current: false },
         { name: 'Customers', href: '/customers', icon: UserGroupIcon, current: false },
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
         { name: 'Orders', href: '/orders', icon: DocumentDuplicateIcon, current: false },

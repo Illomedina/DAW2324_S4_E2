@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import AgGridTable from '../../components/table/TableSimple';
+import AgGridTable from './TableSimple';
 import AppLayout from '../../layout/AppLayout';
 import EditButton from './EditButton';
 import DeleteButton from './DeleteButton';
 
+
+
 const User = () => {
+        
+
         const [userData, setUsersData] = useState([]);     
 
         useEffect(() => {
@@ -42,8 +46,9 @@ const User = () => {
   ];
 
   return (
-    <AppLayout>
+    <AppLayout state>
         <div>
+           
           <AgGridTable rowData={userData} columnDefs={columnDefs} />
         </div>
     </AppLayout>
