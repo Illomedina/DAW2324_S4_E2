@@ -63,21 +63,14 @@ class UserController extends Controller
 
     }
 
-    public function edit($id){
-
-        $user = User::find($id);
-        return view('users.edit', compact('user'));
-    }
-
 
     public function update(Request $request, $id){
         try {
-            $user = User::find($id);
-          
-            $user->name -> $request->name;
-            $user->surname -> $request->surname;
-            $user->user-> $request->user;
-            $user->email -> $request->email;
+            $user = User::findOrFail($id);
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->user= $request->user;
+            $user->email = $request->email;
             $user->save();
             return $user;
         } catch (ModelNotFoundException $e) {

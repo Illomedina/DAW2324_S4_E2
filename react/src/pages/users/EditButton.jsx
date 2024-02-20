@@ -1,17 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const EditButton = (props) => {
   const id = props.data.id;
+  const navigate= useNavigate();
 
   const handleSaveClick = async () => {
     // Aquí debes obtener los datos que deseas enviar a la API
     const dataToSend = {
-      name: '',
-      surname: '',
-      user: '',
-      email: ''
+      name: props.data.name,
+      surname: props.data.surname,
+      user: props.data.user,
+      email:props.data.email,
     };
-
     // Mostrar una ventana de confirmación
     const userConfirmed = window.confirm('¿Estás seguro de que deseas guardar los cambios?');
 
@@ -30,6 +32,7 @@ const EditButton = (props) => {
 
       if (response.ok) {
         alert('Datos guardados correctamente');
+        navigate('/user');
         // Puedes realizar otras acciones después de guardar, si es necesario
       } else {
         alert('Error al guardar los datos');

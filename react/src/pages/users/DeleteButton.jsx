@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DeleteButton = (props) => {
   const id = props.data.id;
@@ -6,7 +7,7 @@ const DeleteButton = (props) => {
   const handleDeleteClick = async () => {
     // Mostrar una ventana de confirmación con el mensaje personalizado
     const userConfirmed = window.confirm(`¿Estás seguro de que deseas borrar "${props.data.config}"?`);
-
+    const navigate= useNavigate();
     if (!userConfirmed) {
       return; // No borrar si el usuario no confirmó
     }
@@ -21,7 +22,7 @@ const DeleteButton = (props) => {
 
       if (response.ok) {
         alert('Datos eliminados correctamente');
-        // Puedes realizar otras acciones después de eliminar, si es necesario
+        navigate('/user');
       } else {
         alert('Error al eliminar los datos');
       }

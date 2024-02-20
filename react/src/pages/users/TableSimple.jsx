@@ -20,7 +20,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
 
   const defaultColDef = {
     filter: true,
-    editable: isEditingEnabled,
+    editable: true,
     flex: 1,
     minWidth: 150,
     paginationPageSize: 15,
@@ -77,3 +77,5 @@ const AgGridTable = ({ rowData, columnDefs }) => {
 };
 
 export default AgGridTable;
+
+       
