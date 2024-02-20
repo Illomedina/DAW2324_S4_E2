@@ -4,13 +4,10 @@ import AppLayout from '../../layout/AppLayout';
 import EditButton from './EditButton';
 import DeleteButton from './DeleteButton';
 
-import { Breadcrumb } from '../../components/Breadcrumb';
 
 
 const User = () => {
-        const steps = [
-          { name: 'Users', href: '/users', current: true },
-        ]
+        
 
         const [userData, setUsersData] = useState([]);     
 
@@ -49,9 +46,9 @@ const User = () => {
   ];
 
   return (
-    <AppLayout>
+    <AppLayout state>
         <div>
-           <Breadcrumb steps={steps} />
+           
           <AgGridTable rowData={userData} columnDefs={columnDefs} />
         </div>
     </AppLayout>
