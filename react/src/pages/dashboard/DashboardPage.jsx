@@ -103,7 +103,7 @@ export const DashboardPage = () => {
                 className="buttonCreate"
                 style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
               >
-                <Link to="/benefits=create">◉ See more</Link>
+                <Link to="/benefits">◉ See more</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -166,7 +166,7 @@ export const DashboardPage = () => {
                 className="buttonCreate"
                 style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
               >
-                <Link to="/benefits=create">◉ See more</Link>
+                <Link to="/customers">◉ See more</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -296,7 +296,7 @@ export const DashboardPage = () => {
                 className="buttonCreate"
                 style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
               >
-                <Link to="/benefits=create">◉ See more</Link>
+                <Link to="/orders">◉ See more</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
