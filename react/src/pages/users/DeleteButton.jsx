@@ -6,8 +6,7 @@ const DeleteButton = (props) => {
 
   const handleDeleteClick = async () => {
     // Mostrar una ventana de confirmación con el mensaje personalizado
-    const userConfirmed = window.confirm(`¿Estás seguro de que deseas borrar "${props.data.config}"?`);
-    const navigate= useNavigate();
+    const userConfirmed = window.confirm(`¿Estás seguro de que deseas borrar "${props.data.id}"?`);
     if (!userConfirmed) {
       return; // No borrar si el usuario no confirmó
     }
@@ -22,7 +21,7 @@ const DeleteButton = (props) => {
 
       if (response.ok) {
         alert('Datos eliminados correctamente');
-        navigate('/user');
+        window.location.reload();
       } else {
         alert('Error al eliminar los datos');
       }
