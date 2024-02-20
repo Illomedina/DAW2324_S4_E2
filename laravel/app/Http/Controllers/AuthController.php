@@ -11,27 +11,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
-    // // register a new user method
-    // public function register(RegisterRequest $request) {
+    // register a new user method
+    public function register(RegisterRequest $request) {
 
-    //     $data = $request->validated();
+        $data = $request->validated();
 
-    //     $user = User::create([
-    //         'name' => $data['name'],
-    //         'surname' => $data['username'],
-    //         'username' => $data['username'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
+        $user = User::create([
+            'name' => $data['name'],
+            'surname' => $data['username'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
-    //     $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-    //     $cookie = cookie('token', $token, 60 * 24); // 1 day
+        $cookie = cookie('token', $token, 60 * 24); // 1 day
 
-    //     return response()->json([
-    //         'user' => new UserResource($user),
-    //     ])->withCookie($cookie);
-    // }
+        return response()->json([
+            'user' => new UserResource($user),
+        ])->withCookie($cookie);
+    }
 
     public function login(LoginRequest $request) {
         $data = $request->validated();
