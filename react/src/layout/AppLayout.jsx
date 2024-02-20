@@ -38,8 +38,8 @@ export default function AppLayout({ children, Page, Steps }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const navigation = [
-        { name: 'Home', href: '#', icon: HomeIcon, current: true },
-        { name: 'Users', href: '/user', icon: UsersIcon, current: false },
+        { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
+        { name: 'Users', href: '#', icon: UsersIcon, current: false },
         { name: 'Customers', href: '/customers', icon: UserGroupIcon, current: false },
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
         { name: 'Orders', href: '/orders', icon: DocumentDuplicateIcon, current: false },
@@ -50,7 +50,7 @@ export default function AppLayout({ children, Page, Steps }) {
     //Lo que hace este script recorrer el objeto navigation para assignar current a true;
     for (var i = 0; i < navigation.length; i++) {
         if (navigation[i].current == true) { navigation[i].current = false; }
-        if (navigation[i].name == Page) { navigation[i].current = true; }
+        if (window.location.href.includes(navigation[i].href)) { navigation[i].current = true; }
     }
 
     const handleNavigation = async (action) => {
@@ -212,7 +212,7 @@ const UserNavigation = () => {
                                         ))}
                                     </ul>
                                 </li>
-                                <li className="mt-auto">
+                                {/* <li className="mt-auto">
                                     <a
                                         href="#"
                                         className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
@@ -220,7 +220,7 @@ const UserNavigation = () => {
                                         <Cog6ToothIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
                                         Settings
                                     </a>
-                                </li>
+                                </li> */}
                             </ul>
                         </nav>
                     </div>
