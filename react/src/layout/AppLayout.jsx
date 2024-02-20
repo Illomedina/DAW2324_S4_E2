@@ -38,7 +38,7 @@ export default function AppLayout({ children, Page, Steps }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const navigation = [
-        { name: 'Home', href: '#', icon: HomeIcon, current: true },
+        { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
         { name: 'Users', href: '#', icon: UsersIcon, current: false },
         { name: 'Customers', href: '/customers', icon: UserGroupIcon, current: false },
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
@@ -50,7 +50,7 @@ export default function AppLayout({ children, Page, Steps }) {
     //Lo que hace este script recorrer el objeto navigation para assignar current a true;
     for (var i = 0; i < navigation.length; i++) {
         if (navigation[i].current == true) { navigation[i].current = false; }
-        if (navigation[i].name == Page) { navigation[i].current = true; }
+        if (window.location.href.includes(navigation[i].href)) { navigation[i].current = true; }
     }
 
     const handleNavigation = async (action) => {
