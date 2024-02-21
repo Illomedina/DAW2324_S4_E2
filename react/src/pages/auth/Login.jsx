@@ -15,7 +15,7 @@ export const Login = () => {
     setAlert(false);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/login",
+        `${import.meta.env.VITE_API_URL}/login`,
         {
           user,
           password,
@@ -91,7 +91,7 @@ export const Login = () => {
                 ></path>
               </svg>
             </div>
-            
+
             <h1 className="text-5xl font-bold primary-color">
               BackOffice Area
             </h1>
@@ -101,14 +101,14 @@ export const Login = () => {
           </div>
           <div className="w-full pr-20 md:w-full lg:w-9/12 mx-auto md:mx-0">
             {/* TODO: */}
-            {alert && ( 
-          <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10">
-              <span className="flex flex-col justify-center text-white font-bold grow-[1] max-w-[90%] text-center">
-                Your request has been denied
-              </span>
-              <div className="w-[10%] bg-red-400 rounded-r-2xl shadow-[0_0_20px_#ff444477]"></div>
-            </div>
-             )}
+            {alert && (
+              <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10">
+                <span className="flex flex-col justify-center text-white font-bold grow-[1] max-w-[90%] text-center">
+                  Your request has been denied
+                </span>
+                <div className="w-[10%] bg-red-400 rounded-r-2xl shadow-[0_0_20px_#ff444477]"></div>
+              </div>
+            )}
             <div className="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
               <h2 className="text-2xl font-bold text-primaryColor text-left mb-5">
                 Sign in
