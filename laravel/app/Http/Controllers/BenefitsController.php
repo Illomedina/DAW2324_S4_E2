@@ -17,12 +17,24 @@ class BenefitsController extends Controller
 
     public function delete($id)
     {
+        $id->validate([
+            'id'=>'required|integer|exists:benefits,id', 
+         ]);
+         
         $benefit = Benefits::findOrFail($id);
         $benefit->delete();
         return response()->json(['message' => 'Resource deleted successfully'], 200);
     }
 
     public function create(Request $request){
+        $request->validate([
+            'idBenefit' => 'required',
+            'month' => 'required',
+            'income' => 'required|numeric',
+            'expense' => 'required|numeric',
+            'profit' => 'required|numeric',
+        ]);
+
         $benefit = Benefits::create([
             'month' => $request->month,
             'income' => $request->income,
@@ -34,12 +46,26 @@ class BenefitsController extends Controller
     }
 
     public function getOne($id){
+        $id->validate([
+           'id'=>'required|integer|exists:benefits,id', 
+        ]);
+
         $benefit = Benefits::findOrFail($id);
         $benefit->get();
         return response()->json($benefit);
     }
 
     public function update(Request $request){
+
+        $request->validate([
+            'idBenefit' => 'required',
+            'month' => 'required',
+            'income' => 'required|numeric',
+            'expense' => 'required|numeric',
+            'profit' => 'required|numeric',
+        ]);
+        
+
         $benefit = Benefits::findOrFail($request->input('idBenefit'));
 
         $benefit->update([
