@@ -2,22 +2,24 @@ import React, { useEffect, useState } from "react";
 import "./SectionTable.css";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
-
-
+import useFetch from "../hooks/useFetch";
 
 function SectionTable({ SectionName }) {
   const [benefits, setBenefits] = useState([]);
   const [loading, setLoading] = useState(false); 
+  //Obtenemos el token recibio a la hora de hacer el login
   const token = localStorage.getItem('token');
+  //Establecemos el token en el header, para que cada vez que hagamos una peticion se aplique el token de manera automatica
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
   const [chartData] = useState([]);
-  // const [chartData, setChartData] = useState([112, 10, 225, 134, 101, 80, 50, 100, 200]);
+  //Establecemos las etiquetas para el chart
   const [labels] = useState(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']);
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipX, setTooltipX] = useState(0);
   const [tooltipY, setTooltipY] = useState(0);
-
+  const {fetchData} = useFetch('http://localhost:8000/api/getBenefits');
+  
   const showTooltip = (e) => {
     setTooltipContent(e.target.textContent);
     setTooltipX(e.target.offsetLeft - e.target.clientWidth);
@@ -37,9 +39,12 @@ function SectionTable({ SectionName }) {
     getBenefits();
   }, []);
 
+  //Funcion que obtiene todos los beneficios
   const getBenefits = async () => {
+    //añadimos spinner de carga
     setLoading(true); 
     try {
+      //Hacemos peticion a api
       const url = "http://localhost:8000/api/getBenefits";
       const response = await axios.get(url,
         {
@@ -47,9 +52,12 @@ function SectionTable({ SectionName }) {
         'Content-Type': 'application/json',
       });
       if(response.status===200){
+        //Asignamos los datos a la tabla de beneficios
         setBenefits(response.data);
 
+        //asignamos los datos a la grafica
         for (let i = 0; i < response.data.length; i++) {
+          //Si el mes que recibimos es igual a x añadimos el profit en el grafico del mes x
           if(response.data[i].month === 'January'){
             chartData[i] = response.data[i].profit;
           }else if(response.data[i].month === 'February'){
@@ -75,18 +83,22 @@ function SectionTable({ SectionName }) {
     } catch (error) {
       console.error('Error fetching benefits:', error);
     } finally {
+      //pasamos loading a false
       setLoading(false); 
     }
   };
 
+  //este metodo se encarga de eliminar una fila de la tabla de beneficios y tambien lo elimina de la base de datos
   const deleteBenefits = async (id) => {
     setLoading(true); 
     try {
+      //Hacemos peticion con axios pasandole id que obtenemos previamente del get
       const response = await axios.delete(`http://localhost:8000/api/deleteBenefits/${id}`);
       console.log('Resource deleted successfully:', response.data);
     } catch (error) {
       console.error('Error deleting resource:', error);
     } finally {
+      //si todo ha ido bien acutalizamos la tabla y quitamos el elemento que hemos eliminado
       getBenefits(...benefits);
       setLoading(false); 
     }
@@ -102,6 +114,7 @@ function SectionTable({ SectionName }) {
         </div>
       )}
       <div className="flex">
+        {/* Aqui pintamos la tabla */}
         <div className="relative flex max-w-[600px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
           <div className="headerContainer">
             <h4 className="text-lg font-bold text-primaryColor columns-3">
@@ -148,6 +161,7 @@ function SectionTable({ SectionName }) {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y">
+                {/* Mapeamos lo que recibimos de getBenefits, esto es como un forEach */}
                 {benefits.map((benefit, i) => (
                   <tr key={benefit.id}>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900">
@@ -163,11 +177,13 @@ function SectionTable({ SectionName }) {
                       {benefit.profit}€
                     </td>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                      {/* En el momento que el usuario clique aqui le pasaremos el id de la tabla en question, esto sirve para que se puedan enviar datos a otras pantallas */}
                       <Link to={`/benefits=edit/${benefit.id}`}>
                         Edit <br />
                       </Link>
                       <button
                         className="text-gray-900"
+                        //Si el usuario clica se elimina la fila
                         onClick={() => deleteBenefits(benefit.id)}
                       >
                         Delete
@@ -179,6 +195,8 @@ function SectionTable({ SectionName }) {
             </table>
           </div>
         </div>
+
+        {/* Aqui pintamos el grafico */}
         <div className="relative flex max-w-[600px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
         <div className="shadow p-6 rounded-lg bg-white">
           <div className="md:flex md:justify-between md:items-center">

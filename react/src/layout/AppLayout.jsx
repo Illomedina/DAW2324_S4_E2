@@ -36,7 +36,6 @@ export default function AppLayout({ children, Page, Steps }) {
     }
  
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
     const navigation = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
         { name: 'Users', href: '/user', icon: UsersIcon, current: false },
@@ -52,9 +51,10 @@ export default function AppLayout({ children, Page, Steps }) {
         if (navigation[i].current == true) { navigation[i].current = false; }
         if (window.location.href.includes(navigation[i].href)) { navigation[i].current = true; }
     }
-
+    //gestionamos Logout
     const handleNavigation = async (action) => {
         if (action === 'Sign out') {
+            //hacemos peticion a api con axios para cerrar sesion
           const url = "http://localhost:8000/api/logout";
           await axios({
             method: "POST",
@@ -62,7 +62,9 @@ export default function AppLayout({ children, Page, Steps }) {
           })
             .then(function (response) {
               if (response.status === 200) {
+                //Si la respuesta es 200 elimamos token que guardamos en localstorage
                 localStorage.removeItem("token");
+                //redirigimos a login
                 navigate('/')
               }
             })
@@ -72,7 +74,6 @@ export default function AppLayout({ children, Page, Steps }) {
             .finally(function () {
             });
         } else {
-          console.log('Navigating to:', action);
         }
       };
 

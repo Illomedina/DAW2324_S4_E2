@@ -13,12 +13,14 @@ export const DashboardPage = () => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   useEffect(() => {
+    //Al entrar en la pantalla ejecutamos metodos, cada uno se encargara de obtener ciertos datos, todas las peticiones son GET
     getBenefits();
     getProducts();
     getOrders();
     getCustomers();
   }, []);
 
+  //Peticion a api que obtiene los beneficios
   const getBenefits = async () => {
     setLoading(true);
     try {
@@ -35,6 +37,7 @@ export const DashboardPage = () => {
     }
   };
 
+  //peticion que obtiene clientes
   const getCustomers = async () => {
     try {
       const url = "http://localhost:8000/api/customers";
@@ -43,7 +46,6 @@ export const DashboardPage = () => {
         "Content-Type": "application/json",
       });
       if (response.status === 200) {
-        console.log(response.data);
         setCustomers(response.data);
       }
     } catch (error) {
@@ -53,6 +55,7 @@ export const DashboardPage = () => {
     }
   };
 
+  //peticion que obtiene Productos
   const getProducts = async () => {
     try {
       const url = "http://localhost:8000/api/products";
@@ -67,7 +70,7 @@ export const DashboardPage = () => {
       console.error("Error fetching products:", error);
     }
   };
-
+//Peticion que obtiene orders
   const getOrders = async () => {
     try {
       const url = "http://localhost:8000/api/orders";

@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../sectionTable/alert.scss";
-
 const CreateForm = ({ section }) => {
+  //Declaramos variables
   const [month, setMonth] = useState("");
   const [income, setIncome] = useState("");
   const [expense, setExpense] = useState("");
@@ -16,12 +16,14 @@ const CreateForm = ({ section }) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
   
+  //Este metodo se encarga de validar los datos que el usuario inserta
   const validate = () => {
     let isValid = true;
     const newErrors = {};
-
+    
     if (month.trim() === "") {
         isValid = false;
+      //En caso de que el usuario no inserte el mes se mostrara error
         newErrors.month = "Month is required";
     }
 
@@ -44,15 +46,13 @@ const CreateForm = ({ section }) => {
       setErrors(newErrors);
     }
 
-    if(!isValid) {
-
-    }
-
     if (isValid) {
+      //Si es valido llamamos a metodo que se encarga de crear
       handleCreate(month, income, expense, profit);
     }
   };
 
+  //Este metodo hace una peticion post con axios el cual recibe los datos previamente validados, en caso de que todo sea correcto se mostrara un alert
   const handleCreate = async (month, income, expense, profit) => {
     setAlert(false);
     const url = "http://localhost:8000/api/createBenefit";
@@ -62,11 +62,13 @@ const CreateForm = ({ section }) => {
       data: { month, income, expense, profit },
     })
       .then(function (response) {
-        if (response.status === 200) {
+        if (response.status === 200) {ç
+
         }
       })
       .catch(function (error) {
         console.error("Error:", error);
+        setAlert(false);
       })
       .finally(function () {
         setAlert(true);
@@ -80,6 +82,7 @@ const CreateForm = ({ section }) => {
   return (
     <div className="popup">
       <div className="popup-inner">
+        {/* Lo que hace el alert && es que si alert es true se mostrara sino pues se ignorara y no se mostrara */}
         {alert && (
           <main>
             <section>
@@ -104,12 +107,14 @@ const CreateForm = ({ section }) => {
         <div className="divide-y divide-gray-200">
           <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
             <div className="flex flex-col">
+              {/* En caso que haya error se mostrara el error */}
             {errors.month && <div className="error">{errors.month}</div>}
               <input
                 type="text"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                 placeholder="Month"
                 value={month}
+                // estaremos escuchando por cambios en el valor.
                 onChange={(e) => setMonth(e.target.value)}
               />
             {errors.income && <div className="error">{errors.income}</div>}

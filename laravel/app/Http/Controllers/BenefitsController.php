@@ -8,25 +8,32 @@ use App\Models\Benefits;
 
 class BenefitsController extends Controller
 {
+    //metodo que realiza una query que devuelve todos los beneficios en un json
     public function index()
-    {
+    {   //Equivale a Select * from benefits
         $benefits = Benefits::all();
+        //Retornamos Json
         return response()->json($benefits);
     }
 
-
+    //funcion que se encarga de eliminar recibiendo id como parametro
     public function delete($id)
     {
+        //primero validamos que el id se haya pasado, que sea integer y despues que existe en la tabla de sql
         $id->validate([
             'id'=>'required|integer|exists:benefits,id', 
          ]);
-         
+         //Realizamos query que equivale a Select * from benefits where id = $id
         $benefit = Benefits::findOrFail($id);
+        //Eliminamos beneficio
         $benefit->delete();
+        //retornamos mensaje para avisar que la operacion ha tenido exito
         return response()->json(['message' => 'Resource deleted successfully'], 200);
     }
 
+    //funcion que se encarga de crear 
     public function create(Request $request){
+
         $request->validate([
             'idBenefit' => 'required',
             'month' => 'required',

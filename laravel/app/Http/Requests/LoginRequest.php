@@ -17,7 +17,8 @@ class LoginRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array {
+    //metodo que se encarga de crear las reglas de validacion
+     public function rules(): array {
         return [
             'user' => 'required|exists:users,user',
             'password' => 'required|string',

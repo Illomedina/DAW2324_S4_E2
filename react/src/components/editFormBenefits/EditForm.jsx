@@ -17,16 +17,22 @@ const EditForm = () => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
   profit = income - expense;
+  //Aqui recuperams el id que previamente hemos pasado por url
   let { id } = useParams();
 
+  //En el momento que se inicie, indicamos que se ejecute de manera automatica el metodo getFields con parametro id dentro
   useEffect(() => {
     getFields(id);
   }, []);
 
+  //Lo que hace este metodo es recibir un id el cual pasamos previamente y hacer una peticion axios
   const getFields = async (id) => {
+      //Esto es un spinner que estara girando mientras se hace la peticion y se cargan los datos
     setLoading(true); 
     try {
+      //Esta peticion axios se encargara de obtener los datos del beneficio que sea igual al id que le hemos pasado
       const response = await axios.get(`http://localhost:8000/api/getOneBenefit/${id}`);
+      //Este metodo obtiene los datos, posteriormente asignaremos estos datos recibidos
       setId(response.data.id);
       setMonth(response.data.month);
       setIncome(response.data.income);
@@ -36,11 +42,12 @@ const EditForm = () => {
     } catch (error) {
       console.error('Error deleting resource:', error);
     } finally {
+      //Cuando se carguen los datos lo pasamos a false para que no se muestre
       setLoading(false); 
     }
   };
 
-
+//Este metodo se encarga de validar los datos que el usuario modifica, es lo mismo que en el CreateForm
   const validate = () => {
     let isValid = true;
 
@@ -65,8 +72,10 @@ const EditForm = () => {
     }
 };
 
+  //Este metodo se enargara de actualizar los datos que el usuario ha insertado, estos datos son previamente validados
   const handleUpdate = async (idBenefit, month, income, expense, profit) => {
     setAlertSucces(false);
+    //Hacemos una peticion con axios pasandole los datos que el usuario ha cambiado
     const url = "http://localhost:8000/api/UpdateBenefit";
     try {
       const response = await axios.post(url, {
@@ -80,9 +89,11 @@ const EditForm = () => {
       if (response.status === 200) {
       }
     } catch (error) {
+      //Si algo ha ido mal mostramos alerta de fallo
       setAlertError(true);
       console.error("Error:", error);
     } finally {
+      //Si todo ha ido bien mostramos alerta de exito
       setAlertSucces(true);
     }
   };
@@ -101,7 +112,7 @@ const EditForm = () => {
           </main>
         )}
 
-{alertError && (
+    {alertError && (
           <main>
             <section>
               <div className="alert alert-1-warning">

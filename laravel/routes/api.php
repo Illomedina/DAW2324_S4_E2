@@ -48,18 +48,21 @@ Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
 
-// Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+//Grupo de rutas de auth:sanctum
 Route::middleware('auth:sanctum')->group(function () {
+    //Rutas que gestionan el usuario
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
-    Route::get('/getBenefits', [AuthController::class, 'getAll']);
+    //Rutas que gestionan beneficios
+    Route::get('/getBenefits', [BenefitsController::class, 'index']);
     Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
     Route::post('createBenefit', [BenefitsController::class, 'create']);
     Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
     Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 });
+
 //USERS-Show all the users
 Route::get('/users', [UserController::class, 'index']);
 //Route to edit 
