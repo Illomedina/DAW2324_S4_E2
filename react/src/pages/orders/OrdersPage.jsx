@@ -4,6 +4,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import AppLayout from "../../layout/AppLayout";
 import { Link } from "react-router-dom";
+import useOrders from "../../hooks/useOrders";
 
 const EditOrder = ({ data }) => {
   return (
@@ -27,15 +28,11 @@ const EditOrder = ({ data }) => {
     </a>
   );
 };
-export default function OrdersPage() {
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/orders`)
-      .then((result) => result.json())
-      .then((data) => setRowData(data))
-      .catch((error) => console.error("Error fetching data: ", error));
-  }, []);
 
-  const [rowData, setRowData] = useState([]);
+export default function OrdersPage() {
+  const apiUrl = `${import.meta.env.VITE_API_URL}/orders`;
+  const { rowData, loading, error } = useOrders(apiUrl);
+
   const colDefs = [
     {
       field: "idOrderPicanova",
@@ -66,6 +63,14 @@ export default function OrdersPage() {
     filter: true,
     editable: false,
   }));
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <AppLayout>
