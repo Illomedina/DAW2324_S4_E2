@@ -1,36 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppLayout from "../../layout/AppLayout";
+import useOrdersData from "../../hooks/useOrders";
 
 const OrderDetailsPage = () => {
   const { idOrder } = useParams();
-  const [orderDetails, setOrderDetails] = useState([]);
-
-  const fetchData = async () => {
-    try {
-      const result = await fetch(
-        `${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`
-      );
-      if (result.ok) {
-        const data = await result.json();
-        setOrderDetails(data);
-      } else if (result.status === 429) {
-        console.log("Too Many Requests. Retrying in 5 seconds...");
-        setTimeout(() => fetchData(), 5000);
-      } else {
-        console.error("Error fetching data. Status:", result.status);
-      }
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
+  const {
+    rowData: orderDetails,
+    loading,
+    error,
+  } = useOrdersData(`${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`);
 
   useEffect(() => {
-    // Verificar que idOrder tenga un valor antes de realizar la solicitud
-    if (idOrder) {
-      fetchData();
+    if (!loading && !error) {
+      console.log("Order details:", orderDetails);
     }
-  }, [idOrder]);
+  }, [orderDetails, loading, error]);
 
   return (
     <AppLayout>
