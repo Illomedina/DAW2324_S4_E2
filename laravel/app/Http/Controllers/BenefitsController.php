@@ -19,10 +19,6 @@ class BenefitsController extends Controller
     //funcion que se encarga de eliminar recibiendo id como parametro
     public function delete($id)
     {
-        //primero validamos que el id se haya pasado, que sea integer y despues que existe en la tabla de sql
-        $id->validate([
-            'id'=>'required|integer|exists:benefits,id', 
-         ]);
          //Realizamos query que equivale a Select * from benefits where id = $id
         $benefit = Benefits::findOrFail($id);
         //Eliminamos beneficio
@@ -54,7 +50,7 @@ class BenefitsController extends Controller
 
     public function getOne($id){
         $id->validate([
-           'id'=>'required|integer|exists:benefits,id', 
+           'id'=>'integer', 
         ]);
 
         $benefit = Benefits::findOrFail($id);

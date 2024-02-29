@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SectionTable.css";
-import { Outlet, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 import axios from "axios";
-import useFetch from "../hooks/useFetch";
 
 function SectionTable({ SectionName }) {
   const [benefits, setBenefits] = useState([]);
@@ -12,21 +11,22 @@ function SectionTable({ SectionName }) {
   //Establecemos el token en el header, para que cada vez que hagamos una peticion se aplique el token de manera automatica
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
   const [chartData] = useState([]);
-  //Establecemos las etiquetas para el chart
-  const [labels] = useState(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']);
+  const [labels] = useState ([]);
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipX, setTooltipX] = useState(0);
   const [tooltipY, setTooltipY] = useState(0);
-  const {fetchData} = useFetch('http://localhost:8000/api/getBenefits');
+  const [alertError, setAlertError] = useState(false);
+  const [alertSucces, setAlertSucces] = useState(false);
   
+  //se encarga de mostrar un cuadro al hacer hover con el raton encima del grafico
   const showTooltip = (e) => {
     setTooltipContent(e.target.textContent);
     setTooltipX(e.target.offsetLeft - e.target.clientWidth);
     setTooltipY(e.target.clientHeight + e.target.clientWidth);
     setTooltipOpen(true);
   };
-
+  // se encarga de esconder un cuadro al hacer hover con el raton encima del grafico
   const hideTooltip = () => {
     setTooltipContent('');
     setTooltipOpen(false);
@@ -39,7 +39,7 @@ function SectionTable({ SectionName }) {
     getBenefits();
   }, []);
 
-  //Funcion que obtiene todos los beneficios
+  //Funcion que obtiene todos los beneficios y de cargar el chart
   const getBenefits = async () => {
     //añadimos spinner de carga
     setLoading(true); 
@@ -54,32 +54,48 @@ function SectionTable({ SectionName }) {
       if(response.status===200){
         //Asignamos los datos a la tabla de beneficios
         setBenefits(response.data);
-
         //asignamos los datos a la grafica
         for (let i = 0; i < response.data.length; i++) {
           //Si el mes que recibimos es igual a x añadimos el profit en el grafico del mes x
           if(response.data[i].month === 'January'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'February'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'March'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'April'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'May'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'June'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'July'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'August'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }else if(response.data[i].month === 'September'){
             chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
+          }else if(response.data[i].month === 'October'){
+            chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
+          }else if(response.data[i].month === 'November'){
+            chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
+          }else if(response.data[i].month === 'December'){
+            chartData[i] = response.data[i].profit;
+            labels[i] = response.data[i].month.substring(0,3);
           }
         }
       }
-
     } catch (error) {
       console.error('Error fetching benefits:', error);
     } finally {
@@ -91,21 +107,29 @@ function SectionTable({ SectionName }) {
   //este metodo se encarga de eliminar una fila de la tabla de beneficios y tambien lo elimina de la base de datos
   const deleteBenefits = async (id) => {
     setLoading(true); 
+    setAlertError(false);
+    setAlertSucces(false);
     try {
       //Hacemos peticion con axios pasandole id que obtenemos previamente del get
       const response = await axios.delete(`http://localhost:8000/api/deleteBenefits/${id}`);
-      console.log('Resource deleted successfully:', response.data);
+      if(response.status === 200) {
+        console.log('Resource deleted successfully:', response.data);
+        setAlertSucces(true);
+        setAlertError(false);
+      }else{
+        setAlertSucces(false);
+        setAlertError(true);
+      }
     } catch (error) {
+      setAlertError(true);
       console.error('Error deleting resource:', error);
     } finally {
       //si todo ha ido bien acutalizamos la tabla y quitamos el elemento que hemos eliminado
       getBenefits(...benefits);
-      setLoading(false); 
+      setLoading(false);
     }
   };
   
- 
-
   return (
     <div className="flex flex-col h-[100vh] divContainer">
       {loading && (
@@ -113,6 +137,28 @@ function SectionTable({ SectionName }) {
           <div className="loader"></div>
         </div>
       )}
+     {alertSucces && (
+          <main>
+            <section>
+              <div className="alert alert-2-success">
+                <h3 className="alert-title">Succes</h3>
+                <p className="alert-content">Data deleted correctly</p>
+              </div>
+            </section>
+          </main>
+        )}
+
+  {alertError && (
+          <main>
+            <section>
+              <div className="alert alert-1-warning">
+                <h3 className="alert-title">Error</h3>
+                <p className="alert-content">Something went wrong</p>
+              </div>
+            </section>
+          </main>
+        )}
+
       <div className="flex">
         {/* Aqui pintamos la tabla */}
         <div className="relative flex max-w-[600px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -202,7 +248,7 @@ function SectionTable({ SectionName }) {
           <div className="md:flex md:justify-between md:items-center">
             <div>
               <h2 className="text-xl text-gray-800 font-bold leading-tight">Benefits chart</h2>
-              <p className="mb-2 text-gray-600 text-sm">Monthly Average</p>
+              <p className="mb-2 text-gray-600 text-sm">Monthly Average of Year 2024</p>
             </div>
             <div className="mb-4">
               <div className="flex items-center">
@@ -231,8 +277,6 @@ function SectionTable({ SectionName }) {
                   <div
                     style={{ height: `${data / 10}px` }}
                     className="transition ease-in duration-200 bg-violet hover:bg-blue-400 relative"
-                    onMouseEnter={showTooltip}
-                    onMouseLeave={hideTooltip}
                   >
                     <div className="text-center absolute top-0 left-0 right-0 -mt-6 text-gray-800 text-sm">{data}</div>
                   </div>
