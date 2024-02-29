@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import AppLayout from "../../layout/AppLayout";
 import { Link } from "react-router-dom";
-import useOrders from "../../hooks/useOrders";
+import useOrdersData from "../../hooks/useOrders";
 
 // EditOrder Component
 const EditOrder = ({ data }) => {
@@ -36,7 +36,7 @@ const OrdersPage = () => {
   const apiUrl = `${import.meta.env.VITE_API_URL}/orders`;
 
   // Use the custom hook to fetch orders data
-  const { rowData, loading, error } = useOrders(apiUrl);
+  const { rowData, loading, error } = useOrdersData(apiUrl);
 
   // Define column definitions for the AgGridReact component
   const colDefs = [
