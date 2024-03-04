@@ -33,8 +33,7 @@ function SectionTable({ SectionName }) {
     setTooltipX(0);
     setTooltipY(0);
   };
-
-
+  
   useEffect(() => {
     getBenefits();
   }, []);
@@ -45,7 +44,7 @@ function SectionTable({ SectionName }) {
     setLoading(true); 
     try {
       //Hacemos peticion a api
-      const url = "http://localhost:8000/api/getBenefits";
+      const url = `${import.meta.env.VITE_API_URL}/getBenefits`;
       const response = await axios.get(url,
         {
         'Accept': 'application/json',
@@ -110,8 +109,9 @@ function SectionTable({ SectionName }) {
     setAlertError(false);
     setAlertSucces(false);
     try {
+      const url =`${import.meta.env.VITE_API_URL}/deleteBenefits/${id}`;
       //Hacemos peticion con axios pasandole id que obtenemos previamente del get
-      const response = await axios.delete(`http://localhost:8000/api/deleteBenefits/${id}`);
+      const response = await axios.delete(url);
       if(response.status === 200) {
         console.log('Resource deleted successfully:', response.data);
         setAlertSucces(true);

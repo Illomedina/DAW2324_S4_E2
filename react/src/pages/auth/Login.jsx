@@ -12,14 +12,14 @@ export const Login = () => {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
 
+  
   //Este metodo se encarga de hacer el login recibiendo usuario y contraseña
   const handleLogin = async (user, password) => {
     setAlert(false);
+
     try {
       //hacemos peticion con axios pasando parametros
-      const response = await axios.post(
-        'http://localhost:8000/api/login',
-        // `${import.meta.env.VITE_API_URL}/login`,
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`,
         {
           user,
           password,
@@ -62,11 +62,9 @@ export const Login = () => {
 //Este metodo se encarga de comprovar que hayan datos cuando se envie la peticion
   const onSubmit = () => {
     const newErrors = {};
-
     if (!user) {
       newErrors.user = "user is required";
     }
-
     if (!password) {
       newErrors.password = "Password is required";
     }
@@ -125,7 +123,7 @@ export const Login = () => {
               <form action="" className="w-full">
                 <div id="input" className="flex flex-col w-full my-5">
                   <label htmlFor="user" className="text-primaryColor mb-2">
-                    user
+                    User
                   </label>
                   <input
                     type="text"
@@ -184,11 +182,9 @@ export const Login = () => {
                   </button>
                   <div className="flex justify-evenly mt-5">
                     <a
-                      href="#"
                       className="w-full text-center font-medium text-gray-500"
                     ></a>
                     <a
-                      href="#"
                       className="w-full text-center font-medium text-gray-500"
                     ></a>
                   </div>

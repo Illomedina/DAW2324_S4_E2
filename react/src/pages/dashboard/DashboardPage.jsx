@@ -24,7 +24,7 @@ export const DashboardPage = () => {
   const getBenefits = async () => {
     setLoading(true);
     try {
-      const url = "http://localhost:8000/api/getBenefits";
+      const url =`${import.meta.env.VITE_API_URL}/getBenefits`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export const DashboardPage = () => {
   //peticion que obtiene clientes
   const getCustomers = async () => {
     try {
-      const url = "http://localhost:8000/api/customers";
+      const url =`${import.meta.env.VITE_API_URL}/customers`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export const DashboardPage = () => {
   //peticion que obtiene Productos
   const getProducts = async () => {
     try {
-      const url = "http://localhost:8000/api/products";
+      const url =`${import.meta.env.VITE_API_URL}/products`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -69,11 +69,12 @@ export const DashboardPage = () => {
     } catch (error) {
       console.error("Error fetching products:", error);
     }
+  
   };
 //Peticion que obtiene orders
   const getOrders = async () => {
     try {
-      const url = "http://localhost:8000/api/orders";
+      const url =`${import.meta.env.VITE_API_URL}/orders`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -100,7 +101,7 @@ export const DashboardPage = () => {
           <div className="relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
             <div className="headerContainer">
               <h4 className="text-lg font-bold text-primaryColor columns-3">
-                {""}
+                {"Benefits"}
               </h4>
               <div
                 className="buttonCreate"
@@ -163,7 +164,7 @@ export const DashboardPage = () => {
           <div className="relative flex max-w-[620px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
           <div className="headerContainer">
               <h4 className="text-lg font-bold text-primaryColor columns-3">
-                {""}
+                {"Customers"}
               </h4>
               <div
                 className="buttonCreate"
@@ -230,7 +231,7 @@ export const DashboardPage = () => {
           <div className="relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
             <div className="headerContainer">
               <h4 className="text-lg font-bold text-primaryColor columns-3">
-                {""}
+                {"Products"}
               </h4>
               <div
                 className="buttonCreate"
@@ -293,7 +294,7 @@ export const DashboardPage = () => {
           <div className="relative flex max-w-[620px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
           <div className="headerContainer">
               <h4 className="text-lg font-bold text-primaryColor columns-3">
-                {""}
+                {"Orders"}
               </h4>
               <div
                 className="buttonCreate"

@@ -50,7 +50,7 @@ class AuthController extends Controller {
         ])->withCookie($cookie);
     }
 
-    //metodo que retorna usuario, este metodo lo uso para comprovar que el usuario se ha creado correctamente
+    //metodo que retorna usuario, este metodo lo uso para comprobar que el usuario se ha creado correctamente
     public function user(Request $request) {
         return new UserResource($request->user());
     }

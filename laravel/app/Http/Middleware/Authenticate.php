@@ -10,7 +10,8 @@ class Authenticate extends Middleware {
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      */
-    protected function redirectTo($request)
+    //funcion que se encarga de redireccionar al usuario, en este caso solo devolvemos mensaje porque react se encarga de redireccionar al usuario
+     protected function redirectTo($request)
     {
         if ($request->expectsJson()) {
             return response()->json(['message' => 'Unauthenticated'], 401);
@@ -19,6 +20,7 @@ class Authenticate extends Middleware {
         }
     }
 
+    //funcion que verifica si el token existe en la cookie y la añade como autorizacion a la cabecera 
     public function handle($request, Closure $next, ...$guards) {
 
         if ($token = $request->cookie('token')) {

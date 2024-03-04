@@ -28,4 +28,4 @@ dist-ssr
 # src/tailwind.config.js
 # src/vite.config.js
 
-
+.env

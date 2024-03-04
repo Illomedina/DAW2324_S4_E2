@@ -1,6 +1,6 @@
 import "./CreateForm.css";
 import React, { useState } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import {Link } from "react-router-dom";
 import axios from "axios";
 import "../sectionTable/alert.scss";
 const CreateForm = ({ section }) => {
@@ -12,42 +12,47 @@ const CreateForm = ({ section }) => {
   profit = income - expense;
   const [alert, setAlert] = useState(false);
   const [errors, setErrors] = useState({});
-  const token = localStorage.getItem('token');
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+  const token = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  
   //Este metodo se encarga de validar los datos que el usuario inserta
   const validate = () => {
     let isValid = true;
     const newErrors = {};
-    
+    //En caso de que el usuario no inserte el mes se mostrara error
     if (month.trim() === "") {
-        isValid = false;
-      //En caso de que el usuario no inserte el mes se mostrara error
-        newErrors.month = "Month is required";
+      isValid = false;
+      newErrors.month = "Month is required";
     }
 
-    if (isNaN(parseFloat(income)) || !isFinite(income) || parseFloat(income) <= 0) {
-        isValid = false;
-        newErrors.username = "Username is required";
-
+    if (
+      isNaN(parseFloat(income)) ||
+      !isFinite(income) ||
+      parseFloat(income) <= 0
+    ) {
+      isValid = false;
+      newErrors.username = "Username is required";
     }
 
-    if (isNaN(parseFloat(expense)) || !isFinite(expense) || parseFloat(expense) <= 0) {
-        isValid = false;
-        newErrors.expense = "Income is required";
+    if (
+      isNaN(parseFloat(expense)) ||
+      !isFinite(expense) ||
+      parseFloat(expense) <= 0
+    ) {
+      isValid = false;
+      newErrors.expense = "Income is required";
     }
 
     if (parseFloat(income) < parseFloat(expense)) {
-        isValid = false;
+      isValid = false;
     }
 
-    if(!isValid){
+    if (!isValid) {
       setErrors(newErrors);
     }
 
+    //Si es valido llamamos a metodo que se encarga de crear
     if (isValid) {
-      //Si es valido llamamos a metodo que se encarga de crear
       handleCreate(month, income, expense, profit);
     }
   };
@@ -62,8 +67,8 @@ const CreateForm = ({ section }) => {
       data: { month, income, expense, profit },
     })
       .then(function (response) {
-        if (response.status === 200) {ç
-
+        if (response.status === 200) {
+          console.log("Data inserted correctly");
         }
       })
       .catch(function (error) {
@@ -72,10 +77,10 @@ const CreateForm = ({ section }) => {
       })
       .finally(function () {
         setAlert(true);
-        setMonth('');
-        setIncome('');
-        setExpense('');
-        setProfit('');
+        setMonth("");
+        setIncome("");
+        setExpense("");
+        setProfit("");
       });
   };
 
@@ -108,7 +113,7 @@ const CreateForm = ({ section }) => {
           <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
             <div className="flex flex-col">
               {/* En caso que haya error se mostrara el error */}
-            {errors.month && <div className="error">{errors.month}</div>}
+              {errors.month && <div className="error">{errors.month}</div>}
               <input
                 type="text"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
@@ -117,7 +122,7 @@ const CreateForm = ({ section }) => {
                 // estaremos escuchando por cambios en el valor.
                 onChange={(e) => setMonth(e.target.value)}
               />
-            {errors.income && <div className="error">{errors.income}</div>}
+              {errors.income && <div className="error">{errors.income}</div>}
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
@@ -125,7 +130,7 @@ const CreateForm = ({ section }) => {
                 value={income}
                 onChange={(e) => setIncome(e.target.value)}
               />
-               {errors.expense && <div className="error">{errors.expense}</div>}
+              {errors.expense && <div className="error">{errors.expense}</div>}
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
