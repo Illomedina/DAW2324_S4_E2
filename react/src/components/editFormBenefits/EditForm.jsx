@@ -35,12 +35,13 @@ const EditForm = () => {
     try {
       const url =`${import.meta.env.VITE_API_URL}/getOneBenefit/${id}`;
       const response = await axios.get(url);
+      console.log(response.data);
       setId(response.data.id);
       setMonth(response.data.month);
       setIncome(response.data.income);
       setExpense(response.data.expense);
       setProfit(response.data.profit);
-      setProfit(response.data.year);
+      setYear(response.data.year);
 
     } catch (error) {
       console.error('Error deleting resource:', error);
@@ -181,14 +182,14 @@ const EditForm = () => {
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="expense"
+                placeholder="Expense"
                 value={expense}
                 onChange={(e) => setExpense(e.target.value)}
               />
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="expense"
+                placeholder="Year"
                 value={year}
                 onChange={(e) => setExpense(e.target.value)}
               />
