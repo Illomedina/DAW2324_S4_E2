@@ -2,12 +2,10 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
-    BellIcon,
     CalendarIcon,
     ChartPieIcon,
     Cog6ToothIcon,
     DocumentDuplicateIcon,
-    FolderIcon,
     HomeIcon,
     UserGroupIcon,
     UsersIcon,
@@ -46,25 +44,25 @@ export default function AppLayout({ children, Page, Steps }) {
         { name: 'Settings', href: '/settings', icon: CogIcon, current: false },
     ]
 
-    //Lo que hace este script recorrer el objeto navigation para assignar current a true;
     for (var i = 0; i < navigation.length; i++) {
         if (navigation[i].current == true) { navigation[i].current = false; }
         if (window.location.href.includes(navigation[i].href)) { navigation[i].current = true; }
     }
-    //gestionamos Logout
+    //This code snippet defines a function 
+    //handleNavigation that makes a POST request to a logout 
+    //endpoint when the action parameter is 'Sign out'. It then removes the token 
+    //from local storage and navigates to the home page if the request is successful. 
+    //If there is an error during the request, it logs the error to the console.
     const handleNavigation = async (action) => {
         if (action === 'Sign out') {
-            //hacemos peticion a api con axios para cerrar sesion
-          const url = "http://localhost:8000/api/logout";
+           const url =`${import.meta.env.VITE_API_URL}/logout`;
           await axios({
             method: "POST",
             url: url,
           })
             .then(function (response) {
               if (response.status === 200) {
-                //Si la respuesta es 200 elimamos token que guardamos en localstorage
                 localStorage.removeItem("token");
-                //redirigimos a login
                 navigate('/')
               }
             })
@@ -78,10 +76,15 @@ export default function AppLayout({ children, Page, Steps }) {
       };
 
 const userNavigation = [
-  { name: 'Your profile', action: 'Profile' },
   { name: 'Sign out', action: 'Sign out'},  
 ]
 
+/**
+ * A description of the entire function.
+ *
+ * @param {type} paramName - description of parameter
+ * @return {type} description of return value
+ */
 const UserNavigation = () => {
     handleNavigation(action);
 };
@@ -244,20 +247,18 @@ const UserNavigation = () => {
                                 </h2>
                             </div>
                             <div className="flex items-center gap-x-4 lg:gap-x-6">
-
-
                                 {/* Separator */}
-                                <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" />
+                                {/* <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" /> */}
 
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative">
                                     <Menu.Button className="-m-1.5 flex items-center p-1.5">
                                         <span className="sr-only">Open user menu</span>
-                                        <img
+                                        {/* <img
                                             className="h-8 w-8 rounded-full bg-gray-50"
                                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                             alt=""
-                                        />
+                                        /> */}
                                         <span className="hidden lg:flex lg:items-center">
                                             <span className="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
                                                 {data.name}

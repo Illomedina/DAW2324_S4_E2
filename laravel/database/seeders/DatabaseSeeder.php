@@ -13,12 +13,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {       
-        DB::table('users')->insert([
-            'name' => 'Admin',
+        // DB::table('users')->insert([
+        //     'name' => 'Admin',
+        //     'surname' => '-',
+        //     'user' => 'Admin', 
+        //     'email' => 'admin@example.com',
+        //     'password' =>Hash::make(config('configuration.ADMIN_PASSWORD')),
+        // ]);
+      DB::table('users')->insert([
+            'name' => 'gabriel',
             'surname' => '-',
             'user' => 'Admin', 
             'email' => 'admin@example.com',
-            'password' =>Hash::make(config('configuration.ADMIN_PASSWORD')),
+            'password' =>Hash::make('password'),
         ]);
+        
     }
 }

@@ -3,12 +3,16 @@ import "./SectionTable.css";
 import {Link } from "react-router-dom";
 import axios from "axios";
 
+/**
+ * Renders a section table with benefits data and a chart.
+ *
+ * @param {Object} SectionName - the name of the section
+ * @return {JSX.Element} the rendered section table and chart
+ */
 function SectionTable({ SectionName }) {
   const [benefits, setBenefits] = useState([]);
   const [loading, setLoading] = useState(false); 
-  //Obtenemos el token recibio a la hora de hacer el login
   const token = localStorage.getItem('token');
-  //Establecemos el token en el header, para que cada vez que hagamos una peticion se aplique el token de manera automatica
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
   const [chartData] = useState([]);
   const [labels] = useState ([]);
@@ -19,14 +23,22 @@ function SectionTable({ SectionName }) {
   const [alertError, setAlertError] = useState(false);
   const [alertSucces, setAlertSucces] = useState(false);
   
-  //se encarga de mostrar un cuadro al hacer hover con el raton encima del grafico
+  /**
+   * Function to show a tooltip based on the event target.
+   *
+   * @param {Event} e - the event triggering the tooltip display
+   * @return {void} 
+   */
   const showTooltip = (e) => {
     setTooltipContent(e.target.textContent);
     setTooltipX(e.target.offsetLeft - e.target.clientWidth);
     setTooltipY(e.target.clientHeight + e.target.clientWidth);
     setTooltipOpen(true);
   };
-  // se encarga de esconder un cuadro al hacer hover con el raton encima del grafico
+  
+  /**
+   * Hides the tooltip by resetting its content and position, and closing it.
+   */
   const hideTooltip = () => {
     setTooltipContent('');
     setTooltipOpen(false);
@@ -35,15 +47,17 @@ function SectionTable({ SectionName }) {
   };
   
   useEffect(() => {
-    getBenefits();
+    getBenefits();  
   }, []);
 
-  //Funcion que obtiene todos los beneficios y de cargar el chart
+  /**
+   * Retrieves benefits from the specified API endpoint and sets the retrieved benefits and profit data for each month in the chart.
+   *
+   * @return {Promise<void>} - Function does not return anything
+   */
   const getBenefits = async () => {
-    //añadimos spinner de carga
     setLoading(true); 
     try {
-      //Hacemos peticion a api
       const url = `${import.meta.env.VITE_API_URL}/getBenefits`;
       const response = await axios.get(url,
         {
@@ -51,11 +65,8 @@ function SectionTable({ SectionName }) {
         'Content-Type': 'application/json',
       });
       if(response.status===200){
-        //Asignamos los datos a la tabla de beneficios
         setBenefits(response.data);
-        //asignamos los datos a la grafica
         for (let i = 0; i < response.data.length; i++) {
-          //Si el mes que recibimos es igual a x añadimos el profit en el grafico del mes x
           if(response.data[i].month === 'January'){
             chartData[i] = response.data[i].profit;
             labels[i] = response.data[i].month.substring(0,3);
@@ -98,19 +109,22 @@ function SectionTable({ SectionName }) {
     } catch (error) {
       console.error('Error fetching benefits:', error);
     } finally {
-      //pasamos loading a false
       setLoading(false); 
     }
   };
 
-  //este metodo se encarga de eliminar una fila de la tabla de beneficios y tambien lo elimina de la base de datos
+  /**
+   * Deletes benefits from the server by making an asynchronous request.
+   *
+   * @param {type} id - The identifier of the benefits to be deleted
+   * @return {type} description of return value
+   */
   const deleteBenefits = async (id) => {
     setLoading(true); 
     setAlertError(false);
     setAlertSucces(false);
     try {
       const url =`${import.meta.env.VITE_API_URL}/deleteBenefits/${id}`;
-      //Hacemos peticion con axios pasandole id que obtenemos previamente del get
       const response = await axios.delete(url);
       if(response.status === 200) {
         console.log('Resource deleted successfully:', response.data);
@@ -124,7 +138,6 @@ function SectionTable({ SectionName }) {
       setAlertError(true);
       console.error('Error deleting resource:', error);
     } finally {
-      //si todo ha ido bien acutalizamos la tabla y quitamos el elemento que hemos eliminado
       getBenefits(...benefits);
       setLoading(false);
     }
@@ -202,6 +215,12 @@ function SectionTable({ SectionName }) {
                     scope="col"
                     className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                   >
+                    Year
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                  >
                     Modify
                   </th>
                 </tr>
@@ -221,6 +240,10 @@ function SectionTable({ SectionName }) {
                     </td>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900">
                       {benefit.profit}€
+                    </td>
+                    <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                      {/* {}€ */}
+                      YEAR
                     </td>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900">
                       {/* En el momento que el usuario clique aqui le pasaremos el id de la tabla en question, esto sirve para que se puedan enviar datos a otras pantallas */}
@@ -265,7 +288,7 @@ function SectionTable({ SectionName }) {
               >
                 <div className="shadow-xs rounded-lg bg-white p-2">
                   <div className="flex items-center justify-between text-sm">
-                    <div>Sales:</div>
+                    <div>Benefits:</div>
                     <div className="font-bold ml-2">{tooltipContent}</div>
                   </div>
                 </div>

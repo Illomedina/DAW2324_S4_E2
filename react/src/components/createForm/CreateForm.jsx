@@ -3,11 +3,18 @@ import React, { useState } from "react";
 import {Link } from "react-router-dom";
 import axios from "axios";
 import "../sectionTable/alert.scss";
+/**
+ * Function for creating a form.
+ *
+ * @param {Object} section - the section for which the form is created
+ * @return {JSX.Element} the form component
+ */
 const CreateForm = ({ section }) => {
   //Declaramos variables
   const [month, setMonth] = useState("");
   const [income, setIncome] = useState("");
   const [expense, setExpense] = useState("");
+  const [year, setYear] = useState("");
   var [profit, setProfit] = useState("");
   profit = income - expense;
   const [alert, setAlert] = useState(false);
@@ -15,14 +22,20 @@ const CreateForm = ({ section }) => {
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  //Este metodo se encarga de validar los datos que el usuario inserta
+  /**
+   * Function to validate the input values for month, income, and expense.
+   */
   const validate = () => {
     let isValid = true;
     const newErrors = {};
-    //En caso de que el usuario no inserte el mes se mostrara error
     if (month.trim() === "") {
       isValid = false;
       newErrors.month = "Month is required";
+    }
+
+    if(month != "January" || month != "February" || month != "March" || month != "April" || month != "May" || month != "June" || month != "July" || month != "August" || month != "September" || month != "October" || month != "November" || month != "December"){
+      isValid = false;
+      newErrors.month = "Month has to be valid";
     }
 
     if (
@@ -47,24 +60,40 @@ const CreateForm = ({ section }) => {
       isValid = false;
     }
 
+    if (
+      isNaN(parseInt(year)) ||
+      !isFinite(year) ||
+      parseFloat(year) <= 0
+    ) {
+      isValid = false;
+      newErrors.year = "Year is required";
+    }
+
     if (!isValid) {
       setErrors(newErrors);
     }
 
-    //Si es valido llamamos a metodo que se encarga de crear
     if (isValid) {
-      handleCreate(month, income, expense, profit);
+      handleCreate(month, income, expense, year, profit);
     }
   };
 
-  //Este metodo hace una peticion post con axios el cual recibe los datos previamente validados, en caso de que todo sea correcto se mostrara un alert
+  /**
+   * Async function to handle creation of benefit data.
+   *
+   * @param {type} month - description of the month parameter
+   * @param {type} income - description of the income parameter
+   * @param {type} expense - description of the expense parameter
+   * @param {type} profit - description of the profit parameter
+   * @return {type} description of the return value
+   */
   const handleCreate = async (month, income, expense, profit) => {
     setAlert(false);
-    const url = "http://localhost:8000/api/createBenefit";
+    const url =`${import.meta.env.VITE_API_URL}/createBenefit`;
     await axios({
       method: "POST",
       url: url,
-      data: { month, income, expense, profit },
+      data: { month, income, expense, year, profit },
     })
       .then(function (response) {
         if (response.status === 200) {
@@ -87,7 +116,6 @@ const CreateForm = ({ section }) => {
   return (
     <div className="popup">
       <div className="popup-inner">
-        {/* Lo que hace el alert && es que si alert es true se mostrara sino pues se ignorara y no se mostrara */}
         {alert && (
           <main>
             <section>
@@ -112,14 +140,12 @@ const CreateForm = ({ section }) => {
         <div className="divide-y divide-gray-200">
           <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
             <div className="flex flex-col">
-              {/* En caso que haya error se mostrara el error */}
               {errors.month && <div className="error">{errors.month}</div>}
               <input
                 type="text"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                 placeholder="Month"
                 value={month}
-                // estaremos escuchando por cambios en el valor.
                 onChange={(e) => setMonth(e.target.value)}
               />
               {errors.income && <div className="error">{errors.income}</div>}
@@ -134,8 +160,15 @@ const CreateForm = ({ section }) => {
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="expense"
+                placeholder="Expense"
                 value={expense}
+                onChange={(e) => setExpense(e.target.value)}
+              />
+                 <input
+                type="number"
+                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                placeholder="Year"
+                value={year}
                 onChange={(e) => setExpense(e.target.value)}
               />
               <label className="labels">Profit</label>
@@ -153,7 +186,7 @@ const CreateForm = ({ section }) => {
               to="/benefits"
               className="buttonDelete flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
             >
-              Exit
+              Cancel
             </Link>
             <button
               className="buttonCreate flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
