@@ -344,7 +344,7 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              {!window.location.href.includes("benefits") && (
+              {!window.location.href.includes("benefits") ||!window.location.href.includes("dashboard") && (
                 <Breadcrumb steps={Steps} />
               )}
               {children}

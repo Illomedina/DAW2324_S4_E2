@@ -50,12 +50,10 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
-//Grupo de rutas de auth:sanctum
+//Group of routes that are authenticated through auth:sanctum
 Route::middleware('auth:sanctum')->group(function () {
-    //Rutas que gestionan el usuario
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
-    //Rutas que gestionan beneficios
     Route::get('/getBenefits', [BenefitsController::class, 'index']);
     Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
     Route::post('createBenefit', [BenefitsController::class, 'create']);
