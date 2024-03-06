@@ -17,7 +17,8 @@ import BenefitsCreate from "../pages/benefits/create/BenefitsCreate";
 import BenefitsEdit from "../pages/benefits/edit/BenefitsEdit";
 import axios from "axios";
 
-import User from "../pages/users/User";
+//import User from "../pages/users/User";
+import UserPage from "../pages/users/UserPage";
 import RegisterForm from "../pages/users/RegisterForm";
 import SettingPage from "../pages/setting/SettingPage";
 import SettingForm from "../pages/setting/SettingForm";
@@ -63,7 +64,8 @@ export const Router = () => {
         element={<BenefitsCreate></BenefitsCreate>}
       />
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
-      <Route path="/user" element={<User />} />
+      <Route path="/users" element={<UserPage />} />
+
       <Route path="/user/create" element={<RegisterForm />} />
       <Route path="/*" element={<PageNotFound />} />
       // ORDERS

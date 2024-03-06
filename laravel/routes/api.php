@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Rutas que gestionan el usuario
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+
     //Rutas que gestionan beneficios
     Route::get('/getBenefits', [BenefitsController::class, 'index']);
     Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
