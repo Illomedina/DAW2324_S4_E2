@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
     //métodos para controlar rutas
     public function index(){
         try{
@@ -23,8 +22,6 @@ class UserController extends Controller
         } catch(\Exception $e){
             return response()->json(['error'=> 'error getting the configuration'], 500);
         }
-        
-      
     }
 
     public function create(){
