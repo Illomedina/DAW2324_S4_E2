@@ -15,26 +15,27 @@ class UserController extends Controller
 {
 
     //métodos para controlar rutas
-    public function index(){
-        try{
-            
+    public function index()
+    {
+        try {
             $users = User::all();
-            return $users;
-        } catch(\Exception $e){
-            return response()->json(['error'=> 'error getting the configuration'], 500);
+            return response()->json($users, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'error getting the configuration'], 500);
         }
-        
-      
     }
 
-    public function create(){
+
+    public function create()
+    {
         //muestra el formulario para crear usuarios
         return view('users.create');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         //Encuentra el id del usuario
-        try{
+        try {
             $user = User::find($id);
             return $user;
         } catch (ModelNotFoundException $e) {
@@ -45,31 +46,29 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        $user = User::create([
+            'idRole' => 1,
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'user' => $request->user,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
 
-      
-            $user = User::create([
-                'idRole' =>1,
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'user' => $request->user,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
-
-             $user->save();
-            
-            
-
+        // return the user and response code
+        return response()->json($user, 201);
     }
 
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         try {
             $user = User::findOrFail($id);
             $user->name = $request->name;
             $user->surname = $request->surname;
-            $user->user= $request->user;
+            $user->user = $request->user;
             $user->email = $request->email;
             $user->save();
             return $user;
@@ -82,11 +81,8 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-    
+
         $user = User::destroy($id);
         return $user;
     }
-    
-
-    
 }

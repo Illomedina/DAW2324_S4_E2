@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'email',
         'email_verified_at',
+        'password',
     ];
 
     /**
@@ -36,7 +37,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -47,7 +47,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     // Relación con la tabla 'roles'
@@ -58,7 +57,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-          // Recuperar el rol del usuario
+        // Recuperar el rol del usuario
         $role = $this->role()->first();
         // Verificar si el usuario tiene el rol de administrador
         return $this->role->roleName === 'admin';
