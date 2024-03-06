@@ -42,7 +42,7 @@ export const UserPage = () => {
                     <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                         <button
                             type="button"
-                            onClick={() => navigate('/createUser')}
+                            onClick={() => navigate('/users/create')}
                             className="block rounded-md bg-teal-400 px-3 py-2 text-center text-sm font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Add User
