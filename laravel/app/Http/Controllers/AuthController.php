@@ -10,33 +10,40 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
 
-    /**
-     * This PHP code defines a login method that takes a LoginRequest object as input. It validates the request data, 
-     * checks if the user exists and the password is correct, and then generates and returns a token along with the user information 
-     * in JSON format.
-     */
+  
     public function login(LoginRequest $request) {
+        // Handles user login request
+        // Validates request data with LoginRequest class
         $data = $request->validated();
+
+        // Search for user in DB by username
         $user = User::where('user', $data['user'])->first();
+
+        // Checks if user exists and password is correct
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                //en caso de que no sea correcto devuelve mensaje
                 'message' => 'username or password is incorrect!'
             ], 401);
         }
+
+        // Generates token with given name and assigns it to user
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        // $cookie = cookie('token', $token, 60 * 24); // 1 day
+        // Creates cookie with token that expires in 1 day
+        // $cookie = cookie('token', $token, 60 * 24);
 
+        // Returns user data and generated token to client
         return response()->json([
-            //En la respuesta devolvemos usuario y token
             'user' => new UserResource($user),
-            'token' => $token 
+            'token' => $token
         ]);
     }
 
+
+  
     /**
-     * This PHP code defines a logout method that deletes the current access token for the user making the request and removes the 'token' cookie. It then returns a JSON response indicating successful logout.
+     * Logs out the user by deleting the current access token and forgetting the cookie
+     * @param  Request $request The request object
      */
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
@@ -47,8 +54,12 @@ class AuthController extends Controller {
         ])->withCookie($cookie);
     }
 
+
+   
     /**
-     * This PHP code defines a method called user that takes a request object as an argument. It creates a new UserResource object using the user retrieved from the request, and returns it.
+     * Returns the user data of the currently authenticated user
+     * @param  Request $request The request object
+     * @return UserResource      The user data of the authenticated user
      */
     public function user(Request $request) {
         return new UserResource($request->user());
