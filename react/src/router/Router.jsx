@@ -20,6 +20,7 @@ import axios from "axios";
 //import User from "../pages/users/User";
 import UserPage from "../pages/users/UserPage";
 import UsersCreate from "../pages/users/UsersCreate";
+import UsersEdit from "../pages/users/UsersEdit";
 import UsersShow from "../pages/users/UsersShow"
 //import RegisterForm from "../pages/users/RegisterForm";
 import SettingPage from "../pages/setting/SettingPage";
@@ -68,12 +69,16 @@ export const Router = () => {
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
       
       //Users
-
       <Route strict path="/users/:userId" element={<UsersShow />} />
       <Route path="/users" element={<UserPage />} />
-
+      <Route path="/users/:userId/edit" element={<UsersEdit />} />
       <Route path="/users/create" element={<UsersCreate></UsersCreate>} />
+
+
+
+
       <Route path="/*" element={<PageNotFound />} />
+
       // ORDERS
       <Route path="/orders" element={<OrdersPage />} />
       <Route path="/orders/:idOrder" element={<OrderDetailsPage />} />
