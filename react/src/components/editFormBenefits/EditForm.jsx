@@ -11,48 +11,60 @@ const EditForm = () => {
   const [month, setMonth] = useState("");
   const [income, setIncome] = useState("");
   const [expense, setExpense] = useState("");
+  const [year, setYear] = useState("");
   var [profit, setProfit] = useState("");
   const [loading, setLoading] = useState(false); 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
   profit = income - expense;
-  //Aqui recuperams el id que previamente hemos pasado por url
   let { id } = useParams();
 
-  //En el momento que se inicie, indicamos que se ejecute de manera automatica el metodo getFields con parametro id dentro
   useEffect(() => {
     getFields(id);
   }, []);
 
-  //Lo que hace este metodo es recibir un id el cual pasamos previamente y hacer una peticion axios
+  /**
+   * A function to retrieve fields based on the given ID.
+   *
+   * @param {number} id - the ID used to retrieve the fields
+   * @return {Promise<void>} a Promise that resolves when the fields are retrieved
+   */
   const getFields = async (id) => {
-      //Esto es un spinner que estara girando mientras se hace la peticion y se cargan los datos
     setLoading(true); 
     try {
-      //Esta peticion axios se encargara de obtener los datos del beneficio que sea igual al id que le hemos pasado
-      const response = await axios.get(`http://localhost:8000/api/getOneBenefit/${id}`);
-      //Este metodo obtiene los datos, posteriormente asignaremos estos datos recibidos
+      const url =`${import.meta.env.VITE_API_URL}/getOneBenefit/${id}`;
+      const response = await axios.get(url);
+      console.log(response.data);
       setId(response.data.id);
       setMonth(response.data.month);
       setIncome(response.data.income);
       setExpense(response.data.expense);
       setProfit(response.data.profit);
+      setYear(response.data.year);
 
     } catch (error) {
       console.error('Error deleting resource:', error);
     } finally {
-      //Cuando se carguen los datos lo pasamos a false para que no se muestre
       setLoading(false); 
     }
   };
 
-//Este metodo se encarga de validar los datos que el usuario modifica, es lo mismo que en el CreateForm
+  /**
+   * Function to validate input data for month, income, expense, and year.
+   *
+   * @return {void} 
+   */
   const validate = () => {
     let isValid = true;
 
     if (month.trim() === "") {
         isValid = false;
+    }
+
+    if(month != "January" || month != "February" || month != "March" || month != "April" || month != "May" || month != "June" || month != "July" || month != "August" || month != "September" || month != "October" || month != "November" || month != "December"){
+      isValid = false;
+      newErrors.month = "Month has to be valid";
     }
 
     if (isNaN(parseFloat(income)) || !isFinite(income) || parseFloat(income) <= 0) {
@@ -63,6 +75,10 @@ const EditForm = () => {
         isValid = false;
     }
 
+    if (isNaN(parseInt(year)) || !isFinite(year) || parseInt(year) <= 0) {
+      isValid = false;
+  }
+
     if (parseFloat(income) < parseFloat(expense)) {
         isValid = false;
     }
@@ -72,28 +88,35 @@ const EditForm = () => {
     }
 };
 
-  //Este metodo se enargara de actualizar los datos que el usuario ha insertado, estos datos son previamente validados
-  const handleUpdate = async (idBenefit, month, income, expense, profit) => {
+  /**
+   * An asynchronous function to handle the update of a benefit with the given parameters.
+   *
+   * @param {string} idBenefit - The ID of the benefit to be updated
+   * @param {string} month - The month for the update
+   * @param {number} income - The income for the update
+   * @param {number} expense - The expense for the update
+   * @param {number} year - The year for the update
+   * @param {number} profit - The profit for the update
+   */
+  const handleUpdate = async (idBenefit, month, income, expense,year, profit) => {
     setAlertSucces(false);
-    //Hacemos una peticion con axios pasandole los datos que el usuario ha cambiado
-    const url = "http://localhost:8000/api/UpdateBenefit";
+    const url =`${import.meta.env.VITE_API_URL}/UpdateBenefit/${id}`;
     try {
       const response = await axios.post(url, {
         idBenefit: idBenefit,
         month: month,
         income: income,
         expense: expense,
+        year: year,
         profit: profit
       });
   
       if (response.status === 200) {
       }
     } catch (error) {
-      //Si algo ha ido mal mostramos alerta de fallo
       setAlertError(true);
       console.error("Error:", error);
     } finally {
-      //Si todo ha ido bien mostramos alerta de exito
       setAlertSucces(true);
     }
   };
@@ -159,8 +182,15 @@ const EditForm = () => {
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="expense"
+                placeholder="Expense"
                 value={expense}
+                onChange={(e) => setExpense(e.target.value)}
+              />
+              <input
+                type="number"
+                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                placeholder="Year"
+                value={year}
                 onChange={(e) => setExpense(e.target.value)}
               />
               <label className="labels">Profit</label>
