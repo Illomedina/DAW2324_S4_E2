@@ -7,7 +7,7 @@ const showUser = ({ data }) => {
   const navigate = useNavigate();
 
   return (
-    <button onClick={() => navigate(`/users/${data.id}`, {state: {user: data}})}>
+    <button onClick={() => navigate(`/users/${data.id}`, {state: {users: data}})}>
       <svg style={{
         display: 'flex',
         justifyContent: 'center',

@@ -37,7 +37,7 @@ export const UsersCreate = () => {
         body: JSON.stringify(formData)
       });
       if (response.ok) {
-        navigate('/user');
+        navigate('/users');
       } else {
         console.error('Error al registrar');
       }
@@ -215,40 +215,7 @@ export const UsersCreate = () => {
                     </div>
                   </fieldset>
 
-                  <fieldset>
-                    <legend className="text-sm font-semibold leading-6 text-gray-900">Validated</legend>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                      These is the user's account validation.
-                    </p>
-                    <div className="mt-2 flex gap-x-3">
-                      <div className="flex items-center">
-                        <input
-                          name="is_validated"
-                          value="1"
-                          onChange={handleChange}
-                          checked={formData.is_validated === '1'}
-                          type="radio"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label htmlFor="push-everything" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
-                          Yes
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          name="is_validated"
-                          value="0"
-                          onChange={handleChange}
-                          checked={formData.is_validated === '0'}
-                          type="radio"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label htmlFor="push-email" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
-                          No
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
+                
                 </div>
               </div>
             </div>

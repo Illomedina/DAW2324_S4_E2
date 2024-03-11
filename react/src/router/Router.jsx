@@ -20,6 +20,7 @@ import axios from "axios";
 //import User from "../pages/users/User";
 import UserPage from "../pages/users/UserPage";
 import UsersCreate from "../pages/users/UsersCreate";
+import UsersShow from "../pages/users/UsersShow"
 //import RegisterForm from "../pages/users/RegisterForm";
 import SettingPage from "../pages/setting/SettingPage";
 import SettingForm from "../pages/setting/SettingForm";
@@ -65,6 +66,10 @@ export const Router = () => {
         element={<BenefitsCreate></BenefitsCreate>}
       />
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
+      
+      //Users
+
+      <Route strict path="/users/:userId" element={<UsersShow />} />
       <Route path="/users" element={<UserPage />} />
 
       <Route path="/users/create" element={<UsersCreate></UsersCreate>} />

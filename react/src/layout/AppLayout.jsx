@@ -38,7 +38,7 @@ export default function AppLayout({ children, Page, Steps }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const navigation = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
-        { name: 'Users', href: '/user', icon: UsersIcon, current: false },
+        { name: 'Users', href: '/users', icon: UsersIcon, current: false },
         { name: 'Customers', href: '/customers', icon: UserGroupIcon, current: false },
         { name: 'Products', href: '/products', icon: CalendarIcon, current: false },
         { name: 'Orders', href: '/orders', icon: DocumentDuplicateIcon, current: false },
