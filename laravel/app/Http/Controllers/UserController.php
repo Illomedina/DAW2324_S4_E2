@@ -22,7 +22,7 @@ class UserController extends Controller
         } catch(\Exception $e){
             return response()->json(['error'=> 'error getting the configuration'], 500);
         }
-    }
+        }
 
     public function create(){
         //muestra el formulario para crear usuarios
@@ -43,8 +43,6 @@ class UserController extends Controller
 
 
     public function store(Request $request){
-
-      
             $user = User::create([
                 'idRole' =>1,
                 'name' => $request->name,
