@@ -22,7 +22,11 @@ export const UserPage = () => {
                     throw new Error('Failed to fetch users');
                 }
                 const data = await response.json();
-                setUsersData(data);
+                if (data.success) {
+                    setUsersData(data.data);
+                } else {
+                    throw new Error(data.message);
+                }
             } catch (error) {
                 console.error("There was an error fetching the users:", error);
             } finally{

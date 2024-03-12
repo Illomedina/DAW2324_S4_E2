@@ -28,7 +28,7 @@ export const UsersTable = ({ userData }) => {
   const colDefs = [
     { field: 'name', headerName: 'Name', filter: true },
     { field: 'surname', headerName: 'Surname', filter: true },
-    { field: 'username', headerName: 'Username', filter: true  },
+    { field: 'user', headerName: 'Username', filter: true  },
     { field: 'email', headerName: 'Email', filter: true  },
     //{ field: 'role', headerName: 'Email', filter: true  },
 

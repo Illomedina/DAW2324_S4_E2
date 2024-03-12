@@ -38,7 +38,7 @@ export const UsersEdit = () => {
     e.preventDefault();
 
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userd}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -47,10 +47,9 @@ export const UsersEdit = () => {
         });
     
         if (response.ok) {
-          const data = await response.json();
           alert('User updated successfully!');
-          navigate(`/users/${data.id}`, { state: { users: data } });
-        } else {
+          navigate('/users');
+                } else {
           // Manejo de errores en caso de que la respuesta no sea exitosa
           console.error('Error:', response.statusText);
         }
