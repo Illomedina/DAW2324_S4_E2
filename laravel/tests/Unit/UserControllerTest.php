@@ -28,7 +28,7 @@ class UserControllerTest extends TestCase
             'surname' => 'Doe',
             'user' => 'john_doe',
             'email' => 'john@example.com',
-            'password' => 'Password12345678',
+            'password' => 'Password123',
         ];
 
         $response = $this->post('/api/createUser', $userData);
@@ -38,7 +38,7 @@ class UserControllerTest extends TestCase
 
         $this->assertTrue(
             User::where('email', 'john@example.com')
-                ->where('password', 'Password12345678')
+                ->where('password', 'Password123')
                 ->exists(),
             'The user was not found in the database'
         );
@@ -49,7 +49,6 @@ class UserControllerTest extends TestCase
     public function testUpdate()
     {
         $user = User::factory()->create();
-
         $userData = [
             'name' => 'Updated Name',
             'surname' => 'Updated Surname',
@@ -68,11 +67,8 @@ class UserControllerTest extends TestCase
     public function testDestroy()
     {
         $user = User::factory()->create();
-
         $response = $this->delete('/api/users/' . $user->id);
-
         $response->assertStatus(200);
-
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 }
