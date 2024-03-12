@@ -7,6 +7,7 @@
     font-weight: 500;
     transition: all 0.2s ease-in-out;
     width: 70px;
+    margin-left: 60px;
 }.buttonCreate:hover{
     background-color: #061F41;
 }
