@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
     //métodos para controlar rutas
     public function index()
     {

@@ -13,14 +13,15 @@ export const DashboardPage = () => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   useEffect(() => {
-    //Al entrar en la pantalla ejecutamos metodos, cada uno se encargara de obtener ciertos datos, todas las peticiones son GET
     getBenefits();
     getProducts();
     getOrders();
     getCustomers();
   }, []);
 
-  //Peticion a api que obtiene los beneficios
+  /**
+   * Asynchronous function to fetch benefits from the API and update state accordingly.
+   */
   const getBenefits = async () => {
     setLoading(true);
     try {
@@ -37,7 +38,12 @@ export const DashboardPage = () => {
     }
   };
 
-  //peticion que obtiene clientes
+  /**
+   * Asynchronous function to fetch customers from the API and update the state with the response data.
+   *
+   * @param None
+   * @return None
+   */
   const getCustomers = async () => {
     try {
       const url =`${import.meta.env.VITE_API_URL}/customers`;
@@ -55,7 +61,11 @@ export const DashboardPage = () => {
     }
   };
 
-  //peticion que obtiene Productos
+  /**
+   * Fetches products from the API and sets the products state if the response is successful, otherwise logs an error.
+   *
+   * @return {void} 
+   */
   const getProducts = async () => {
     try {
       const url =`${import.meta.env.VITE_API_URL}/products`;
@@ -71,7 +81,11 @@ export const DashboardPage = () => {
     }
   
   };
-//Peticion que obtiene orders
+  /**
+   * Asynchronous function to retrieve orders from the API and handle the response or error.
+   *
+   * @return {void} 
+   */
   const getOrders = async () => {
     try {
       const url =`${import.meta.env.VITE_API_URL}/orders`;
@@ -105,7 +119,7 @@ export const DashboardPage = () => {
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
+                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "220px" }}
               >
                 <Link to="/benefits">◉ See more</Link>
               </div>
@@ -168,7 +182,7 @@ export const DashboardPage = () => {
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
+                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "190px" }}
               >
                 <Link to="/customers">◉ See more</Link>
               </div>
@@ -235,7 +249,7 @@ export const DashboardPage = () => {
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
+                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "210px" }}
               >
                 <Link to="/products">◉ See more</Link>
               </div>
@@ -298,7 +312,7 @@ export const DashboardPage = () => {
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px" }}
+                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "280px" }}
               >
                 <Link to="/orders">◉ See more</Link>
               </div>
