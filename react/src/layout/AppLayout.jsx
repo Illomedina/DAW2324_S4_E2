@@ -33,7 +33,8 @@ export default function AppLayout({ children, Page, Steps }) {
   }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigation = [
+
+  let navigation = [
     { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
     { name: "Users", href: "/users", icon: UsersIcon, current: false },
     {
@@ -52,6 +53,77 @@ export default function AppLayout({ children, Page, Steps }) {
     { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
     { name: "Settings", href: "/settings", icon: CogIcon, current: false },
   ];
+
+  const adminNavigation = [
+    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+    { name: "Users", href: "/users", icon: UsersIcon, current: false },
+    {
+      name: "Customers",
+      href: "/customers",
+      icon: UserGroupIcon,
+      current: false,
+    },
+    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
+    {
+      name: "Orders",
+      href: "/orders",
+      icon: DocumentDuplicateIcon,
+      current: false,
+    },
+    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
+    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
+  ];
+
+  // Define las secciones de navegación para cada tipo de usuario
+  const managerNavigation = [
+    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+    {
+      name: "Customers",
+      href: "/customers",
+      icon: UserGroupIcon,
+      current: false,
+    },
+    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
+    {
+      name: "Orders",
+      href: "/orders",
+      icon: DocumentDuplicateIcon,
+      current: false,
+    },
+    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
+  ];
+  const supportNavigation = [
+    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+    {
+      name: "Customers",
+      href: "/customers",
+      icon: UserGroupIcon,
+      current: false,
+    },
+    {
+      name: "Orders",
+      href: "/orders",
+      icon: DocumentDuplicateIcon,
+      current: false,
+    },
+  ];
+
+  //let navigation = [];
+
+  switch (data.idRole) {
+    case "1":
+      navigation = adminNavigation;
+      break;
+    case "2":
+      navigation = managerNavigation;
+      break;
+    case "3":
+      navigation = supportNavigation;
+      break;
+    default:
+      console.log("NO tienes rol");
+      break;
+  }
 
   for (var i = 0; i < navigation.length; i++) {
     if (navigation[i].current == true) {
@@ -98,8 +170,6 @@ export default function AppLayout({ children, Page, Steps }) {
   const UserNavigation = () => {
     handleNavigation(action);
   };
-
-
 
   return (
     <>
