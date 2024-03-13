@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Insertar usuarios de ejemplo
+      
         DB::table('users')->insert([
             [
                 'idRole' => 1, 
