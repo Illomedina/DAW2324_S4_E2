@@ -17,8 +17,12 @@ import BenefitsCreate from "../pages/benefits/create/BenefitsCreate";
 import BenefitsEdit from "../pages/benefits/edit/BenefitsEdit";
 import axios from "axios";
 
-import User from "../pages/users/User";
-import RegisterForm from "../pages/users/RegisterForm";
+//import User from "../pages/users/User";
+import UserPage from "../pages/users/UserPage";
+import UsersCreate from "../pages/users/UsersCreate";
+import UsersEdit from "../pages/users/UsersEdit";
+import UsersShow from "../pages/users/UsersShow"
+//import RegisterForm from "../pages/users/RegisterForm";
 import SettingPage from "../pages/setting/SettingPage";
 import SettingForm from "../pages/setting/SettingForm";
 
@@ -63,9 +67,18 @@ export const Router = () => {
         element={<BenefitsCreate></BenefitsCreate>}
       />
       <Route path="/benefits=edit/:id" element={<BenefitsEdit />} />
-      <Route path="/user" element={<User />} />
-      <Route path="/user/create" element={<RegisterForm />} />
+      
+      //Users
+      <Route strict path="/users/:userId" element={<UsersShow />} />
+      <Route path="/users" element={<UserPage />} />
+      <Route path="/users/:userId/edit" element={<UsersEdit />} />
+      <Route path="/users/create" element={<UsersCreate></UsersCreate>} />
+
+
+
+
       <Route path="/*" element={<PageNotFound />} />
+
       // ORDERS
       <Route path="/orders" element={<OrdersPage />} />
       <Route path="/orders/:idOrder" element={<OrderDetailsPage />} />

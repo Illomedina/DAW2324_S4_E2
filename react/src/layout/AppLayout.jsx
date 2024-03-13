@@ -35,7 +35,7 @@ export default function AppLayout({ children, Page, Steps }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigation = [
     { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Users", href: "/user", icon: UsersIcon, current: false },
+    { name: "Users", href: "/users", icon: UsersIcon, current: false },
     {
       name: "Customers",
       href: "/customers",
@@ -347,7 +347,7 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              {!window.location.href.includes("benefits") || !window.location.href.includes("dashboard") && (
+              {window.location.href.includes("benefits") == false || window.location.href.includes("Benefits") == false || window.location.href.includes("dashboard") == false || window.location.href.includes("Dashboard") == false && (
                 <Breadcrumb steps={Steps} />
               )}
               {children}
