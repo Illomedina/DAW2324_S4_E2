@@ -11,11 +11,15 @@ export const Login = () => {
   const [token, setToken] = useState("");
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
+
+  
+  //Este metodo se encarga de hacer el login recibiendo usuario y contraseña
   const handleLogin = async (user, password) => {
     setAlert(false);
+
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/login",
+      //hacemos peticion con axios pasando parametros
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`,
         {
           user,
           password,
@@ -29,9 +33,10 @@ export const Login = () => {
       );
 
       if (response.status === 200) {
+        //si respuesta es igual a 200 guardamos usuario y token
         const { token } = response.data;
         const { user } = response.data;
-
+        //verificamos que no esten vacios
         if (!token) {
           console.error("No token found in the response");
           setAlert(true);
@@ -40,32 +45,34 @@ export const Login = () => {
           console.error("No user found in the response");
           setAlert(true);
         }
-
+        //si no estan vacios se guardan los datos
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         setToken(token);
+        //navegamos a /dashboard
         navigate('/dashboard');
       }
     } catch (error) {
       console.error("Error logging in:", error);
+      //en caso de error mostramos alerta
       setAlert(true);
     }
   };
 
+//Este metodo se encarga de comprovar que hayan datos cuando se envie la peticion
   const onSubmit = () => {
     const newErrors = {};
-
     if (!user) {
       newErrors.user = "user is required";
     }
-
     if (!password) {
       newErrors.password = "Password is required";
     }
-
+    //en caso de haber errores se mostraran 
     setErrors(newErrors);
 
     if (!newErrors.user && !newErrors.password) {
+      //si no hay errores realizamos login
       handleLogin(user, password);
     }
   };
@@ -91,7 +98,7 @@ export const Login = () => {
                 ></path>
               </svg>
             </div>
-            
+
             <h1 className="text-5xl font-bold primary-color">
               BackOffice Area
             </h1>
@@ -101,14 +108,14 @@ export const Login = () => {
           </div>
           <div className="w-full pr-20 md:w-full lg:w-9/12 mx-auto md:mx-0">
             {/* TODO: */}
-            {alert && ( 
-          <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10">
-              <span className="flex flex-col justify-center text-white font-bold grow-[1] max-w-[90%] text-center">
-                Your request has been denied
-              </span>
-              <div className="w-[10%] bg-red-400 rounded-r-2xl shadow-[0_0_20px_#ff444477]"></div>
-            </div>
-             )}
+            {alert && (
+              <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10">
+                <span className="flex flex-col justify-center text-white font-bold grow-[1] max-w-[90%] text-center">
+                  Your request has been denied
+                </span>
+                <div className="w-[10%] bg-red-400 rounded-r-2xl shadow-[0_0_20px_#ff444477]"></div>
+              </div>
+            )}
             <div className="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
               <h2 className="text-2xl font-bold text-primaryColor text-left mb-5">
                 Sign in
@@ -116,7 +123,7 @@ export const Login = () => {
               <form action="" className="w-full">
                 <div id="input" className="flex flex-col w-full my-5">
                   <label htmlFor="user" className="text-primaryColor mb-2">
-                    user
+                    User
                   </label>
                   <input
                     type="text"
@@ -175,11 +182,9 @@ export const Login = () => {
                   </button>
                   <div className="flex justify-evenly mt-5">
                     <a
-                      href="#"
                       className="w-full text-center font-medium text-gray-500"
                     ></a>
                     <a
-                      href="#"
                       className="w-full text-center font-medium text-gray-500"
                     ></a>
                   </div>

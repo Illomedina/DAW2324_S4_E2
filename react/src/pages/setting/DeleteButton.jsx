@@ -12,7 +12,7 @@ const DeleteButton = (props) => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/settings/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const DeleteButton = (props) => {
 
       if (response.ok) {
         alert('Datos eliminados correctamente');
-        // Puedes realizar otras acciones después de eliminar, si es necesario
+        window.location.reload();
       } else {
         alert('Error al eliminar los datos');
       }

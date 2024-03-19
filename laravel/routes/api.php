@@ -48,25 +48,31 @@ Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
 
-// Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+//Group of routes that are authenticated through auth:sanctum
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
-    Route::get('/getBenefits', [AuthController::class, 'getAll']);
+    Route::get('/getBenefits', [BenefitsController::class, 'index']);
     Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
     Route::post('createBenefit', [BenefitsController::class, 'create']);
     Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
     Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
 });
 
+//USERS-Show all the users
 Route::get('/users', [UserController::class, 'index']);
-
-// Ruta para el crear un usuario
-Route::post('createUser',  [UserController::class, 'store']);
+//Route to edit 
+Route::put('/users/{id}', [UserController::class, 'update']);
+// Route to create 
+Route::post('/createUser',  [UserController::class, 'store']);
 //Ruta para eliminar un usuario
 Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+
+
+
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);

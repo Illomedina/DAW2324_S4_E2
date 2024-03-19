@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import AgGridTable from '../../components/table/TableSimple';
 import AppLayout from '../../layout/AppLayout';
-import EditButton from '../users/EditButton';
-import DeleteButton from '../../components/table/DeleteButton';
+import EditButton from './EditButton';
+import DeleteButton from './DeleteButton';
 
 
 const SettingPage = () => {
@@ -12,7 +12,7 @@ const SettingPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/settings');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/settings`);
         const data = await response.json();
         setJsonData(data);
       } catch (error) {

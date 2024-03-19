@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-      //  Schema::table('users', function (Blueprint $table) {
-        //    $table->string('password', 200)->change();
-        //});
+        Schema::table('benefits', function (Blueprint $table) {
+            $table->string('year')->nullable();
+        });
     }
 
     /**
@@ -21,9 +21,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //Schema::table('users', function (Blueprint $table) {
-            //
-     //   });
+        Schema::table('benefits', function (Blueprint $table) {
+            $table->dropColumn('year');
+        });
     }
-
 };
+
+

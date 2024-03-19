@@ -12,13 +12,25 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        DB::table('users')->insert([
-            'name' => 'Admin',
+    {       
+        // DB::table('users')->insert([
+        //     'name' => 'Admin',
+        //     'surname' => '-',
+        //     'user' => 'Admin', 
+        //     'email' => 'admin@example.com',
+        //     'password' =>Hash::make(config('configuration.ADMIN_PASSWORD')),
+        // ]);
+      DB::table('users')->insert([
+            'name' => 'gabriel',
             'surname' => '-',
             'user' => 'Admin', 
             'email' => 'admin@example.com',
-            'password' =>Hash::make(env('ADMIN_PASSWORD')),
+            'password' =>Hash::make('password'),
         ]);
+
+        $this->call([
+            BenefitsTableSeeder::class,
+        ]);
+        
     }
 }

@@ -11,6 +11,7 @@ const EditForm = () => {
   const [month, setMonth] = useState("");
   const [income, setIncome] = useState("");
   const [expense, setExpense] = useState("");
+  const [year, setYear] = useState("");
   var [profit, setProfit] = useState("");
   const [loading, setLoading] = useState(false); 
   const token = localStorage.getItem('token');
@@ -23,15 +24,24 @@ const EditForm = () => {
     getFields(id);
   }, []);
 
+  /**
+   * A function to retrieve fields based on the given ID.
+   *
+   * @param {number} id - the ID used to retrieve the fields
+   * @return {Promise<void>} a Promise that resolves when the fields are retrieved
+   */
   const getFields = async (id) => {
     setLoading(true); 
     try {
-      const response = await axios.get(`http://localhost:8000/api/getOneBenefit/${id}`);
+      const url =`${import.meta.env.VITE_API_URL}/getOneBenefit/${id}`;
+      const response = await axios.get(url);
+      console.log(response.data);
       setId(response.data.id);
       setMonth(response.data.month);
       setIncome(response.data.income);
       setExpense(response.data.expense);
       setProfit(response.data.profit);
+      setYear(response.data.year);
 
     } catch (error) {
       console.error('Error deleting resource:', error);
@@ -40,12 +50,21 @@ const EditForm = () => {
     }
   };
 
-
+  /**
+   * Function to validate input data for month, income, expense, and year.
+   *
+   * @return {void} 
+   */
   const validate = () => {
     let isValid = true;
 
     if (month.trim() === "") {
         isValid = false;
+    }
+
+    if(month != "January" || month != "February" || month != "March" || month != "April" || month != "May" || month != "June" || month != "July" || month != "August" || month != "September" || month != "October" || month != "November" || month != "December"){
+      isValid = false;
+      newErrors.month = "Month has to be valid";
     }
 
     if (isNaN(parseFloat(income)) || !isFinite(income) || parseFloat(income) <= 0) {
@@ -56,6 +75,10 @@ const EditForm = () => {
         isValid = false;
     }
 
+    if (isNaN(parseInt(year)) || !isFinite(year) || parseInt(year) <= 0) {
+      isValid = false;
+  }
+
     if (parseFloat(income) < parseFloat(expense)) {
         isValid = false;
     }
@@ -65,15 +88,26 @@ const EditForm = () => {
     }
 };
 
-  const handleUpdate = async (idBenefit, month, income, expense, profit) => {
+  /**
+   * An asynchronous function to handle the update of a benefit with the given parameters.
+   *
+   * @param {string} idBenefit - The ID of the benefit to be updated
+   * @param {string} month - The month for the update
+   * @param {number} income - The income for the update
+   * @param {number} expense - The expense for the update
+   * @param {number} year - The year for the update
+   * @param {number} profit - The profit for the update
+   */
+  const handleUpdate = async (idBenefit, month, income, expense,year, profit) => {
     setAlertSucces(false);
-    const url = "http://localhost:8000/api/UpdateBenefit";
+    const url =`${import.meta.env.VITE_API_URL}/UpdateBenefit/${id}`;
     try {
       const response = await axios.post(url, {
         idBenefit: idBenefit,
         month: month,
         income: income,
         expense: expense,
+        year: year,
         profit: profit
       });
   
@@ -101,7 +135,7 @@ const EditForm = () => {
           </main>
         )}
 
-{alertError && (
+    {alertError && (
           <main>
             <section>
               <div className="alert alert-1-warning">
@@ -148,8 +182,15 @@ const EditForm = () => {
               <input
                 type="number"
                 className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="expense"
+                placeholder="Expense"
                 value={expense}
+                onChange={(e) => setExpense(e.target.value)}
+              />
+              <input
+                type="number"
+                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                placeholder="Year"
+                value={year}
                 onChange={(e) => setExpense(e.target.value)}
               />
               <label className="labels">Profit</label>

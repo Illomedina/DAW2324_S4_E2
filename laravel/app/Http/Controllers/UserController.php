@@ -1,55 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
-//Request proporciona métodos para examinar la solicitud HTTP
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Exceptions\Exception;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
     //métodos para controlar rutas
     public function index(){
-        $users = User::all();
-
-        return $users;
-      
-    }
-
-    public function create(){
-        //muestra el formulario para crear usuarios
-        return view('users.create');
-    }
-
-    public function show($id){
-        //Encuentra el id del usuario
-        $user = User::find($id);
-
-        // Verifica si el usuario existe
-        if (!$user) {
-            return redirect()->route('users.index')->with('error', 'Usuario no encontrado');
+        try{   
+            $users = User::all();
+            return response()->json([
+                'success' => true,
+                'message' => 'Users successfully recovered',
+                'data' => $users,
+            ], 200);
+        } catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Error getting users.',
+                'error' => $e->getMessage(), 
+            ], 500);
         }
-        
-        // Verifica si el usuario autenticado es el dueño del perfil o si es un administrador
-        if (auth()->user()->id === $user->id) {
-            // Devuelve la vista con el perfil del usuario
-            return redirect()->route('users.index')->with('error', 'No tienes permiso para ver este perfil');
-        } 
-
-        return view('users.show', compact('user'));
-    }
-    
-    public function showUser(){
-        // Lógica para mostrar el perfil del usuario (puedes adaptarla según tus necesidades)
-        //$user = auth()->user();
-        //return view('users.show', compact('user'));
-        return view('user'); // Reemplaza 'your_react_view' con el nombre real de tu vista
     }
 
-    public function store(Request $request){
+
+    public function store(Request $request)
+    {
+        $rules = [
+            'idRole' => 'nullable|exists:roles,id',
+            'name' => 'required|string|max:50',
+            'user' => 'required|string|max:50|unique:users',
+            'surname' => 'required|string|max:50',
+            'password' => 'required|string|min:6',
+            'email' => 'required|string|email|max:255|unique:users',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $user = User::create([
-            'idRole' =>1,
+            'idRole' =>$request->idRole,
             'name' => $request->name,
             'surname' => $request->surname,
             'user' => $request->user,
@@ -57,38 +57,71 @@ class UserController extends Controller
             'password' => $request->password,
         ]);
 
-        $user->save();
+        $user->save();  
+        
+        return response()->json(['message' => 'User successfully created.'], 201);
+
     }
 
-    public function edit($id){
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
 
-        $user = User::find($id);
-        return view('users.edit', compact('user'));
+            // Data Validate
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:50',
+                'surname' => 'required|string|max:50',
+                'user' => 'required|string|max:50',
+                'email' => 'required|string|email|max:255',
+                'password' => 'nullable|string|min:6',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 422);
+            }
+
+            // Update User Data
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->user = $request->user;
+            $user->email = $request->email;
+
+            // If the user change the password, it is updated
+            if ($request->has('password')) {
+                $user->password = bcrypt($request->password);
+            }
+
+            // If the role change, it is updated
+            if ($request->has('idRole')) {
+                $user->idRole = $request->idRole;
+            }
+
+
+            $user->save();
+
+            // Devolver el usuario actualizado
+            return response()->json(['success' => true, 'user' => $user], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Usuario no encontrado.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al actualizar el usuario.'], 500);
+        }
     }
-
-    public function update(Request $request, $id){
-        // Valida los datos del formulario
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'surname' => 'required|string|max:50',
-            'user' => 'required|string|max:30',
-            'password' => 'required|string|max:400',
-            'email' => 'required|email|max:255|unique:users,email,' . $id,
-        ]);
-
-        // Actualiza el usuario en la base de datos
-        User::find($id)->update($request->all());
-
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
-    }
+    
 
     public function destroy($id)
     {
-        // Elimina el usuario de la base de datos
-        //User::find($id)->delete();
-        $user = User::destroy($id);
-        return $user;
-        //return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente');
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            
+            return response()->json(['message' => 'User successfully deleted'], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'User not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete user'], 500);
+        }
     }
     
 
