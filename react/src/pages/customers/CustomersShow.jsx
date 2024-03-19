@@ -3,6 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../layout/AppLayout';
 
 
+/**
+ * Renders the customer information page.
+ *
+ * @return {JSX.Element} The customer information page component.
+ */
 export const CustomersShow = () => {
   const navigate = useNavigate();
 

@@ -3,11 +3,17 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Renders a button that navigates to the customer details page when clicked.
+ *
+ * @param {Object} data - The customer data to be displayed
+ * @return {JSX.Element} The button element with a click event to navigate to customer details
+ */
 const showCustomer = ({ data }) => {
   const navigate = useNavigate();
 
   return (
-    <button onClick={() => navigate(`/customers/${data.id}`, {state: {customer: data}})}>
+    <button onClick={() => navigate(`/customers/${data.id}`, { state: { customer: data } })}>
       <svg style={{
         display: 'flex',
         justifyContent: 'center',
@@ -23,15 +29,21 @@ const showCustomer = ({ data }) => {
 };
 
 
+/**
+ * Renders a table component for displaying customer data.
+ *
+ * @param {Array} customers - An array of customer objects to display in the table.
+ * @return {JSX.Element} The JSX element representing the customer table.
+ */
 export const CustomersTable = ({ customers }) => {
 
   const colDefs = [
     { field: 'name', headerName: 'Name', filter: true },
-    { field: 'mail', headerName: 'Email', filter: true  },
-    { field: 'username', headerName: 'Username', filter: true  },
-    { field: 'postcode', headerName: 'PostalCode', filter: true  },
-    { field: 'is_validated', headerName: 'Validated', filter: true  },
-    { field: 'customerStatus', headerName: 'Status', filter: true  },
+    { field: 'mail', headerName: 'Email', filter: true },
+    { field: 'username', headerName: 'Username', filter: true },
+    { field: 'postcode', headerName: 'PostalCode', filter: true },
+    { field: 'is_validated', headerName: 'Validated', filter: true },
+    { field: 'customerStatus', headerName: 'Status', filter: true },
     // { field: 'phone', headerName: 'Phone' },
     // { field: 'address', headerName: 'Address' },
     { headerName: 'Show', cellRenderer: showCustomer }
