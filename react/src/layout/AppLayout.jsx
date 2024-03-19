@@ -25,82 +25,50 @@ function classNames(...classes) {
 export default function AppLayout({ children, Page, Steps }) {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
-  let data;
+  const idRole = localStorage.getItem("idRole");
+
+  let data, role;
   if (user) {
     data = JSON.parse(user);
+    console.log("Datos del usuario:", data);
+    role = JSON.parse(idRole);
+    
   } else {
     data = "";
+    role = "";
   }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   let navigation = [];
 
-  let adminNavigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Users", href: "/users", icon: UsersIcon, current: false },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
-    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
-  ];
-
-  // Define las secciones de navegación para cada tipo de usuario
-  let managerNavigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
-  ];
-  let supportNavigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-  ];
-
-  //let navigation = [];
-
-  switch (data.idRole) {
+  switch (role) {
     case 1:
-      navigation = adminNavigation;
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Users", href: "/users", icon: UsersIcon, current: false },
+        { name: "Customers", href: "/customers", icon: UserGroupIcon, current: false },
+        { name: "Products", href: "/products", icon: CalendarIcon, current: false },
+        { name: "Orders", href: "/orders", icon: DocumentDuplicateIcon, current: false },
+        { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
+        { name: "Settings", href: "/settings", icon: CogIcon, current: false },
+      ];
       break;
     case 2:
-      navigation = managerNavigation;
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Customers", href: "/customers", icon: UserGroupIcon, current: false },
+        { name: "Products", href: "/products", icon: CalendarIcon, current: false },
+        { name: "Orders", href: "/orders", icon: DocumentDuplicateIcon, current: false },
+        { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
+      ];
       break;
     case 3:
-      navigation = supportNavigation;
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Customers", href: "/customers", icon: UserGroupIcon, current: false },
+        { name: "Orders", href: "/orders", icon: DocumentDuplicateIcon, current: false },
+      ];
       break;
     default:
       console.log("NO tienes rol");
