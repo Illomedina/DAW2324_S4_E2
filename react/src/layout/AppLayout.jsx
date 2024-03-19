@@ -34,27 +34,9 @@ export default function AppLayout({ children, Page, Steps }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  let navigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Users", href: "/users", icon: UsersIcon, current: false },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
-    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
-  ];
+  let navigation = [];
 
-  const adminNavigation = [
+  let adminNavigation = [
     { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
     { name: "Users", href: "/users", icon: UsersIcon, current: false },
     {
@@ -75,7 +57,7 @@ export default function AppLayout({ children, Page, Steps }) {
   ];
 
   // Define las secciones de navegación para cada tipo de usuario
-  const managerNavigation = [
+  let managerNavigation = [
     { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
     {
       name: "Customers",
@@ -92,7 +74,7 @@ export default function AppLayout({ children, Page, Steps }) {
     },
     { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
   ];
-  const supportNavigation = [
+  let supportNavigation = [
     { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
     {
       name: "Customers",
@@ -111,13 +93,13 @@ export default function AppLayout({ children, Page, Steps }) {
   //let navigation = [];
 
   switch (data.idRole) {
-    case "1":
+    case 1:
       navigation = adminNavigation;
       break;
-    case "2":
+    case 2:
       navigation = managerNavigation;
       break;
-    case "3":
+    case 3:
       navigation = supportNavigation;
       break;
     default:
