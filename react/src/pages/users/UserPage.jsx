@@ -29,10 +29,10 @@ export const UserPage = () => {
                 }
             } catch (error) {
                 console.error("There was an error fetching the users:", error);
-            } finally{
+            } finally {
                 setLoading(false);
             }
-            
+
         };
         fetchData();
     }, []);
@@ -47,7 +47,7 @@ export const UserPage = () => {
                         <button
                             type="button"
                             onClick={() => navigate('/users/create')}
-                            className="block rounded-md bg-teal-400 px-3 py-2 text-center text-sm font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300"
                         >
                             Add User
                         </button>

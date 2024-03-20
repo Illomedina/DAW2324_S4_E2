@@ -368,15 +368,13 @@ export const CustomersCreate = () => {
 
           <div className="px-4 py-4 text-right sm:px-6">
             <button type="button" onClick={() => navigate('/customers')}
-              className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
-    hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-    focus-visible:outline-gray-900"
+              className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full transition duration-300"
             >
               Cancel
             </button>
 
             <button type="submit" onClick={onSubmit}
-              className="inline-flex justify-center rounded-md ml-2 bg-teal-400 px-3 py-2 text-md font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+              className="ml-4 bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
               Create
             </button>
           </div>
