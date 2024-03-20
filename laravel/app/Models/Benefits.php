@@ -20,7 +20,8 @@ class Benefits extends Model
         'month',
         'income',
         'expense',
-        'profit'
+        'profit',
+        'year'
     ];
 
     use HasFactory;

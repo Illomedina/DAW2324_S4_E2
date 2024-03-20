@@ -14,14 +14,20 @@ function SectionTable({ SectionName }) {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  const [chartData] = useState([]);
-  const [labels] = useState([]);
+  var [chartData] = useState([]);
+  var [labels] = useState([]);
   const [tooltipContent, setTooltipContent] = useState("");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipX, setTooltipX] = useState(0);
   const [tooltipY, setTooltipY] = useState(0);
   const [alertError, setAlertError] = useState(false);
   const [alertSucces, setAlertSucces] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [years, setYears] = useState([]);
+  const actualYear = new Date().getFullYear();
+
+
 
   /**
    * Function to show a tooltip based on the event target.
@@ -36,6 +42,15 @@ function SectionTable({ SectionName }) {
     setTooltipOpen(true);
   };
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+  
+  const handleInputChange = (event) => {
+    setSearchTerm(event.value.toLowerCase());
+    console.log(searchTerm);
+  };
+
   /**
    * Hides the tooltip by resetting its content and position, and closing it.
    */
@@ -48,8 +63,61 @@ function SectionTable({ SectionName }) {
 
   useEffect(() => {
     getBenefits();
+    getYears();
   }, []);
 
+/**
+ * Retrieves all years from the API and sets the years state.
+ *
+ * @return {Promise<void>} - A promise that resolves when the years have been retrieved and set.
+ */
+  const getYears = async () => {
+      const url = `${import.meta.env.VITE_API_URL}/getAllYears`;
+      const response = await axios.get(url, {
+        Accept: "application/json",
+        "Content-Type": "aplication/json"
+      });
+
+      if(response.status === 200){
+        setYears(response.data);
+      }else{
+        console.log("Bad response");
+      }
+
+  }
+
+  /**
+   * Fetches benefits data for a specific year.
+   *
+   * @param {number} year - The year for which benefits data is requested
+   * @return {Promise} A Promise that resolves when the benefits data is successfully retrieved
+   */
+  const getBenefitsByYear = async (year) => {
+    const url = `${import.meta.env.VITE_API_URL}/getBenefitsByYear/${year}`;
+    const response = await axios.get(url, {
+      Accept: "application/json",
+      "Content-Type": "aplication/json"
+    });
+
+    if(response.status === 200){
+      setBenefits(response.data);
+  
+    }else{
+      console.log("Bad response");
+    }
+  }
+
+  /**
+   * A description of the entire function.
+   *
+   * @param {type} year - description of parameter
+   * @return {type} 
+   */
+  const handleYearClick = (year) => {
+    getBenefitsByYear(year);
+  }
+
+  
   /**
    * Retrieves benefits from the specified API endpoint and sets the retrieved benefits and profit data for each month in the chart.
    *
@@ -57,8 +125,9 @@ function SectionTable({ SectionName }) {
    */
   const getBenefits = async () => {
     setLoading(true);
+
     try {
-      const url = `${import.meta.env.VITE_API_URL}/getBenefits`;
+      const url = `${import.meta.env.VITE_API_URL}/getBenefitsByYear/${actualYear}`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -171,12 +240,27 @@ function SectionTable({ SectionName }) {
         </main>
       )}
 
+      <div className="relative group mb-10">
+        <button id="dropdown-button" onClick={toggleDropdown} className="inline-flex justify-center w-50 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
+          <span className="mr-2">Select Year</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+        <div id="dropdown-menu" className={`z-10 absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1 ${isOpen ? '' : 'hidden'}`}>
+          <input id="search-input" onChange={handleInputChange} value={searchTerm} className="block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none" type="text" placeholder="Search years" autoComplete="off" />
+          {years.map((year, i) => (   
+          <a key={i} onClick={() => handleYearClick(year)} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">{year}</a>
+          ))}
+          </div>
+      </div>
+
       <div className="flex">
         {/* Aqui pintamos la tabla */}
         <div className="relative flex max-w-[650px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
           <div className="headerContainer">
             <h4 className="text-lg font-bold text-primaryColor columns-3">
-              {SectionName}
+              Table
             </h4>
             <div className="buttonContainer">
               <Link className="buttonCreate" to="/benefits=create">
@@ -188,6 +272,12 @@ function SectionTable({ SectionName }) {
             <table className="table divide-y divide-gray-200">
               <thead className="bg-gray-100">
                 <tr>
+                <th
+                    scope="col"
+                    className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                  >
+                    Year
+                  </th>
                   <th
                     scope="col"
                     className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
@@ -216,12 +306,6 @@ function SectionTable({ SectionName }) {
                     scope="col"
                     className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                   >
-                    Year
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                  >
                     Modify
                   </th>
                 </tr>
@@ -230,6 +314,9 @@ function SectionTable({ SectionName }) {
                 {/* Mapeamos lo que recibimos de getBenefits, esto es como un forEach */}
                 {benefits.map((benefit, i) => (
                   <tr key={benefit.id}>
+                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                      {benefit.year}
+                    </td>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900">
                       {benefit.month}
                     </td>
@@ -242,11 +329,9 @@ function SectionTable({ SectionName }) {
                     <td className="py-4 px-6 text-sm font-medium text-gray-900">
                       {benefit.profit}€
                     </td>
-                    <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                      {benefit.year}
-                    </td>
-                    <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                    <td className="py-4 px-6 text-sm font-medium text-gray-900 flex">
                       {/* En el momento que el usuario clique aqui le pasaremos el id de la tabla en question, esto sirve para que se puedan enviar datos a otras pantallas */}
+                     
                       <Link to={`/benefits=edit/${benefit.id}`}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -290,10 +375,10 @@ function SectionTable({ SectionName }) {
             <div className="md:flex md:justify-between md:items-center">
               <div>
                 <h2 className="text-xl text-gray-800 font-bold leading-tight">
-                  Benefits chart
+                  Chart
                 </h2>
                 <p className="mb-2 text-gray-600 text-sm">
-                  Monthly Average of Year 2024
+                  Monthly Benefits of Year 2024
                 </p>
               </div>
               <div className="mb-4">

@@ -17,6 +17,7 @@ const CreateForm = ({ section }) => {
   const [year, setYear] = useState("");
   var [profit, setProfit] = useState("");
   profit = income - expense;
+
   const [alert, setAlert] = useState(false);
   const [errors, setErrors] = useState({});
   const token = localStorage.getItem("token");
@@ -28,76 +29,61 @@ const CreateForm = ({ section }) => {
   const validate = () => {
     let isValid = true;
     const newErrors = {};
+
     if (month.trim() === "") {
       isValid = false;
       newErrors.month = "Month is required";
     }
-
-    if(month != "January" || month != "February" || month != "March" || month != "April" || month != "May" || month != "June" || month != "July" || month != "August" || month != "September" || month != "October" || month != "November" || month != "December"){
+    
+   if (month.trim() !== 'January' && month.trim() !== 'February' && month.trim() !== 'March' && month.trim() !== 'April' && month.trim() !== 'June' && month.trim() !== 'July' && month.trim() !== 'August' && month.trim() !== 'September' && month.trim() !== 'October' && month.trim() !== 'November' && month.trim() !== 'December') {
+        isValid = false;
+        newErrors.month = "Month must be valid";
+    }
+   
+    if (isNaN(parseFloat(income)) || !isFinite(income) || parseFloat(income) <= 0) {
       isValid = false;
-      newErrors.month = "Month has to be valid";
+      newErrors.income = "Income must be a number greater than 0";
+    }
+    if (isNaN(parseFloat(expense)) || !isFinite(expense) || parseFloat(expense) <= 0) {
+      isValid = false;
+      newErrors.expense = "Expense must be a number greater than 0";
     }
 
-    if (
-      isNaN(parseFloat(income)) ||
-      !isFinite(income) ||
-      parseFloat(income) <= 0
-    ) {
+
+    if (isNaN(parseInt(year)) || !isFinite(year) || parseInt(year) <= 0) {
       isValid = false;
-      newErrors.username = "Username is required";
+      newErrors.year = "Year must be a number greater than 0";
     }
 
-    if (
-      isNaN(parseFloat(expense)) ||
-      !isFinite(expense) ||
-      parseFloat(expense) <= 0
-    ) {
-      isValid = false;
-      newErrors.expense = "Income is required";
-    }
-
-    if (parseFloat(income) < parseFloat(expense)) {
-      isValid = false;
-    }
-
-    if (
-      isNaN(parseInt(year)) ||
-      !isFinite(year) ||
-      parseFloat(year) <= 0
-    ) {
-      isValid = false;
-      newErrors.year = "Year is required";
-    }
-
-    if (!isValid) {
+    if(isValid){
+      handleCreate(month, income, expense, profit, year);
+    }else{
       setErrors(newErrors);
     }
-
-    if (isValid) {
-      handleCreate(month, income, expense, year, profit);
-    }
+  
   };
 
   /**
    * Async function to handle creation of benefit data.
    *
-   * @param {type} month - description of the month parameter
-   * @param {type} income - description of the income parameter
-   * @param {type} expense - description of the expense parameter
-   * @param {type} profit - description of the profit parameter
-   * @return {type} description of the return value
    */
-  const handleCreate = async (month, income, expense, profit) => {
+  const handleCreate = async (month, income, expense, profit, year) => {
     setAlert(false);
+    console.log(month, income, expense, profit, year);
     const url =`${import.meta.env.VITE_API_URL}/createBenefit`;
     await axios({
       method: "POST",
       url: url,
-      data: { month, income, expense, year, profit },
+      data: { month, income, expense, profit, year},
     })
       .then(function (response) {
         if (response.status === 200) {
           console.log("Data inserted correctly");
+        }
+
+        if(response.status === 409) {
+          console.log("Year already exists");
+          setAlert(false);
         }
       })
       .catch(function (error) {
