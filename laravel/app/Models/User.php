@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-//La clase User hereda el Modelo del usuario desde porque 
-//la clase Authenticable hereda del modelo del user
+/**
+ * Model User
+ *
+ * Class representing the user entity in the database.
+ * Extends Authenticatable to use Laravel's authentication functionality.
+ */
 
 class User extends Authenticatable
 {
@@ -49,10 +52,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Relación con la tabla 'roles'
+    // Relationship to the 'roles' table
     public function role()
     {
-        return $this->belongsTo(Role::class, 'id');
+        return $this->belongsTo(Role::class, 'idRole');
     }
 
     public function isAdmin(): bool
