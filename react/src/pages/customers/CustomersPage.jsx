@@ -8,12 +8,24 @@ import axios from 'axios';
 const steps = [
     { name: 'Customers', href: '/customers', current: true },
 ]
+/**
+ * Generates a Customers Page component that fetches customers data from the API and displays them.
+ *
+ * @return {JSX.Element} The rendered Customers Page component
+ */
 export const CustomersPage = () => {
     const navigate = useNavigate();
     const [customers, setCustomers] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
+        /**
+         * Function that fetches customers from the API, sets the state with the retrieved data,
+         * and handles loading states and errors.
+         *
+         * @param None
+         * @return None
+         */
         const fetchCustomers = async () => {
             setLoading(true);
             try {
