@@ -40,10 +40,38 @@ Route::resource('/settings', SettingController::class);
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
-Route::get('/customers', [CustomerController::class, 'index']);
-Route::post('/customers/create', [CustomerController::class, 'store']);
-Route::put('/customers/{id}', [CustomerController::class, 'update']);
-Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
+/**
+ * Returns all the customers in the database
+ *
+ * @return Illuminate\Http\Response
+ */
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+
+/**
+ * Stores a new customer in the database
+ *
+ * @param Illuminate\Http\Request $request
+ * @return Illuminate\Http\Response
+ */
+Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
+
+/**
+ * Updates a customer in the database
+ *
+ * @param Illuminate\Http\Request $request
+ * @param int $id
+ * @return Illuminate\Http\Response
+ */
+Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+
+/**
+ * Deletes a customer from the database
+ *
+ * @param int $id
+ * @return Illuminate\Http\Response
+ */
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
 
 Route::get('/products/{id}', [ProductController::class, 'show']);
 

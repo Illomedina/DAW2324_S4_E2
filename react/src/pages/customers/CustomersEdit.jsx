@@ -8,6 +8,12 @@ const steps = [
   { name: 'Edit Customer', href: '/customers/create', current: true },
 ]
 
+/**
+ * Edit customer information and handle deletion.
+ *
+ * @param {object} e - The event object.
+ * @return {JSX.Element} The JSX element representing the customer edit form.
+ */
 export const CustomersEdit = () => {
   const navigate = useNavigate();
 
@@ -35,11 +41,23 @@ export const CustomersEdit = () => {
     is_validated: customer.is_validated,
   });
 
+  /**
+   * Updates the form data based on the input change event.
+   *
+   * @param {object} e - The input change event object.
+   * @return {void} This function does not return a value.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
 
+  /**
+   * Submit form data asynchronously.
+   *
+   * @param {Event} e - The event object
+   * @return {Promise<void>} Promise that resolves after form submission
+   */
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,6 +70,10 @@ export const CustomersEdit = () => {
       .catch(error => console.error('Error:', error));
   }
 
+  /**
+   * Deletes a customer using axios delete request.
+   *
+   */
   const onDelete = () => {
     axios.delete(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`)
       .then(() => {
