@@ -23,7 +23,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
     }
   };
 
-  
+
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
@@ -49,21 +49,9 @@ const AgGridTable = ({ rowData, columnDefs }) => {
   };
 
   return (
-    <div className="p-4 border rounded-md relative">
-      <div className="mb-4 flex items-center">
-        <ButtonToggle
-          onToggle={handleToggleEdit}
-        />
-      </div>
-    
-      <div className="absolute top-2 right-4">
-        <input
-          className="border p-2 rounded"
-          type="text"
-          placeholder="Search..."
-          value={searchText}
-          onChange={onSearchTextChange}
-        />
+    <div>
+      <div className="flex justify-end">
+        <ButtonToggle onToggle={handleToggleEdit} />
       </div>
       <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
         <AgGridReact
@@ -76,7 +64,7 @@ const AgGridTable = ({ rowData, columnDefs }) => {
           rowStyle={defaultColDef.rowStyle}
           paginationPageSize={defaultColDef.paginationPageSize}
           editType="fullRow"
-          fetchData={fetchData}        
+          fetchData={fetchData}
         />
       </div>
     </div>

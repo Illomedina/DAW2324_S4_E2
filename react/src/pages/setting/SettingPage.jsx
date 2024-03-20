@@ -5,6 +5,9 @@ import AppLayout from '../../layout/AppLayout';
 import EditButton from './EditButton';
 import DeleteButton from './DeleteButton';
 
+const steps = [
+  { name: 'Settings', href: '/settings', current: true },
+]
 
 const SettingPage = () => {
   const [jsonData, setJsonData] = useState([]);
@@ -24,27 +27,28 @@ const SettingPage = () => {
   }, []);
 
   const columnDefs = [
-    { headerName: 'Nom', 
+    {
+      headerName: 'Name',
       field: 'config',
     },
-    { headerName: 'value', field: 'value', },
+    { headerName: 'Value', field: 'value', },
     {
       headerName: 'Edit',
       cellRenderer: EditButton,
       editable: false,
-      cellStyle: { 'fontWeight': 'bold', 'color': 'green', } 
+      cellStyle: { 'fontWeight': 'bold', 'color': 'green', }
     },
     {
       headerName: 'Delete',
       cellRenderer: DeleteButton,
       editable: false,
-      cellStyle: { 'fontWeight': 'bold', 'color': 'red', } 
+      cellStyle: { 'fontWeight': 'bold', 'color': 'red', }
 
     },
   ];
 
   return (
-    <AppLayout>
+    <AppLayout Page={"Settings"} Steps={steps}>
       <div>
         <AgGridTable
           rowData={jsonData}
