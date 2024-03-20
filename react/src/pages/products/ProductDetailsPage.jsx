@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 import AppLayout from '../../layout/AppLayout';
+import Spinner from '../../components/Spinner';
 
 const steps = [
     { name: 'Products', href: '/products', current: false },
@@ -86,10 +87,6 @@ const ProductDetailsPage = () => {
         { cellRenderer: SalesPriceCellRenderer, headerName: 'Sales price', sortable: true, filter: true },
     ];
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
     if (error) {
         return <div>Error: {error.message}</div>;
     }
@@ -98,18 +95,20 @@ const ProductDetailsPage = () => {
         <AppLayout Page={"Product Details"} Steps={steps}>
             <div style={{ height: '80vh', width: '100%', overflowY: 'auto' }}>
                 <div className="ag-theme-quartz" style={{ height: '80vh', width: '100%' }}>
-                    {product && (
-                        <>
-                            <h1>{product.name}</h1>
-                            <AgGridReact
-                                rowData={details}
-                                columnDefs={detailColumnDefs}
-                                defaultColDef={defaultColDef}
-                                domLayout='autoHeight'
-                                pagination={true}
-                            />
-                        </>
-                    )}
+                    {isLoading
+                        ? <Spinner message='Loading Product...' />
+                        : (
+                            <>
+                                <h1>{product.name}</h1>
+                                <AgGridReact
+                                    rowData={details}
+                                    columnDefs={detailColumnDefs}
+                                    defaultColDef={defaultColDef}
+                                    domLayout='autoHeight'
+                                    pagination={true}
+                                />
+                            </>
+                        )}
                 </div>
             </div>
         </AppLayout>

@@ -9,6 +9,7 @@ import { PriceRangeCellRenderer } from '../../components/tables/products/cellRen
 import { ImageCellRenderer } from '../../components/tables/products/cellRenderers/ImageCellRenderer';
 import { EditProductCellRenderer } from '../../components/tables/products/cellRenderers/EditProductCellRenderer';
 import { ProductIsActiveCellRenderer } from '../../components/tables/products/cellRenderers/ProductIsActiveCellRenderer';
+import Spinner from '../../components/Spinner';
 const steps = [
     { name: 'Products', href: '/products', current: true },
 ]
@@ -18,11 +19,19 @@ export default function ProductsPage() {
 
     const [isEditable, setIsEditable] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/products`)
             .then((result) => result.json())
-            .then((data) => setRowData(data))
-            .catch((error) => console.error('Error fetching data: ', error));
+            .then((data) => {
+                setRowData(data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error('Error fetching data: ', error);
+                setIsLoading(false);
+            });
     }, []);
 
     const toggleEditable = () => setIsEditable(!isEditable);
@@ -130,17 +139,22 @@ export default function ProductsPage() {
                 {/* <ButtonFetchProductsAPI /> */}
             </div>
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
-
-                <AgGridReact
-                    rowData={rowData}
-                    defaultColDef={defaultColDef}
-                    columnDefs={colDefs}
-                    pagination={true}
-                    rowSelection="multiple"
-                    context={{ isEditable }}
-                    onCellClicked={handleCellClicked}
-                    autoSizeStrategy={autoSizeStrategy}
-                />
+                {isLoading
+                    ? <Spinner message='Loading Products...' /> // Asegúrate de tener un componente Spinner para mostrarlo aquí
+                    : (
+                        <>
+                            <AgGridReact
+                                rowData={rowData}
+                                defaultColDef={defaultColDef}
+                                columnDefs={colDefs}
+                                pagination={true}
+                                rowSelection="multiple"
+                                context={{ isEditable }}
+                                onCellClicked={handleCellClicked}
+                                autoSizeStrategy={autoSizeStrategy}
+                            />
+                        </>
+                    )}
             </div>
         </AppLayout>
     );
