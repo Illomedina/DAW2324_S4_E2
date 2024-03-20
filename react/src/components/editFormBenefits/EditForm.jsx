@@ -16,6 +16,7 @@ const EditForm = () => {
   const [loading, setLoading] = useState(false); 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+  const [errors, setErrors] = useState({});
 
   profit = income - expense;
   let { id } = useParams();
@@ -57,34 +58,37 @@ const EditForm = () => {
    */
   const validate = () => {
     let isValid = true;
+    const newErrors = {};
 
     if (month.trim() === "") {
-        isValid = false;
-    }
-
-    if(month != "January" || month != "February" || month != "March" || month != "April" || month != "May" || month != "June" || month != "July" || month != "August" || month != "September" || month != "October" || month != "November" || month != "December"){
       isValid = false;
-      newErrors.month = "Month has to be valid";
+      newErrors.month = "Month is required";
     }
-
+    
+   if (month.trim() !== 'January' && month.trim() !== 'February' && month.trim() !== 'March' && month.trim() !== 'April' && month.trim() !== 'June' && month.trim() !== 'July' && month.trim() !== 'August' && month.trim() !== 'September' && month.trim() !== 'October' && month.trim() !== 'November' && month.trim() !== 'December') {
+        isValid = false;
+        newErrors.month = "Month must be valid";
+    }
+   
     if (isNaN(parseFloat(income)) || !isFinite(income) || parseFloat(income) <= 0) {
-        isValid = false;
+      isValid = false;
+      newErrors.income = "Income must be a number greater than 0";
+    }
+    if (isNaN(parseFloat(expense)) || !isFinite(expense) || parseFloat(expense) <= 0) {
+      isValid = false;
+      newErrors.expense = "Expense must be a number greater than 0";
     }
 
-    if (isNaN(parseFloat(expense)) || !isFinite(expense) || parseFloat(expense) <= 0) {
-        isValid = false;
-    }
 
     if (isNaN(parseInt(year)) || !isFinite(year) || parseInt(year) <= 0) {
       isValid = false;
-  }
-
-    if (parseFloat(income) < parseFloat(expense)) {
-        isValid = false;
+      newErrors.year = "Year must be a number greater than 0";
     }
 
       if (isValid) {
-        handleUpdate(idBenefit, month, parseFloat(income), parseFloat(expense), parseFloat(income) - parseFloat(expense));
+        handleUpdate(idBenefit, month, income, expense,profit, year);
+    }else{
+      setErrors(newErrors);
     }
 };
 
@@ -98,17 +102,17 @@ const EditForm = () => {
    * @param {number} year - The year for the update
    * @param {number} profit - The profit for the update
    */
-  const handleUpdate = async (idBenefit, month, income, expense,year, profit) => {
+  const handleUpdate = async (idBenefit, month, income, expense,profit, year) => {
     setAlertSucces(false);
-    const url =`${import.meta.env.VITE_API_URL}/UpdateBenefit/${id}`;
+    const url =`${import.meta.env.VITE_API_URL}/UpdateBenefit`;
     try {
       const response = await axios.post(url, {
         idBenefit: idBenefit,
         month: month,
         income: income,
         expense: expense,
-        year: year,
-        profit: profit
+        profit: profit,
+        year: year
       });
   
       if (response.status === 200) {
@@ -209,7 +213,7 @@ const EditForm = () => {
               to="/benefits"
               className="buttonDelete flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
             >
-              Exit
+              Cancel
             </Link>
             <button
               className="buttonCreate flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"

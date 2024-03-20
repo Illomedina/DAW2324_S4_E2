@@ -83,10 +83,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::get('/getBenefits', [BenefitsController::class, 'index']);
+    Route::get('/getAllYears', [BenefitsController::class, 'getAllYears']);
     Route::delete('deleteBenefits/{id}', [BenefitsController::class, 'delete']);
     Route::post('createBenefit', [BenefitsController::class, 'create']);
     Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
     Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+    Route::get('getBenefitsByYear/{year}', [BenefitsController::class, 'getBenefitsByYear']);
     // PRODUCTS
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
