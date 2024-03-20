@@ -6,6 +6,7 @@ use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+
 class CustomerController extends Controller
 {
     /**

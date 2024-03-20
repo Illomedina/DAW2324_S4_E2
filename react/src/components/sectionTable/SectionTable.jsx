@@ -179,7 +179,7 @@ function SectionTable({ SectionName }) {
               {SectionName}
             </h4>
             <div className="buttonContainer">
-              <Link className="buttonCreate" to="/benefits=create">
+              <Link className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300" to="/benefits=create">
                 Create
               </Link>
             </div>
