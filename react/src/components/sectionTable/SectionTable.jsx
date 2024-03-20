@@ -303,7 +303,6 @@ function SectionTable({ SectionName }) {
       </div>
 
       <div className="flex">
-        {/* Aqui pintamos la tabla */}
         <div className="relative flex max-w-[650px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
           <div className="headerContainer">
             <h4 className="text-lg font-bold text-primaryColor columns-3">
@@ -358,7 +357,6 @@ function SectionTable({ SectionName }) {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y">
-                {/* Mapeamos lo que recibimos de getBenefits, esto es como un forEach */}
                 {benefits.map((benefit, i) => (
                   <tr key={benefit.id}>
                        <td className="py-4 px-6 text-sm font-medium text-gray-900">
@@ -377,7 +375,6 @@ function SectionTable({ SectionName }) {
                       {benefit.profit}€
                     </td>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900 flex">
-                      {/* En el momento que el usuario clique aqui le pasaremos el id de la tabla en question, esto sirve para que se puedan enviar datos a otras pantallas */}
                      
                       <Link to={`/benefits=edit/${benefit.id}`}>
                         <svg
