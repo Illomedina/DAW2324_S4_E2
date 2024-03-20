@@ -86,7 +86,7 @@ const OrdersPage = () => {
 
   // Render the AgGridReact component with fetched data and column definitions
   return (
-    <AppLayout>
+    <AppLayout Page="Orders">
       <div
         className="ag-theme-quartz"
         style={{ width: "100%", height: "80vh" }}
