@@ -8,6 +8,12 @@ const steps = [
   { name: 'Create Customer', href: '/customers/create', current: true },
 ]
 
+/**
+ * Create a new customer with the provided information.
+ *
+ * @param {object} e - The event object.
+ * @return {void} Nothing is returned from this function.
+ */
 export const CustomersCreate = () => {
   const navigate = useNavigate();
 
@@ -27,11 +33,23 @@ export const CustomersCreate = () => {
     is_validated: false
   });
 
+  /**
+   * Updates the form data with the new value of the input field.
+   *
+   * @param {Event} e - The event object representing the input change.
+   * @return {void} This function does not return anything.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
 
+  /**
+   * A function that handles form submission asynchronously.
+   *
+   * @param {Event} e - the event object
+   * @return {Promise} a Promise that resolves when submission is complete
+   */
   const onSubmit = async (e) => {
     e.preventDefault();
 

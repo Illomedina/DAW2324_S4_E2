@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Benefits;
+use App\Models\Customer;
 use Illuminate\Database\Seeder;
 
-class BenefitsTableSeeder extends Seeder
+class CustomersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Benefits::factory()->count(12)->create();
+        Customer::factory()->count(10)->create();
     }
 }

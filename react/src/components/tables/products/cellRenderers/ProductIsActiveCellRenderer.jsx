@@ -1,4 +1,5 @@
 export const ProductIsActiveCellRenderer = props => {
+    const token = localStorage.getItem('token');
     const { value, context, data } = props;
 
     const handleChange = async (e) => {
@@ -8,6 +9,7 @@ export const ProductIsActiveCellRenderer = props => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ is_active: checked }),
             });
