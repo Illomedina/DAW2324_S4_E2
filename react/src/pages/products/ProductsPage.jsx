@@ -10,6 +10,7 @@ import { ImageCellRenderer } from '../../components/tables/products/cellRenderer
 import { EditProductCellRenderer } from '../../components/tables/products/cellRenderers/EditProductCellRenderer';
 import { ProductIsActiveCellRenderer } from '../../components/tables/products/cellRenderers/ProductIsActiveCellRenderer';
 import Spinner from '../../components/Spinner';
+
 const steps = [
     { name: 'Products', href: '/products', current: true },
 ]
@@ -21,8 +22,16 @@ export default function ProductsPage() {
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/products`)
+        fetch(`${import.meta.env.VITE_API_URL}/products`, {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
+            },
+        })
             .then((result) => result.json())
             .then((data) => {
                 setRowData(data);

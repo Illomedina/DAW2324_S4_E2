@@ -87,6 +87,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('createBenefit', [BenefitsController::class, 'create']);
     Route::post('UpdateBenefit', [BenefitsController::class, 'update']);
     Route::get('getOneBenefit/{id}', [BenefitsController::class, 'getOne']);
+    // PRODUCTS
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::put('/products/{id}', [ProductController::class, 'update']);
 });
 
 //USERS-Show all the users
@@ -97,14 +101,6 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 Route::post('/createUser',  [UserController::class, 'store']);
 //Ruta para eliminar un usuario
 Route::delete('users/{id}', [UserController::class, 'destroy']);
-
-
-
-
-// PRODUCTS
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::put('/products/{id}', [ProductController::class, 'update']);
 
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);

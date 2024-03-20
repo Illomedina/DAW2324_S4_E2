@@ -19,10 +19,20 @@ const ProductDetailsPage = () => {
         error: null,
     });
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`);
+                const headers = new Headers({
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                });
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`, {
+                    method: 'GET',
+                    headers: headers,
+                });
                 const data = await response.json();
                 setProductData({
                     ...productData,
