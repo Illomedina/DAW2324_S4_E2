@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -13,19 +14,20 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //métodos para controlar rutas
-    public function index(){
-        try{   
+    public function index()
+    {
+        try {
             $users = User::all();
             return response()->json([
                 'success' => true,
                 'message' => 'Users successfully recovered',
                 'data' => $users,
             ], 200);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Error getting users.',
-                'error' => $e->getMessage(), 
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -49,7 +51,7 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'idRole' =>$request->idRole,
+            'idRole' => $request->idRole,
             'name' => $request->name,
             'surname' => $request->surname,
             'user' => $request->user,
@@ -57,10 +59,12 @@ class UserController extends Controller
             'password' => $request->password,
         ]);
 
-        $user->save();  
-        
+        $user->save();
+
         return response()->json(['message' => 'User successfully created.'], 201);
 
+        // return the user and response code
+        return response()->json($user, 201);
     }
 
     public function update(Request $request, $id)
@@ -108,14 +112,14 @@ class UserController extends Controller
             return response()->json(['error' => 'Error al actualizar el usuario.'], 500);
         }
     }
-    
+
 
     public function destroy($id)
     {
         try {
             $user = User::findOrFail($id);
             $user->delete();
-            
+
             return response()->json(['message' => 'User successfully deleted'], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'User not found'], 404);
@@ -123,7 +127,4 @@ class UserController extends Controller
             return response()->json(['error' => 'Failed to delete user'], 500);
         }
     }
-    
-
-    
 }
