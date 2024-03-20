@@ -22,40 +22,37 @@ class UserController extends Controller
                 'data' => $users,
             ], 200);
         } catch(\Exception $e){
-            return response()->json([
-                'success' => false,
-                'message' => 'Error getting users.',
-                'error' => $e->getMessage(), 
-            ], 500);
+            return response()->json(['error'=> 'error getting the configuration'], 500);
+        }
+        }
+
+    public function create(){
+        //muestra el formulario para crear usuarios
+        return view('users.create');
+    }
+
+    public function show($id){
+        //Encuentra el id del usuario
+        try{
+            $user = User::find($id);
+            return $user;
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Configuration not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'error getting the configuration'], 500);
         }
     }
 
 
-    public function store(Request $request)
-    {
-        $rules = [
-            'idRole' => 'nullable|exists:roles,id',
-            'name' => 'required|string|max:50',
-            'user' => 'required|string|max:50|unique:users',
-            'surname' => 'required|string|max:50',
-            'password' => 'required|string|min:6',
-            'email' => 'required|string|email|max:255|unique:users',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $user = User::create([
-            'idRole' =>$request->idRole,
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'user' => $request->user,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+    public function store(Request $request){
+            $user = User::create([
+                'idRole' =>1,
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'user' => $request->user,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
 
         $user->save();  
         
