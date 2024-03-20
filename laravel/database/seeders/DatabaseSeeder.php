@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'admin@example.com',
         //     'password' =>Hash::make(config('configuration.ADMIN_PASSWORD')),
         // ]);
-      DB::table('users')->insert([
-            'name' => 'gabriel',
-            'surname' => '-',
-            'user' => 'Admin', 
-            'email' => 'admin@example.com',
-            'password' =>Hash::make('password'),
-        ]);
+    //   DB::table('users')->insert([
+    //         'name' => 'gabriel',
+    //         'surname' => '-',
+    //         'user' => 'Admin', 
+    //         'email' => 'admin@example.com',
+    //         'password' =>Hash::make('password'),
+    //     ]);
 
         $this->call([
             UsersTableSeeder::class,
