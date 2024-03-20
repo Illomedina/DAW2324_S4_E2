@@ -216,7 +216,7 @@ export default function AppLayout({ children, Page, Steps }) {
             <div className="flex h-16 shrink-0 justify-center">
               <img
                 className="h-14 w-auto mt-4"
-                src="/logocompleto.png"
+                src="/logo_customaize.png"
                 alt="Your Company"
               />
             </div>
