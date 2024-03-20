@@ -14,8 +14,8 @@ function SectionTable({ SectionName }) {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  var [chartData] = useState([]);
-  var [labels] = useState([]);
+  var [chartData, setChartData] = useState([]);
+  var [labels, setLabels] = useState([]);
   const [tooltipContent, setTooltipContent] = useState("");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipX, setTooltipX] = useState(0);
@@ -25,8 +25,8 @@ function SectionTable({ SectionName }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [years, setYears] = useState([]);
-  const actualYear = new Date().getFullYear();
-
+  const actualYear = new Date().getFullYear(); 
+  var year = useState('');
 
 
   /**
@@ -101,6 +101,53 @@ function SectionTable({ SectionName }) {
 
     if(response.status === 200){
       setBenefits(response.data);
+      var chartDataTemp  = [];
+      var labelsTemp  = [];
+
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].month === "January") {
+          chartDataTemp[0] = response.data[i].profit;
+          labelsTemp[0] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "February") {
+          chartDataTemp[1] = response.data[i].profit;
+          labelsTemp[1] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "March") {
+          chartDataTemp[2] = response.data[i].profit;
+          labelsTemp[2] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "April") {
+          chartDataTemp[3] = response.data[i].profit;
+          labelsTemp[3] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "May") {
+          chartDataTemp[4] = response.data[i].profit;
+          labelsTemp[4] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "June") {
+          chartDataTemp[5] = response.data[i].profit;
+          labelsTemp[5] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "July") {
+          chartDataTemp[6] = response.data[i].profit;
+          labelsTemp[6] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "August") {
+          chartDataTemp[7] = response.data[i].profit;
+          labelsTemp[7] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "September") {
+          chartDataTemp[8] = response.data[i].profit;
+          labelsTemp[8] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "October") {
+          chartDataTemp[9] = response.data[i].profit;
+          labelsTemp[9] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "November") {
+          chartDataTemp[10] = response.data[i].profit;
+          labelsTemp[10] = response.data[i].month.substring(0, 3);
+        } else if (response.data[i].month === "December") {
+          chartDataTemp[11] = response.data[i].profit;
+          labelsTemp[11] = response.data[i].month.substring(0, 3);
+        }
+      }
+      console.log(chartDataTemp);
+      console.log(labelsTemp);
+
+      setChartData(chartDataTemp);
+      setLabels(labelsTemp);
   
     }else{
       console.log("Bad response");
@@ -242,7 +289,7 @@ function SectionTable({ SectionName }) {
 
       <div className="relative group mb-10">
         <button id="dropdown-button" onClick={toggleDropdown} className="inline-flex justify-center w-50 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
-          <span className="mr-2">Select Year</span>
+        <span className="mr-2">Select Year</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fillRule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>
@@ -263,7 +310,7 @@ function SectionTable({ SectionName }) {
               Table
             </h4>
             <div className="buttonContainer">
-              <Link className="buttonCreate" to="/benefits=create">
+              <Link className="buttonCreate" to="/benefits=create" style={{marginLeft: '130px'}}>
                 Create
               </Link>
             </div>
@@ -370,7 +417,7 @@ function SectionTable({ SectionName }) {
         </div>
 
         {/* Aqui pintamos el grafico */}
-        <div className="relative flex max-w-[600px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+        <div className="relative flex max-w-[600px] h-[350px] w-full flex-col ml-4 rounded-[10px]">
           <div className="shadow p-6 rounded-lg bg-white">
             <div className="md:flex md:justify-between md:items-center">
               <div>
@@ -378,7 +425,7 @@ function SectionTable({ SectionName }) {
                   Chart
                 </h2>
                 <p className="mb-2 text-gray-600 text-sm">
-                  Monthly Benefits of Year 2024
+                 Monthly Benefits of Year 2024
                 </p>
               </div>
               <div className="mb-4">
@@ -403,7 +450,7 @@ function SectionTable({ SectionName }) {
                 </div>
               )}
               <div className="flex -mx-2 items-end mb-2">
-                {chartData.map((data, index) => (
+                {chartData?.map((data, index) => (
                   <div key={index} className="px-2 w-1/6">
                     <div
                       style={{ height: `${data / 20}px` }}
@@ -424,7 +471,7 @@ function SectionTable({ SectionName }) {
                 }}
               ></div>
               <div className="flex -mx-2 items-end">
-                {labels.map((label, index) => (
+                {labels?.map((label, index) => (
                   <div key={index} className="px-2 w-1/6">
                     <div className="bg-red-600 relative">
                       <div
