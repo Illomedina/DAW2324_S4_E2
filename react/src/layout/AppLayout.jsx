@@ -82,7 +82,7 @@ export default function AppLayout({ children, Page, Steps }) {
         .catch(function (error) {
           console.error("Error:", error);
         })
-        .finally(function () { });
+        .finally(function () {});
     } else {
     }
   };
@@ -213,10 +213,10 @@ export default function AppLayout({ children, Page, Steps }) {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-56 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
-            <div className="flex h-16 shrink-0 justify-center">
+            <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-14 w-auto mt-4"
-                src="/logo_customaize.png"
+                className="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                 alt="Your Company"
               />
             </div>
@@ -257,7 +257,6 @@ export default function AppLayout({ children, Page, Steps }) {
               </ul>
             </nav>
           </div>
-        </div>
         </div>
         <div className="lg:pl-56">
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -345,15 +344,15 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              {window.location.href.includes("/benefits") == false && window.location.href.includes("/dashboard") == false && (
-                <Breadcrumb steps={Steps} />
-              )}
+              {window.location.href.includes("/benefits") == false &&
+                window.location.href.includes("/dashboard") == false && (
+                  <Breadcrumb steps={Steps} />
+                )}
               {children}
             </div>
           </main>
 
           <UserwayWidget />
-
         </div>
       </div>
     </>

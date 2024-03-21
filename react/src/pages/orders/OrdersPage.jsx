@@ -74,15 +74,15 @@ const OrdersPage = () => {
     []
   );
 
-  // Render loading state if data is still loading
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // // Render loading state if data is still loading
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  // Render error message if there's an error during data fetching
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // // Render error message if there's an error during data fetching
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   // Render the AgGridReact component with fetched data and column definitions
   return (
