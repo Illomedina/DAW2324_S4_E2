@@ -23,7 +23,7 @@ SANCTUM_STATEFUL_DOMAINS=http://localhost:8080,http://127.0.0.1:8080,http://loca
 # Create a new .env in the `React` folder:
 Should contain the following:
 ```
-VITE_API_URL="http://lar3.alumnat.iesmontsia.org/api"
+VITE_API_URL="http://localhost:8000/api"
 ```
 
 # Starting the services:
