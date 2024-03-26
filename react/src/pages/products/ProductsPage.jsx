@@ -9,6 +9,7 @@ import { PriceRangeCellRenderer } from '../../components/tables/products/cellRen
 import { ImageCellRenderer } from '../../components/tables/products/cellRenderers/ImageCellRenderer';
 import { EditProductCellRenderer } from '../../components/tables/products/cellRenderers/EditProductCellRenderer';
 import { ProductIsActiveCellRenderer } from '../../components/tables/products/cellRenderers/ProductIsActiveCellRenderer';
+import { updateProductDetails } from '../../api/updateProductDetails';
 import Spinner from '../../components/Spinner';
 
 const steps = [
@@ -63,6 +64,10 @@ export default function ProductsPage() {
         }
     };
 
+    const onCellValueChanged = (event) => {
+        updateProductDetails(event, token, import.meta.env.VITE_API_URL);
+    };
+
     function calculateSalesPrice(priceInSubunit, benefitsMarginPercentage) {
         const benefitsMargin = benefitsMarginPercentage / 100;
         const salesPrice = priceInSubunit + (priceInSubunit * benefitsMargin);
@@ -115,6 +120,7 @@ export default function ProductsPage() {
             editable: false,
         },
         {
+            field: 'benefits_margin',
             headerName: "Benefits Margin",
             valueGetter: benefitsMarginValueGetter,
             valueSetter: (params) => {
@@ -149,7 +155,7 @@ export default function ProductsPage() {
             </div>
             <div className="ag-theme-quartz" style={{ width: '100%', height: '80vh' }}>
                 {isLoading
-                    ? <Spinner message='Loading Products...' /> // Asegúrate de tener un componente Spinner para mostrarlo aquí
+                    ? <Spinner message='Loading Products...' />
                     : (
                         <>
                             <AgGridReact
@@ -161,7 +167,7 @@ export default function ProductsPage() {
                                 context={{ isEditable }}
                                 onCellClicked={handleCellClicked}
                                 autoSizeStrategy={autoSizeStrategy}
-                            />
+                                onCellValueChanged={onCellValueChanged} />
                         </>
                     )}
             </div>
