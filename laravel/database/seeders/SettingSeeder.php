@@ -23,7 +23,7 @@ class SettingSeeder extends Seeder
                 'value' => 'c30dce2e1c3c9aafe0bf1ceeb68d9f7f',
             ],
             [
-                'config' => 'Dall-e API Key',
+                'config' => 'BigJPG API Key',
                 'value' => 'aebb870ef6ac718aa8bd442b1c993806',
             ],
             [
