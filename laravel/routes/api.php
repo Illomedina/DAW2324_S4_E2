@@ -5,9 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductControllerController;
 use App\Http\Controllers\setting\SettingController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BenefitsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
@@ -24,17 +22,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/test', function () {
-    return response()->json([
-        'message' => 'Hello World!',
-    ]);
-});
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
 
 Route::resource('/settings', SettingController::class);
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
@@ -72,10 +62,6 @@ Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('cust
  */
 Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
-
-Route::get('/products/{id}', [ProductController::class, 'show']);
-
-
 Route::post('/login', [AuthController::class, 'login']);
 
 //Group of routes that are authenticated through auth:sanctum
@@ -93,16 +79,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
+    // USERS
+    Route::get('/users', [UserController::class, 'index']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::post('/createUser',  [UserController::class, 'store']);
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
 });
-
-//USERS-Show all the users
-Route::get('/users', [UserController::class, 'index']);
-//Route to edit 
-Route::put('/users/{id}', [UserController::class, 'update']);
-// Route to create 
-Route::post('/createUser',  [UserController::class, 'store']);
-//Ruta para eliminar un usuario
-Route::delete('users/{id}', [UserController::class, 'destroy']);
 
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);
