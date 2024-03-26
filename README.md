@@ -20,10 +20,10 @@ APP_URL=http://localhost
 SANCTUM_STATEFUL_DOMAINS=http://localhost:8080,http://127.0.0.1:8080,http://localhost:3000,http://127.0.0.1:3000
 ```
 
-# Create a new .env in the `React` folder:
-Should contain the following:
+# Go to the `React` folder:
 ```
-VITE_API_URL="http://localhost:8000/api"
+cd /react
+cp .env.example .env
 ```
 
 # Starting the services:
