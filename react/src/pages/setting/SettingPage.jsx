@@ -1,4 +1,3 @@
-// SettingPage.js
 import React, { useState, useEffect, useMemo } from 'react';
 import AgGridTable from '../../components/table/TableSimple';
 import AppLayout from '../../layout/AppLayout';
@@ -14,8 +13,14 @@ const SettingPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('token');
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/settings`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/settings`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
         const data = await response.json();
         setJsonData(data);
       } catch (error) {
@@ -25,6 +30,7 @@ const SettingPage = () => {
 
     fetchData();
   }, []);
+
 
   const columnDefs = [
     {

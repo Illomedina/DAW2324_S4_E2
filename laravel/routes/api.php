@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/settings', SettingController::class);
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
@@ -84,6 +83,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::post('/createUser',  [UserController::class, 'store']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
+    // SETTINGS
+    Route::resource('/settings', SettingController::class);
 });
 
 Route::get('/orders', [OrderController::class, 'index']);
