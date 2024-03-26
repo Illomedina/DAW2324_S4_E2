@@ -29,36 +29,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 //Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
 
-/**
- * Returns all the customers in the database
- *
- * @return Illuminate\Http\Response
- */
+// CUSTOMERS
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-
-/**
- * Stores a new customer in the database
- *
- * @param Illuminate\Http\Request $request
- * @return Illuminate\Http\Response
- */
 Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
-
-/**
- * Updates a customer in the database
- *
- * @param Illuminate\Http\Request $request
- * @param int $id
- * @return Illuminate\Http\Response
- */
 Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
-
-/**
- * Deletes a customer from the database
- *
- * @param int $id
- * @return Illuminate\Http\Response
- */
 Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -78,15 +52,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
-    // USERS
-    Route::get('/users', [UserController::class, 'index']);
-    Route::put('/users/{id}', [UserController::class, 'update']);
-    Route::post('/createUser',  [UserController::class, 'store']);
-    Route::delete('users/{id}', [UserController::class, 'destroy']);
     // SETTINGS
     Route::resource('/settings', SettingController::class);
 });
-
+// USERS
+Route::get('/users', [UserController::class, 'index']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::post('/createUser',  [UserController::class, 'store']);
+Route::delete('users/{id}', [UserController::class, 'destroy']);
+// ORDERS
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);
 Route::get('/OrderDetails/{id}', [OrderDetailsController::class, 'show']);
