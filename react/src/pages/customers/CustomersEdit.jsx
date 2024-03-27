@@ -8,6 +8,8 @@ const steps = [
   { name: 'Edit Customer', href: '/customers/create', current: true },
 ]
 
+const token = localStorage.getItem('token');
+
 /**
  * Edit customer information and handle deletion.
  *
@@ -61,14 +63,21 @@ export const CustomersEdit = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    axios.put(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`, formData)
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${token}`,
+    };
+
+    axios.put(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`, formData, { headers })
       .then(response => {
         const { data } = response;
         alert('Customer updated successfully!');
         navigate(`/customers/${data.id}`, { state: { customer: response.data.data } });
       })
       .catch(error => console.error('Error:', error));
-  }
+  };
+
 
   /**
    * Deletes a customer using axios delete request.

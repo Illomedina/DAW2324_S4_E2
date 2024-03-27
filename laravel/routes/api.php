@@ -26,15 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-//Route::get('/settings/{id}', 'SettingController@show')->name('settings.show');
-
-// CUSTOMERS
-Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
-Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
-Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-
 Route::post('/login', [AuthController::class, 'login']);
 
 //Group of routes that are authenticated through auth:sanctum
@@ -54,6 +45,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/products/{id}', [ProductController::class, 'update']);
     // SETTINGS
     Route::resource('/settings', SettingController::class);
+    // CUSTOMERS
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
+    Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 });
 // USERS
 Route::get('/users', [UserController::class, 'index']);

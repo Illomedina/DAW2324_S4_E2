@@ -9,6 +9,8 @@ import axios from 'axios';
 const steps = [
     { name: 'Customers', href: '/customers', current: true },
 ]
+
+const token = localStorage.getItem('token');
 /**
  * Generates a Customers Page component that fetches customers data from the API and displays them.
  *
@@ -30,7 +32,12 @@ export const CustomersPage = () => {
         const fetchCustomers = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
+                const headers = {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
+                };
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`, { headers });
                 setCustomers(response.data);
             } catch (error) {
                 console.error("There was an error fetching the customers:", error);

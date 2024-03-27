@@ -8,6 +8,8 @@ const steps = [
   { name: 'Create Customer', href: '/customers/create', current: true },
 ]
 
+const token = localStorage.getItem('token');
+
 /**
  * Create a new customer with the provided information.
  *
@@ -54,16 +56,21 @@ export const CustomersCreate = () => {
     e.preventDefault();
 
     const url = `${import.meta.env.VITE_API_URL}/customers/create`;
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${token}`,
+    };
 
     try {
-      const response = await axios.post(url, formData);
+      const response = await axios.post(url, formData, { headers });
       navigate('/customers');
     } catch (error) {
-      console.error('Error:', error.response.data);
+      console.error('Error:', error.response ? error.response.data : error.message);
       // Manejar el error aquí
     }
+  };
 
-  }
 
 
   return (
