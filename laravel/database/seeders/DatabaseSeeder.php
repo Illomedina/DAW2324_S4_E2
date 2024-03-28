@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             BenefitsTableSeeder::class,
             CustomersTableSeeder::class,
-            OrderTableSeeder::class,
-            OrderDetailSeeder::class
+            // OrderTableSeeder::class,
+            OrderDetailSeeder::class,
         ]);
     }
 }
