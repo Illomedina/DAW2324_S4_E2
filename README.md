@@ -33,6 +33,7 @@ docker-compose up --build
 
 # Seed the database:
 In the laravel shell:
-```
-php artisan migrate:fresh --seed
+```diff
+- php artisan migrate:fresh --seed
++ php artisan db:seed --class=DatabaseSeeder
 ```
