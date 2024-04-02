@@ -54,10 +54,10 @@ const OrderDetailsPage = () => {
                 <span className="text-gray-400">Shipping Price:</span>
                 <span>{order.shippingPrice}</span>
               </p>
-              <p className="flex justify-between">
+              {/* <p className="flex justify-between">
                 <span className="text-gray-400">Customer:</span>
-                <span>Roger Arques</span>
-              </p>
+                <span></span>
+              </p> */}
               {/* ... Individual order details ... */}
               <table className="w-full text-left mt-4">
                 <thead>
