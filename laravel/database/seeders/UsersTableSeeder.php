@@ -14,10 +14,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Insertar usuarios de ejemplo
+      
         DB::table('users')->insert([
             [
-                'idRole' => 1, 
+                // 'idRole' => 1, 
                 'name' => 'Macarena',
                 'user' => 'macarena',
                 'surname' => 'Gonzales',
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 2, 
+                // 'idRole' => 2, 
                 'name' => 'Manager',
                 'user' => 'manageraccount',
                 'surname' => 'Account',
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 3, 
+                // 'idRole' => 3, 
                 'name' => 'Customer',
                 'user' => 'customersupport',
                 'surname' => 'Support',
@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 1, 
+                // 'idRole' => 1, 
                 'name' => 'Miquel',
                 'user' => 'miquel',
                 'surname' => 'Duran',
@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 1, 
+                // 'idRole' => 1, 
                 'name' => 'Jordi',
                 'user' => 'jordi',
                 'surname' => 'Navarro',
@@ -72,7 +72,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 1, 
+                // 'idRole' => 1, 
                 'name' => 'Gabriel',
                 'user' => 'gabriel',
                 'surname' => 'Urs',
@@ -83,7 +83,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 1, 
+                // 'idRole' => 1, 
                 'name' => 'Josep',
                 'user' => 'josep',
                 'surname' => 'Roldan',
@@ -94,7 +94,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'idRole' => 1, 
+                // 'idRole' => 1, 
                 'name' => 'Roger',
                 'user' => 'roger',
                 'surname' => 'Arques',

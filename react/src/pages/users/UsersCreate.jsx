@@ -46,7 +46,7 @@ export const UsersCreate = () => {
         console.error('Error al registrar');
       }
     } catch (error) {
-        console.error('Error:', error.response.data);
+      console.error('Error:', error.response.data);
     }
 
   }
@@ -114,7 +114,7 @@ export const UsersCreate = () => {
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
-                  </div> 
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,7 +166,7 @@ export const UsersCreate = () => {
                       </div>
                     </div>
 
-                    
+
                   </div>
 
                   <fieldset>
@@ -201,7 +201,7 @@ export const UsersCreate = () => {
                           Inactive
                         </label>
                       </div>
-                      
+
 
                       <div className="flex items-center">
                         <input
@@ -219,7 +219,7 @@ export const UsersCreate = () => {
                     </div>
                   </fieldset>
 
-                
+
                 </div>
               </div>
             </div>
@@ -227,15 +227,13 @@ export const UsersCreate = () => {
 
           <div className="px-4 py-4 text-right sm:px-6">
             <button type="button" onClick={() => navigate('/users')}
-              className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
-    hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-    focus-visible:outline-gray-900"
+              className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full transition duration-300"
             >
               Cancel
             </button>
 
             <button type="submit" onClick={onSubmit}
-              className="inline-flex justify-center rounded-md ml-2 bg-teal-400 px-3 py-2 text-md font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+              className="ml-4 bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
               Create
             </button>
           </div>

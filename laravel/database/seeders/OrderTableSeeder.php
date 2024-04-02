@@ -1,13 +1,16 @@
 <?php
 
+namespace Database\Seeders;
+
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 
-class DatabaseSeeder extends Seeder
+class OrderTableSeeder extends Seeder
 {
     public function run()
     {
-        \App\Models\Order::factory()->count(50)->create();
+       Order::factory()->count(50)->create();
     }
 }

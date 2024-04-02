@@ -8,6 +8,14 @@ const steps = [
   { name: 'Edit Customer', href: '/customers/create', current: true },
 ]
 
+const token = localStorage.getItem('token');
+
+/**
+ * Edit customer information and handle deletion.
+ *
+ * @param {object} e - The event object.
+ * @return {JSX.Element} The JSX element representing the customer edit form.
+ */
 export const CustomersEdit = () => {
   const navigate = useNavigate();
 
@@ -35,23 +43,46 @@ export const CustomersEdit = () => {
     is_validated: customer.is_validated,
   });
 
+  /**
+   * Updates the form data based on the input change event.
+   *
+   * @param {object} e - The input change event object.
+   * @return {void} This function does not return a value.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
 
+  /**
+   * Submit form data asynchronously.
+   *
+   * @param {Event} e - The event object
+   * @return {Promise<void>} Promise that resolves after form submission
+   */
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    axios.put(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`, formData)
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${token}`,
+    };
+
+    axios.put(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`, formData, { headers })
       .then(response => {
         const { data } = response;
         alert('Customer updated successfully!');
         navigate(`/customers/${data.id}`, { state: { customer: response.data.data } });
       })
       .catch(error => console.error('Error:', error));
-  }
+  };
 
+
+  /**
+   * Deletes a customer using axios delete request.
+   *
+   */
   const onDelete = () => {
     axios.delete(`${import.meta.env.VITE_API_URL}/customers/${customer.id}`)
       .then(() => {
@@ -411,12 +442,12 @@ export const CustomersEdit = () => {
             {/* Contenedor para los botones de la derecha */}
             <div className="flex justify-end">
               <button type="button" onClick={() => navigate(-1)}
-                className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
                 Cancel
               </button>
 
               <button type="submit" onClick={onSubmit}
-                className="inline-flex justify-center rounded-md ml-2 bg-teal-400 px-3 py-2 text-md font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                className="ml-4 bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
                 Update
               </button>
             </div>

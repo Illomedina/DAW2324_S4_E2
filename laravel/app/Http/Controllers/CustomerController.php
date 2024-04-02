@@ -6,12 +6,15 @@ use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieve a list of all customers.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
         $customers = Customer::all();
         return response()->json($customers);
@@ -19,10 +22,13 @@ class CustomerController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
+        // Validate the input data
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'surname' => 'required|max:255',
@@ -37,8 +43,10 @@ class CustomerController extends Controller
             'status' => 'required|in:Active,Inactive,Banned,Deleted',
         ]);
 
+        // Add the current date to the validated data
         $validatedData['membershipDate'] = now();
 
+        // Create a new customer with the validated data
         $customer = Customer::create([
             'name' => $validatedData['name'],
             'surname' => $validatedData['surname'],
@@ -53,13 +61,15 @@ class CustomerController extends Controller
             'is_validated' => $validatedData['is_validated'] ?? false,
             'membershipDate' => $validatedData['membershipDate'],
             'customerStatus' => $validatedData['status'],
-
         ]);
 
-        // Devolver una respuesta
-        return response()->json(['message' => 'Customer created successfully', 'data' => $customer], 201);
-
+        // Return a JSON response with a message and the created customer
+        return response()->json(
+            ['message' => 'Customer created successfully', 'data' => $customer],
+            201
+        );
     }
+
 
     /**
      * Display the specified resource.
@@ -71,9 +81,18 @@ class CustomerController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string $id ID of the customer to update
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id)
     {
+        /**
+         * Validate the user input.
+         *
+         * @var array $validatedData Validated user input
+         */
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'surname' => 'required|max:255,',
@@ -88,8 +107,16 @@ class CustomerController extends Controller
             'status' => 'required|in:Active,Inactive,Banned,Deleted',
         ]);
 
+        /**
+         * Find the customer to update.
+         *
+         * @var App\Customer $customer Customer to update
+         */
         $customer = Customer::find($id);
 
+        /**
+         * Update the customer with the validated input.
+         */
         $customer->name = $validatedData['name'];
         $customer->surname = $validatedData['surname'];
         $customer->username = $validatedData['username'];
@@ -102,24 +129,75 @@ class CustomerController extends Controller
         $customer->is_validated = $validatedData['is_validated'] ?? false;
         $customer->customerStatus = $validatedData['status'];
 
+        /**
+         * Save the updated customer.
+         */
         $customer->save();
 
-        return response()->json(['message' => 'Customer updated successfully', 'data' => $customer, 'id' => $id]);
+        /**
+         * Return a JSON response with a message and the updated customer.
+         *
+         * @var array $response JSON response
+         */
+        $response = [
+            'message' => 'Customer updated successfully',
+            'data' => $customer,
+            'id' => $id,
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id ID of the customer to delete
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
+        /**
+         * Find the customer to delete.
+         *
+         * @var App\Customer $customer Customer to delete
+         */
         $customer = Customer::find($id);
+
+        /**
+         * Check if the customer exists.
+         */
         if ($customer) {
+            /**
+             * Delete the customer.
+             */
             $customer->delete();
-            return response()->json(['message' => 'Customer deleted successfully']);
+
+            /**
+             * Return a success message.
+             *
+             * @var array $response JSON response
+             */
+            $response = [
+                'message' => 'Customer deleted successfully',
+            ];
+
+            return response()->json($response, 200);
         } else {
-            return response()->json(['message' => 'Customer not found'], 404);
+            /**
+             * Return an error message if the customer does not exist.
+             *
+             * @var array $response JSON response
+             */
+            $response = [
+                'message' => 'Customer not found',
+            ];
+
+            return response()->json($response, 404);
         }
     }
-
 }
