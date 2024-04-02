@@ -1,6 +1,35 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const DeleteButton = (props) => {
+  const { t } = useTranslation();
+
   const id = props.data.id;
 
   const handleDeleteClick = async () => {
@@ -34,7 +63,7 @@ const DeleteButton = (props) => {
   return (
     <span >
       <button onClick={handleDeleteClick}>
-        Delete
+        {t("Delete")}
       </button>
     </span>
   );

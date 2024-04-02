@@ -2,8 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const SettingForm = () => {
+  const { t } = useTranslation();
   const [serverErrors, setServerErrors] = useState(null);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || '');
 
@@ -50,11 +78,11 @@ const SettingForm = () => {
           onSubmit={handleSubmit}
         >
           <Form className="bg-white p-8 rounded-md shadow-md">
-            <h1 className="text-4xl font-bold mb-5">Settings Add</h1>
+            <h1 className="text-4xl font-bold mb-5">{t("Settings Add")}</h1>
 
             <div className="mb-5">
               <label htmlFor="name" className="mb-3 block text-base font-medium text-[#07074D]">
-                Setting Name
+                {t("Settings Name")}
               </label>
               <Field
                 type="text"
@@ -67,7 +95,7 @@ const SettingForm = () => {
 
             <div className="mb-5">
               <label htmlFor="message" className="mb-3 block text-base font-medium text-[#07074D]">
-                Value
+                {t("Value")}
               </label>
               <Field
                 as="textarea"
@@ -85,14 +113,14 @@ const SettingForm = () => {
                 className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
                 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                 focus-visible:outline-gray-900 mr-2"            >
-                Submit
+                {t("Submit")}
             </button>
             <button type="button" onClick={() => navigate('/settings')}
               className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm
               hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
               focus-visible:outline-gray-900"
             >
-              Cancel
+              {t("Cancel")}
             </button>
             </div>
 

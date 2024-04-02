@@ -3,7 +3,36 @@ import React, { useEffect, useState } from "react";
 import "../../components/sectionTable/SectionTable.css";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
 export const DashboardPage = () => {
+  const { t } = useTranslation();
   const [benefits, setBenefits] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -25,7 +54,7 @@ export const DashboardPage = () => {
   const getBenefits = async () => {
     setLoading(true);
     try {
-      const url =`${import.meta.env.VITE_API_URL}/getBenefits`;
+      const url = `${import.meta.env.VITE_API_URL}/getBenefits`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -46,7 +75,7 @@ export const DashboardPage = () => {
    */
   const getCustomers = async () => {
     try {
-      const url =`${import.meta.env.VITE_API_URL}/customers`;
+      const url = `${import.meta.env.VITE_API_URL}/customers`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -64,11 +93,11 @@ export const DashboardPage = () => {
   /**
    * Fetches products from the API and sets the products state if the response is successful, otherwise logs an error.
    *
-   * @return {void} 
+   * @return {void}
    */
   const getProducts = async () => {
     try {
-      const url =`${import.meta.env.VITE_API_URL}/products`;
+      const url = `${import.meta.env.VITE_API_URL}/products`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -79,16 +108,15 @@ export const DashboardPage = () => {
     } catch (error) {
       console.error("Error fetching products:", error);
     }
-  
   };
   /**
    * Asynchronous function to retrieve orders from the API and handle the response or error.
    *
-   * @return {void} 
+   * @return {void}
    */
   const getOrders = async () => {
     try {
-      const url =`${import.meta.env.VITE_API_URL}/orders`;
+      const url = `${import.meta.env.VITE_API_URL}/orders`;
       const response = await axios.get(url, {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -101,9 +129,8 @@ export const DashboardPage = () => {
     }
   };
 
-
   return (
-    <AppLayout>
+    <AppLayout Page={"Home"}>
       <div className="flex flex-col h-[100vh] divContainer">
         {loading && (
           <div className="loader-container">
@@ -119,9 +146,14 @@ export const DashboardPage = () => {
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "220px" }}
+                style={{
+                  padding: "0px",
+                  paddingLeft: "5px",
+                  width: "90px",
+                  marginLeft: "220px",
+                }}
               >
-                <Link to="/benefits">◉ See more</Link>
+                <Link to="/benefits">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -132,25 +164,25 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Month
+                      {t("Month")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Income
+                      {t("Income")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Expenses
+                      {t("Expenses")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Profit
+                      {t("Profit")}
                     </th>
                   </tr>
                 </thead>
@@ -176,15 +208,20 @@ export const DashboardPage = () => {
             </div>
           </div>
           <div className="relative flex max-w-[620px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-          <div className="headerContainer">
+            <div className="headerContainer">
               <h4 className="text-lg font-bold text-primaryColor columns-3">
                 {"Customers"}
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "190px" }}
+                style={{
+                  padding: "0px",
+                  paddingLeft: "5px",
+                  width: "90px",
+                  marginLeft: "190px",
+                }}
               >
-                <Link to="/customers">◉ See more</Link>
+                <Link to="/customers">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -195,25 +232,25 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Name
+                      {t("Name")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3 px-6 text-xs w-60 font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                    >
+                      {t("Email")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Email
+                      {t("Username")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Username
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      PostalCode
+                      {t("PostalCode")}
                     </th>
                   </tr>
                 </thead>
@@ -237,7 +274,6 @@ export const DashboardPage = () => {
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
         {/* SECTION PRODUCTS / ORDERS */}
@@ -249,9 +285,14 @@ export const DashboardPage = () => {
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "210px" }}
+                style={{
+                  padding: "0px",
+                  paddingLeft: "5px",
+                  width: "90px",
+                  marginLeft: "210px",
+                }}
               >
-                <Link to="/products">◉ See more</Link>
+                <Link to="/products">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -262,25 +303,25 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Name
+                      {t("Name")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      SKU
+                      {t("SKU")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      DPI
+                      {t("DPI")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Type
+                      {t("Type")}
                     </th>
                   </tr>
                 </thead>
@@ -291,10 +332,10 @@ export const DashboardPage = () => {
                         {product.name}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {product.sku} 
+                        {product.sku}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {product.dpi} 
+                        {product.dpi}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
                         {product.dpi}
@@ -306,15 +347,20 @@ export const DashboardPage = () => {
             </div>
           </div>
           <div className="relative flex max-w-[620px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-          <div className="headerContainer">
+            <div className="headerContainer">
               <h4 className="text-lg font-bold text-primaryColor columns-3">
                 {"Orders"}
               </h4>
               <div
                 className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "280px" }}
+                style={{
+                  padding: "0px",
+                  paddingLeft: "5px",
+                  width: "90px",
+                  marginLeft: "280px",
+                }}
               >
-                <Link to="/orders">◉ See more</Link>
+                <Link to="/orders">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -325,40 +371,39 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Quantity
+                      {t("Orderd ID")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Price
+                      {t("Customer ID")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Shipping Price
+                      {t("Status")}
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y">
-                  {customers.map((customer, i) => (
-                    <tr key={customer.id}>
+                  {orders.map((orders, i) => (
+                    <tr key={orders.id}>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.quantity}
+                        {orders.idOrderPicanova}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.priceEach}
+                        {orders.idCustomer}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.shippingPrice}
+                        {orders.orderStatus}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
       </div>

@@ -17,7 +17,9 @@ import BenefitsEdit from "../pages/benefits/edit/BenefitsEdit";
 import UserPage from "../pages/users/UserPage";
 import UsersCreate from "../pages/users/UsersCreate";
 import UsersEdit from "../pages/users/UsersEdit";
-import UsersShow from "../pages/users/UsersShow"
+import UsersShow from "../pages/users/UsersShow";
+import UserProfile from "../pages/users/UserProfile";
+
 import SettingPage from "../pages/setting/SettingPage";
 import SettingForm from "../pages/setting/SettingForm";
 import OrdersPage from "../pages/orders/OrdersPage";
@@ -37,7 +39,7 @@ export const Router = () => {
 
   useEffect(() => {
     checkRoute();
-  });
+  }, []);
   return (
     <Routes>
       // ROOT
@@ -69,6 +71,12 @@ export const Router = () => {
       <Route path="/users" element={<UserPage />} />
       <Route path="/users/:userId/edit" element={<UsersEdit />} />
       <Route path="/users/create" element={<UsersCreate></UsersCreate>} />
+      <Route path="/users/profile/:userId" element={<UserProfile />} />
+
+
+
+      <Route path="/*" element={<PageNotFound />} />
+
       // ORDERS
       <Route path="/orders" element={<OrdersPage />} />
       <Route path="/orders/:idOrder" element={<OrderDetailsPage />} />

@@ -1,6 +1,35 @@
 import AppLayout from '../../layout/AppLayout';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+const token = localStorage.getItem('token');
 
 const steps = [
   { name: 'Users', href: '/users', current: false },
@@ -8,6 +37,7 @@ const steps = [
 ]
 
 export const UsersCreate = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,7 +62,9 @@ export const UsersCreate = () => {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+
         },
         body: JSON.stringify(formData)
       });
@@ -55,8 +87,8 @@ export const UsersCreate = () => {
         <form>
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
             <div className="px-4 sm:px-0">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
-              <p className="mt-1 text-sm leading-6 text-gray-600">Provide users personal information.</p>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">{t("Personal Information")}</h2>
+              <p className="mt-1 text-sm leading-6 text-gray-600">{t("Provide users personal information.")}</p>
             </div>
 
             <div className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
@@ -64,7 +96,7 @@ export const UsersCreate = () => {
                 <div className="grid max-w-3xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-2">
                     <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                      Name
+                    {t("Name")}
                     </label>
                     <div className="mt-2">
                       <input
@@ -80,7 +112,7 @@ export const UsersCreate = () => {
 
                   <div className="sm:col-span-4">
                     <label htmlFor="surname" className="block text-sm font-medium leading-6 text-gray-900">
-                      Surname
+                    {t("Surname")}
                     </label>
                     <div className="mt-2">
                       <input
@@ -97,7 +129,7 @@ export const UsersCreate = () => {
 
                   <div className="sm:col-span-4">
                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                      Email
+                    {t("Email")}
                     </label>
                     <div className="mt-2">
                       <input
@@ -118,9 +150,9 @@ export const UsersCreate = () => {
 
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
             <div className="px-4 sm:px-0">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">Account information</h2>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">{t("Account information")}</h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
-                Set the user's account information.
+              {t("Set the user's account information.")}
               </p>
             </div>
 
@@ -131,7 +163,7 @@ export const UsersCreate = () => {
 
                     <div className="sm:col-span-4">
                       <label htmlFor="user" className="block text-sm font-medium leading-6 text-gray-900">
-                        Username
+                      {t("Username")}
                       </label>
                       <div className="mt-2">
                         <input
@@ -148,7 +180,7 @@ export const UsersCreate = () => {
 
                     <div className="sm:col-span-3 sm:col-start-1">
                       <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                        Password
+                      {t("Password")}
                       </label>
                       <div className="mt-2">
                         <input
@@ -166,9 +198,9 @@ export const UsersCreate = () => {
                   </div>
 
                   <fieldset>
-                    <legend className="text-sm font-semibold leading-6 text-gray-900">Status</legend>
+                    <legend className="text-sm font-semibold leading-6 text-gray-900">{t("Status")}</legend>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
-                      These is the customer's account status.
+                    {t("These is the customer's account status.")}
                     </p>
                     <div className="mt-2 flex gap-x-12">
                       <div className="flex items-center">
@@ -181,7 +213,7 @@ export const UsersCreate = () => {
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-everything" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
-                          Active
+                        {t("Active")}
                         </label>
                       </div>
                       <div className="flex items-center">
@@ -194,7 +226,7 @@ export const UsersCreate = () => {
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-email" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
-                          Inactive
+                        {t("Inactive")}
                         </label>
                       </div>
 
@@ -209,7 +241,7 @@ export const UsersCreate = () => {
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label htmlFor="push-nothing" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
-                          Deleted
+                        {t("Deleted")}
                         </label>
                       </div>
                     </div>
@@ -225,12 +257,12 @@ export const UsersCreate = () => {
             <button type="button" onClick={() => navigate('/users')}
               className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full transition duration-300"
             >
-              Cancel
+              {t("Cancel")}
             </button>
 
             <button type="submit" onClick={onSubmit}
               className="ml-4 bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
-              Create
+              {t("Create")}
             </button>
           </div>
         </form>

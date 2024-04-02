@@ -3,8 +3,37 @@ import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageSwitcher from "../../components/LanguageSwitcher";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export const Login = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -24,33 +53,57 @@ export const Login = () => {
           user,
           password,
         },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
+        //{
+          //headers: {
+            //Accept: "application/json",
+            //"Content-Type": "application/json",
+          //},
+        //}
       );
 
       if (response.status === 200) {
         //si respuesta es igual a 200 guardamos usuario y token
         const { token } = response.data;
-        const { user } = response.data;
+        //const { user } = response.data;
         //verificamos que no esten vacios
         if (!token) {
           console.error("No token found in the response");
           setAlert(true);
           return;
-        } else if (!user) {
-          console.error("No user found in the response");
-          setAlert(true);
-        }
+        } 
+        //else if (!user) {
+          //console.error("No user found in the response");
+          //setAlert(true);
+       // }
         //si no estan vacios se guardan los datos
         localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-        setToken(token);
+
+        // Hacemos una solicitud adicional para obtener los datos del usuario, incluido su rol
+        const userDataResponse = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pasamos el token en los headers de autorización
+          },
+        });
+
+        if (userDataResponse.status === 200) {
+          const userData = userDataResponse.data.data;
+        const loggedInUser = userData.find(userData => userData.user === user);
+        const idRole = loggedInUser ? loggedInUser.idRole : null;
+        const userId = loggedInUser ? loggedInUser.id : null;
+          console.log("User role:", idRole);
+          // Guardamos los datos del usuario en el almacenamiento local
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("idRole", JSON.stringify(idRole));
+          console.log("User ID:", userId);
+          localStorage.setItem("userId", userId);
+          // Navegamos a la página de dashboard
+          navigate('/dashboard');
+        }
+
+        //localStorage.setItem("user", JSON.stringify(user));
+        //setToken(token);
         //navegamos a /dashboard
-        navigate('/dashboard');
+        //navigate('/dashboard');
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -78,7 +131,11 @@ export const Login = () => {
   };
 
   return (
+    
     <div className="antialiased background-login">
+      <div className="float-right">
+      <LanguageSwitcher />
+      </div>
       <div className="container px-6 mx-auto">
         <div className="flex flex-col text-center md:text-left md:flex-row h-screen justify-evenly md:items-center">
           <div className="flex pl-20 flex-col w-full">
@@ -100,10 +157,10 @@ export const Login = () => {
             </div>
 
             <h1 className="text-5xl font-bold primary-color">
-              BackOffice Area
+              {t("BackOffice Area")}
             </h1>
             <p className="w-5/12 mx-auto md:mx-0 primary-color">
-              Control and monitorize your website data from dashboard.
+              {t("Control and monitorize your website data from dashboard.")}
             </p>
           </div>
           <div className="w-full pr-20 md:w-full lg:w-9/12 mx-auto md:mx-0">
@@ -111,19 +168,19 @@ export const Login = () => {
             {alert && (
               <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10">
                 <span className="flex flex-col justify-center text-white font-bold grow-[1] max-w-[90%] text-center">
-                  Your request has been denied
+                  {t("Your request has been denied")}
                 </span>
                 <div className="w-[10%] bg-red-400 rounded-r-2xl shadow-[0_0_20px_#ff444477]"></div>
               </div>
             )}
             <div className="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
               <h2 className="text-2xl font-bold text-primaryColor text-left mb-5">
-                Sign in
+                {t("Sign in")}
               </h2>
               <form action="" className="w-full">
                 <div id="input" className="flex flex-col w-full my-5">
                   <label htmlFor="user" className="text-primaryColor mb-2">
-                    User
+                    {t("User")}
                   </label>
                   <input
                     type="text"
@@ -139,7 +196,7 @@ export const Login = () => {
                 </div>
                 <div id="input" className="flex flex-col w-full my-5">
                   <label htmlFor="password" className="text-primaryColor mb-2">
-                    Password
+                    {t("Password")}
                   </label>
                   <input
                     type="password"
@@ -177,7 +234,7 @@ export const Login = () => {
                           ></path>
                         </svg>
                       </div>
-                      <div className="font-bold">Sign in</div>
+                      <div className="font-bold">{t("Sign in")}</div>
                     </div>
                   </button>
                   <div className="flex justify-evenly mt-5">

@@ -17,41 +17,141 @@ import { Breadcrumb } from "../components/Breadcrumb";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserwayWidget from "../components/userwayWidget/UserWayWidget";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageSwitcher from "../components/LanguageSwitcher";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function AppLayout({ children, Page, Steps }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
-  let data;
+  const idRole = localStorage.getItem("idRole");
+  const userId = localStorage.getItem("userId");
+
+  let data, role;
+
   if (user) {
     data = JSON.parse(user);
+    role = JSON.parse(idRole);
   } else {
     data = "";
+    role = "";
   }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Users", href: "/users", icon: UsersIcon, current: false },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
-    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
-  ];
+  let navigation = [];
+
+  switch (role) {
+    case 1:
+      navigation = [
+        { name: t("Home"), href: "/dashboard", icon: HomeIcon, current: true },
+        { name: t("Users"), href: "/users", icon: UsersIcon, current: false },
+        {
+          name: t("Customers"),
+          href: "/customers",
+          icon: UserGroupIcon,
+          current: false,
+        },
+        {
+          name: t("Products"),
+          href: "/products",
+          icon: CalendarIcon,
+          current: false,
+        },
+        {
+          name: t("Orders"),
+          href: "/orders",
+          icon: DocumentDuplicateIcon,
+          current: false,
+        },
+        {
+          name: t("Benefits"),
+          href: "/benefits",
+          icon: ChartPieIcon,
+          current: false,
+        },
+        { name: t("Settings"), href: "/settings", icon: CogIcon, current: false },
+      ];
+      break;
+    case 2:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        {
+          name: "Customers",
+          href: "/customers",
+          icon: UserGroupIcon,
+          current: false,
+        },
+        {
+          name: "Products",
+          href: "/products",
+          icon: CalendarIcon,
+          current: false,
+        },
+        {
+          name: "Orders",
+          href: "/orders",
+          icon: DocumentDuplicateIcon,
+          current: false,
+        },
+        {
+          name: "Benefits",
+          href: "/benefits",
+          icon: ChartPieIcon,
+          current: false,
+        },
+      ];
+      break;
+    case 3:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        {
+          name: "Customers",
+          href: "/customers",
+          icon: UserGroupIcon,
+          current: false,
+        },
+        {
+          name: "Orders",
+          href: "/orders",
+          icon: DocumentDuplicateIcon,
+          current: false,
+        },
+      ];
+      break;
+    default:
+      console.log("NO tienes rol");
+      break;
+  }
 
   for (var i = 0; i < navigation.length; i++) {
     if (navigation[i].current == true) {
@@ -82,12 +182,16 @@ export default function AppLayout({ children, Page, Steps }) {
         .catch(function (error) {
           console.error("Error:", error);
         })
-        .finally(function () {});
-    } else {
+        .finally(function () { });
+    } else if (action === "My profile") {
+      navigate(`/users/profile/${userId}`);
     }
   };
 
-  const userNavigation = [{ name: "Sign out", action: "Sign out" }];
+  const userNavigation = [
+    { name: "My profile", action: "My profile" },
+    { name: "Sign out", action: "Sign out" },
+  ];
 
   /**
    * A description of the entire function.
@@ -95,7 +199,7 @@ export default function AppLayout({ children, Page, Steps }) {
    * @param {type} paramName - description of parameter
    * @return {type} description of return value
    */
-  const UserNavigation = () => {
+  const UserNavigation = (action) => {
     handleNavigation(action);
   };
 
@@ -146,7 +250,7 @@ export default function AppLayout({ children, Page, Steps }) {
                         className="-m-2.5 p-2.5"
                         onClick={() => setSidebarOpen(false)}
                       >
-                        <span className="sr-only">Close sidebar</span>
+                        <span className="sr-only">{t("Close sidebar")}</span>
                         <XMarkIcon
                           className="h-6 w-6 text-white"
                           aria-hidden="true"
@@ -158,8 +262,8 @@ export default function AppLayout({ children, Page, Steps }) {
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        className="h-14 w-auto"
+                        src="/LogoCustomAIze.png"
                         alt="Your Company"
                       />
                     </div>
@@ -197,7 +301,7 @@ export default function AppLayout({ children, Page, Steps }) {
                               className="h-6 w-6 shrink-0"
                               aria-hidden="true"
                             />
-                            Settings
+                            {t("Settings")}
                           </a>
                         </li>
                       </ul>
@@ -215,7 +319,7 @@ export default function AppLayout({ children, Page, Steps }) {
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-14 mt-4 w-auto"
+                className="h-14 mt-5 w-auto"
                 src="/LogoCustomAIze.png"
                 alt="Your Company"
               />
@@ -265,7 +369,7 @@ export default function AppLayout({ children, Page, Steps }) {
               className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
               onClick={() => setSidebarOpen(true)}
             >
-              <span className="sr-only">Open sidebar</span>
+              <span className="sr-only">{t("Open sidebar")}</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
 
@@ -276,6 +380,9 @@ export default function AppLayout({ children, Page, Steps }) {
             />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+              <div className="float-right">
+                <LanguageSwitcher />
+              </div>
               <div className="relative flex flex-1 my-auto">
                 <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
                   {Page}
@@ -288,7 +395,7 @@ export default function AppLayout({ children, Page, Steps }) {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
-                    <span className="sr-only">Open user menu</span>
+                    <span className="sr-only">{t("Open user menu")}</span>
                     {/* <img
                                             className="h-8 w-8 rounded-full bg-gray-50"
                                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -299,7 +406,7 @@ export default function AppLayout({ children, Page, Steps }) {
                         className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true"
                       >
-                        {data.name}
+                        {data}
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -324,7 +431,11 @@ export default function AppLayout({ children, Page, Steps }) {
                               href={item.action}
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleNavigation(item.action);
+                                if (item.action === "My profile") {
+                                  UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
+                                } else {
+                                  handleNavigation(item.action);
+                                }
                               }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",

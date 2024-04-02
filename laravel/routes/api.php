@@ -50,12 +50,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+    Route::get('/users', [UserController::class, 'index']);
+
+    //Route to edit 
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
+    // Route to create 
+    Route::post('/createUser',  [UserController::class, 'store']);      
+
+    //Ruta para eliminar un usuario
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+    Route::get('/users/{id}', [UserController::class, 'show']);
+
 });
-// USERS
-Route::get('/users', [UserController::class, 'index']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::post('/createUser',  [UserController::class, 'store']);
-Route::delete('users/{id}', [UserController::class, 'destroy']);
+
 // ORDERS
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/OrderDetails', [OrderDetailsController::class, 'index']);
