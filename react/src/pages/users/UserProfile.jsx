@@ -65,7 +65,7 @@ export const UserProfile = () => {
                         type="text"
                         name="name"
                         id="name"
-                        value={user.name}
+                        value={user.data.name}
                         disabled
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -81,7 +81,7 @@ export const UserProfile = () => {
                         type="text"
                         name="surname"
                         id="surname"
-                        value={user.surname}
+                        value={user.data.surname}
                         disabled
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -97,7 +97,7 @@ export const UserProfile = () => {
                         id="email"
                         name="email"
                         type="email"
-                        value={user.email}
+                        value={user.data.email}
                         disabled
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
