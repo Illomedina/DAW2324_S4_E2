@@ -217,7 +217,7 @@ export default function AppLayout({ children, Page, Steps }) {
               <img
                 className="h-14 mt-4 w-auto"
                 src="/LogoCustomAIze.png"
-                alt="Your Company"
+                alt="Company Logo"
               />
             </div>
             <nav className="flex flex-1 flex-col">

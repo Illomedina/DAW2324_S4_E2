@@ -38,7 +38,7 @@ const OrderDetailsPage = () => {
           {/* ... Header and logo section (omitted for brevity) ... */}
           <img
             src="/LogoCustomAIze.png"
-            alt="chippz"
+            alt="Company Logo"
             className="mx-auto w-16 py-4"
           />
           <div className="flex flex-col justify-center items-center gap-2">
