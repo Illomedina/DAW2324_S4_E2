@@ -215,8 +215,8 @@ export default function AppLayout({ children, Page, Steps }) {
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                className="h-14 mt-4 w-auto"
+                src="/LogoCustomAIze.png"
                 alt="Your Company"
               />
             </div>
