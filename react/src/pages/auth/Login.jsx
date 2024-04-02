@@ -60,11 +60,13 @@ export const Login = () => {
           const userData = userDataResponse.data.data;
         const loggedInUser = userData.find(userData => userData.user === user);
         const idRole = loggedInUser ? loggedInUser.idRole : null;
+        const userId = loggedInUser ? loggedInUser.id : null;
           console.log("User role:", idRole);
           // Guardamos los datos del usuario en el almacenamiento local
           localStorage.setItem("user", JSON.stringify(user));
           localStorage.setItem("idRole", JSON.stringify(idRole));
-
+          console.log("User ID:", userId);
+          localStorage.setItem("userId", userId);
           // Navegamos a la página de dashboard
           navigate('/dashboard');
         }

@@ -4,6 +4,7 @@ import AppLayout from '../../layout/AppLayout';
 import { UsersTable } from '../../components/tables/UsersTable';
 import Spinner from '../../components/Spinner';
 //import axios from 'axios';
+const token = localStorage.getItem('token');
 
 const steps = [
     { name: 'Users', href: '/users', current: true },
@@ -17,7 +18,12 @@ export const UserPage = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                
                 if (!response.ok) {
                     throw new Error('Failed to fetch users');
                 }

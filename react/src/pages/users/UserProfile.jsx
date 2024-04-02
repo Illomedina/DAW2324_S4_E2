@@ -2,6 +2,8 @@ import AppLayout from '../../layout/AppLayout';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
+const token = localStorage.getItem('token');
+
 const steps = [
   { name: 'Users', href: '/users', current: false },
   { name: 'User Profile', href: '/users/profile/${userId}', current: true },
@@ -15,7 +17,11 @@ export const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      });
         
         if (response.ok) {
           const userData = await response.json();

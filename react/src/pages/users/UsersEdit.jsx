@@ -2,6 +2,8 @@ import AppLayout from '../../layout/AppLayout';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
+const token = localStorage.getItem('token');
+
 const steps = [
   { name: 'Users', href: '/users', current: false },
   { name: 'Edit User', href: '/users/create', current: true },
@@ -42,6 +44,7 @@ export const UsersEdit = () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         });
@@ -66,6 +69,8 @@ export const UsersEdit = () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+
         },
       });
 

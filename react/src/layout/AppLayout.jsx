@@ -26,6 +26,8 @@ export default function AppLayout({ children, Page, Steps }) {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
   const idRole = localStorage.getItem("idRole");
+  const userId = localStorage.getItem("userId");
+
 
   let data, role;
   if (user) {
@@ -88,7 +90,9 @@ export default function AppLayout({ children, Page, Steps }) {
   //endpoint when the action parameter is 'Sign out'. It then removes the token
   //from local storage and navigates to the home page if the request is successful.
   //If there is an error during the request, it logs the error to the console.
-  const handleNavigation = async (action, userId) => {
+  const handleNavigation = async (action) => {
+    console.log(userId)
+    console.log(data)
     if (action === "Sign out") {
       const url = `${import.meta.env.VITE_API_URL}/logout`;
       await axios({
@@ -120,7 +124,7 @@ export default function AppLayout({ children, Page, Steps }) {
    * @return {type} description of return value
    */
   const UserNavigation = (action) => {
-    handleNavigation(action, data.id);
+    handleNavigation(action);
   };
 
   return (
@@ -352,7 +356,7 @@ export default function AppLayout({ children, Page, Steps }) {
                                 if (item.action === "My profile") {
                                   UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
                                 } else {
-                                  handleNavigation(item.action, data.id);
+                                  handleNavigation(item.action);
                                 }                              }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",

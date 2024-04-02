@@ -2,6 +2,8 @@ import AppLayout from '../../layout/AppLayout';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+const token = localStorage.getItem('token');
+
 const steps = [
   { name: 'Users', href: '/users', current: false },
   { name: 'Create User', href: '/users/create', current: true },
@@ -32,7 +34,9 @@ export const UsersCreate = () => {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+
         },
         body: JSON.stringify(formData)
       });

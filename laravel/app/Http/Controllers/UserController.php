@@ -109,10 +109,10 @@ class UserController extends Controller
         }
     }
     
-    public function show($id)
+    public function show($userId)
     {
         try {
-            $user = User::findOrFail($id);
+            $user = User::findOrFail($userId);
             return response()->json([
                 'success' => true,
                 'message' => 'User details successfully retrieved',
