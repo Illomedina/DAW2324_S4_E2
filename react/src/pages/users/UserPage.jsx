@@ -4,11 +4,39 @@ import AppLayout from '../../layout/AppLayout';
 import { UsersTable } from '../../components/tables/UsersTable';
 import Spinner from '../../components/Spinner';
 //import axios from 'axios';
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const steps = [
     { name: 'Users', href: '/users', current: true },
 ]
 export const UserPage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [userData, setUsersData] = useState([]);
     const [isLoading, setLoading] = useState(true);
@@ -49,7 +77,7 @@ export const UserPage = () => {
                             onClick={() => navigate('/users/create')}
                             className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300"
                         >
-                            Add User
+                            {t("Add User")}
                         </button>
                     </div>
                 </div>

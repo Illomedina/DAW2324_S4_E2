@@ -1,8 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppLayout from "../../layout/AppLayout";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const OrderDetailsPage = () => {
+  const { t } = useTranslation();
   const { idOrder } = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
 
@@ -51,24 +79,24 @@ const OrderDetailsPage = () => {
               className="flex flex-col gap-3 border-b py-6 text-xs"
             >
               <p className="flex justify-between">
-                <span className="text-gray-400">Order Number:</span>
+                <span className="text-gray-400">{t("Order Number:")}</span>
                 <span>{order.idOrder}</span>
               </p>
               <p className="flex justify-between">
-                <span className="text-gray-400">Shipping Price:</span>
+                <span className="text-gray-400">{t("Shipping Price:")}</span>
                 <span>{order.shippingPrice}</span>
               </p>
               <p className="flex justify-between">
-                <span className="text-gray-400">Customer:</span>
+                <span className="text-gray-400">{t("Customer:")}</span>
                 <span>Roger Arques</span>
               </p>
               <table className="w-full text-left mt-4">
                 <thead>
                   <tr className="flex">
-                    <th className="w-full py-2">Product</th>
-                    <th className="min-w-[44px] py-2">QTY</th>
-                    <th className="min-w-[44px] py-2">VAR</th>
-                    <th className="min-w-[44px] py-2">Total</th>
+                    <th className="w-full py-2">{t("Product")}</th>
+                    <th className="min-w-[44px] py-2">{t("QTY")}</th>
+                    <th className="min-w-[44px] py-2">{t("VAR")}</th>
+                    <th className="min-w-[44px] py-2">{t("Total")}</th>
                   </tr>
                 </thead>
                 <tbody>
