@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Order;
+use App\Models\Customer; // Asegúrate de importar el modelo Customer
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -12,11 +13,10 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-           'idOrderPicanova' => $this->faker->unique()->numberBetween(100000000, 999999999),
-            'idCustomer' => rand(1, 10), // O puedes utilizar $this->faker->numberBetween(1, 50)
+            'idOrderPicanova' => $this->faker->unique()->numberBetween(100000000, 999999999),
+            'customerName' => Customer::query()->inRandomOrder()->value('name'), // Obtiene un nombre aleatorio de la tabla customers
             'datetime' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'orderStatus' => $this->faker->randomElement(['Pending', 'Processing', 'Shipped']),
         ];
     }
 }
-

@@ -13,7 +13,7 @@ class Order extends Model
 
     protected $fillable = [
         'idOrderPicanova',
-        'idCustomer',
+        'customerName',
         'datetime',
         'orderStatus',
     ];

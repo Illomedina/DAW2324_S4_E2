@@ -46,8 +46,8 @@ const OrdersPage = () => {
       cellRenderer: undefined,
     },
     {
-      field: "idCustomer",
-      headerName: "Customer ID",
+      field: "customerName",
+      headerName: "Customer Name",
       cellRenderer: undefined,
     },
     {
