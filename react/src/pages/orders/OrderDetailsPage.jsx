@@ -8,7 +8,8 @@ const steps = [
   { name: "Order Details", href: "/", current: true },
 ];
 
-// Define the functional component for the OrderDetailsPageimport { useTranslation } from "react-i18next";
+// Define the functional component for the OrderDetailsPage
+import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import translationEN from "/src/locales/eng/translation.json";
