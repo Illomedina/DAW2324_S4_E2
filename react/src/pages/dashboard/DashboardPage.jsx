@@ -112,134 +112,136 @@ export const DashboardPage = () => {
         )}
         {/* SECTION BENEFITS / CUSTOMERS */}
         <div className="flex">
-          <div className="relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-            <div className="headerContainer">
-              <h4 className="text-lg font-bold text-primaryColor columns-3">
-                {"Benefits"}
-              </h4>
-              <div
-                className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "220px" }}
-              >
-                <Link to="/benefits">◉ See more</Link>
-              </div>
-            </div>
-            <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-              <table className="table divide-y divide-gray-200">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Month
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Income
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Expenses
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Profit
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y">
-                  {benefits.map((benefit, i) => (
-                    <tr key={benefit.id}>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {benefit.month}
-                      </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {benefit.income} €
-                      </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        -{benefit.expense} €
-                      </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {benefit.profit}€
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="relative flex max-w-[620px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-          <div className="headerContainer">
-              <h4 className="text-lg font-bold text-primaryColor columns-3">
-                {"Customers"}
-              </h4>
-              <div
-                className="buttonCreate"
-                style={{ padding: "0px", paddingLeft: "5px", width: "90px",marginLeft: "190px" }}
-              >
-                <Link to="/customers">◉ See more</Link>
-              </div>
-            </div>
-            <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-              <table className="table divide-y divide-gray-200">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      Username
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                    >
-                      PostalCode
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y">
-                  {customers.map((customer, i) => (
-                    <tr key={customer.id}>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.name}
-                      </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.mail}
-                      </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.surname}
-                      </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.postcode}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+  {/* Benefits Section */}
+  <div className="relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+    <div className="headerContainer">
+      <h2 className="text-lg font-bold text-primaryColor columns-3">
+        Benefits
+      </h2>
+      <div
+        className="buttonCreate"
+        style={{ padding: "0px", paddingLeft: "5px", width: "90px", marginLeft: "220px" }}
+      >
+        <Link to="/benefits" aria-label="See more benefits">See more</Link>
+      </div>
+    </div>
+    <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+      <table className="table divide-y divide-gray-200" aria-label="Benefits table">
+        <thead className="bg-gray-100">
+          <tr>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Month
+            </th>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Income
+            </th>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Expenses
+            </th>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Profit
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y">
+          {benefits.map((benefit) => (
+            <tr key={benefit.id}>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {benefit.month}
+              </td>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {benefit.income} €
+              </td>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                -{benefit.expense} €
+              </td>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {benefit.profit}€
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-          </div>
-        </div>
+  {/* Customers Section */}
+  <div className="relative flex max-w-[620px] h-[350px] w-full flex-col ml-4 rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+    <div className="headerContainer">
+      <h2 className="text-lg font-bold text-primaryColor columns-3">
+        Customers
+      </h2>
+      <div
+        className="buttonCreate"
+        style={{ padding: "0px", paddingLeft: "5px", width: "90px", marginLeft: "190px" }}
+      >
+        <Link to="/customers" aria-label="See more customers">See more</Link>
+      </div>
+    </div>
+    <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+      <table className="table divide-y divide-gray-200" aria-label="Customers table">
+        <thead className="bg-gray-100">
+          <tr>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Name
+            </th>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Email
+            </th>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              Username
+            </th>
+            <th
+              scope="col"
+              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+            >
+              PostalCode
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y">
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {customer.name}
+              </td>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {customer.mail}
+              </td>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {customer.surname}
+              </td>
+              <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                {customer.postcode}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
         {/* SECTION PRODUCTS / ORDERS */}
         <div className="flex mt-10 mb-10">
           <div className="relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">

@@ -78,38 +78,19 @@ export const Login = () => {
   };
 
   return (
-    <div className="antialiased background-login">
+   
+    <main className="antialiased background-login">
       <div className="container px-6 mx-auto">
-        <div className="flex flex-col text-center md:text-left md:flex-row h-screen justify-evenly md:items-center">
+        <section className="flex flex-col text-center md:text-left md:flex-row h-screen justify-evenly items-center">
           <div className="flex pl-20 flex-col w-full">
-            <div>
-              <svg
-                className="w-20 h-20 mx-auto md:float-left fill-stroke primary-color"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                ></path>
-              </svg>
-            </div>
-
-            <h1 className="text-5xl font-bold primary-color">
-              BackOffice Area
-            </h1>
-            <p className="w-5/12 mx-auto md:mx-0 primary-color">
+            <h1 className="text-5xl font-bold primary-color" tabIndex="0">BackOffice Area</h1>
+            <p className="w-5/12 mx-auto md:mx-0 primary-color" tabIndex="0">
               Control and monitorize your website data from dashboard.
             </p>
           </div>
           <div className="w-full pr-20 md:w-full lg:w-9/12 mx-auto md:mx-0">
-            {/* TODO: */}
             {alert && (
-              <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10">
+              <div className="flex flex-row bg-gray-900 h-10 w-[400px] rounded-[30px] mb-10" role="alert">
                 <span className="flex flex-col justify-center text-white font-bold grow-[1] max-w-[90%] text-center">
                   Your request has been denied
                 </span>
@@ -117,11 +98,9 @@ export const Login = () => {
               </div>
             )}
             <div className="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
-              <h2 className="text-2xl font-bold text-primaryColor text-left mb-5">
-                Sign in
-              </h2>
-              <form action="" className="w-full">
-                <div id="input" className="flex flex-col w-full my-5">
+              <h2 className="text-2xl font-bold text-primaryColor text-left mb-5" tabIndex="0">Sign in</h2>
+              <form className="w-full">
+                <div className="flex flex-col w-full my-5">
                   <label htmlFor="user" className="text-primaryColor mb-2">
                     User
                   </label>
@@ -132,12 +111,13 @@ export const Login = () => {
                     onChange={(e) => setUser(e.target.value)}
                     placeholder="Please insert your user"
                     className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryColor focus:shadow-lg"
+                    aria-invalid={errors.user ? "true" : "false"}
                   />
                   {errors.user && (
-                    <div className="error">{errors.user}</div>
+                    <div className="error" role="alert">{errors.user}</div>
                   )}
                 </div>
-                <div id="input" className="flex flex-col w-full my-5">
+                <div className="flex flex-col w-full my-5">
                   <label htmlFor="password" className="text-primaryColor mb-2">
                     Password
                   </label>
@@ -148,53 +128,28 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Please insert your password"
                     className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryColor focus:shadow-lg"
+                    aria-invalid={errors.password ? "true" : "false"}
                   />
                   {errors.password && (
-                    <div className="error">{errors.password}</div>
+                    <div className="error" role="alert">{errors.password}</div>
                   )}
                 </div>
                 <div className="flex flex-col w-full my-5">
                   <button
-                    id="button"
                     type="button"
-                    onClick={() => onSubmit()}
-                    className="w-full py-4 rounded-lg text-black-100"
+                    id="button"
+                    onClick={onSubmit}
+                    className="w-full py-4 rounded-lg text-black-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryColor-hover"
                   >
-                    <div className="flex flex-row items-center justify-center">
-                      <div className="mr-2">
-                        <svg
-                          className="w-6 h-6"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div className="font-bold">Sign in</div>
-                    </div>
+                    Sign in
                   </button>
-                  <div className="flex justify-evenly mt-5">
-                    <a
-                      className="w-full text-center font-medium text-gray-500"
-                    ></a>
-                    <a
-                      className="w-full text-center font-medium text-gray-500"
-                    ></a>
-                  </div>
                 </div>
               </form>
             </div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

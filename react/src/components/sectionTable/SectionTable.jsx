@@ -257,63 +257,61 @@ function SectionTable({ SectionName }) {
 
   return (
     <div className="flex flex-col h-[100vh] divContainer">
-      {loading && (
-        <div className="loader-container">
-          <div className="loader"></div>
+       {loading && (
+    <div className="loader-container" aria-label="Loading content, please wait." role="alert">
+      <div className="loader"></div>
+    </div>
+  )}
+  {alertSucces && (
+    <main aria-live="polite">
+      <section>
+        <div className="alert alert-2-success" role="alert">
+          <h2 className="alert-title">Success</h2>
+          <p className="alert-content">Data deleted correctly.</p>
         </div>
-      )}
-      {alertSucces && (
-        <main>
-          <section>
-            <div className="alert alert-2-success">
-              <h3 className="alert-title">Succes</h3>
-              <p className="alert-content">Data deleted correctly</p>
-            </div>
-          </section>
-        </main>
-      )}
+      </section>
+    </main>
+  )}
 
-      {alertError && (
-        <main>
-          <section>
-            <div className="alert alert-1-warning">
-              <h3 className="alert-title">Error</h3>
-              <p className="alert-content">Something went wrong</p>
-            </div>
-          </section>
-        </main>
-      )}
+  {alertError && (
+    <main aria-live="polite">
+      <section>
+        <div className="alert alert-1-warning" role="alert">
+          <h2 className="alert-title">Error</h2>
+          <p className="alert-content">Something went wrong.</p>
+        </div>
+      </section>
+    </main>
+  )}
 
-      <div className="relative group mb-10">
-        <button id="dropdown-button" onClick={toggleDropdown} className="inline-flex justify-center w-50 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
-          <span className="mr-2">Select Year</span>
+<div className="relative group mb-10">
+    <button id="dropdown-button" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={isOpen ? "true" : "false"} className="inline-flex justify-center w-50 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
+      <span className="mr-2">Select Year</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fillRule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>
-        </button>
-        <div id="dropdown-menu" className={`z-10 absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1 ${isOpen ? '' : 'hidden'}`}>
-          <input id="search-input" onChange={handleInputChange} value={searchTerm} className="block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none" type="text" placeholder="Search years" autoComplete="off" />
-          {years.map((year, i) => (
-            <a key={i} onClick={() => handleYearClick(year)} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">{year}</a>
-          ))}
+          </button>
+    <div id="dropdown-menu" className={`z-10 absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1 ${isOpen ? '' : 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
+      <input id="search-input" onChange={handleInputChange} value={searchTerm} className="block w-full px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none" type="text" placeholder="Search years" autoComplete="off" role="searchbox" />
+      {years.map((year, index) => (
+        <a key={index} onClick={() => handleYearClick(year)} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md" role="menuitem">{year}</a>
+      ))}
+    </div>
+  </div>
+
+  <div className="flex">
+    <div className="relative flex max-w-[650px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+      <div className="headerContainer">
+        <h2 className="text-lg font-bold text-primaryColor">Table</h2>
+        <div className="buttonContainer">
+          <Link className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300" to="/benefits=create" style={{ marginLeft: '130px' }}>
+            Create
+          </Link>
         </div>
       </div>
-
-      <div className="flex">
-        <div className="relative flex max-w-[650px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-          <div className="headerContainer">
-            <h4 className="text-lg font-bold text-primaryColor columns-3">
-              Table
-            </h4>
-            <div className="buttonContainer">
-              <Link className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300" to="/benefits=create" style={{ marginLeft: '130px' }}>
-                Create
-              </Link>
-            </div>
-          </div>
-          <div className="scrollit relative flex max-w-[650px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
-            <table className="table divide-y divide-gray-200">
-              <thead className="bg-gray-100">
+      <div className="scrollit relative flex max-w-[650px] h-[550px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+        <table className="table divide-y divide-gray-200" aria-label="Financial Table">
+          <thead className="bg-gray-100">
                 <tr>
                   <th
                     scope="col"
