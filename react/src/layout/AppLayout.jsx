@@ -30,18 +30,16 @@ export default function AppLayout({ children, Page, Steps }) {
 
 
   let data, role;
+
   if (user) {
     data = JSON.parse(user);
-    console.log("Datos del usuario:", data);
     role = JSON.parse(idRole);
-    
   } else {
     data = "";
     role = "";
   }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   let navigation = [];
 
   switch (role) {
@@ -91,8 +89,6 @@ export default function AppLayout({ children, Page, Steps }) {
   //from local storage and navigates to the home page if the request is successful.
   //If there is an error during the request, it logs the error to the console.
   const handleNavigation = async (action) => {
-    console.log(userId)
-    console.log(data)
     if (action === "Sign out") {
       const url = `${import.meta.env.VITE_API_URL}/logout`;
       await axios({
@@ -108,15 +104,14 @@ export default function AppLayout({ children, Page, Steps }) {
         .catch(function (error) {
           console.error("Error:", error);
         })
-        .finally(function () {});
+        .finally(function () { });
     } else if (action === "My profile") {
       navigate(`/users/profile/${userId}`);
     }
   };
 
-  const userNavigation = [{ name: "My profile", action: "My profile" },{ name: "Sign out", action: "Sign out" }];
+  const userNavigation = [{ name: "My profile", action: "My profile" }, { name: "Sign out", action: "Sign out" }];
 
-  
   /**
    * A description of the entire function.
    *
@@ -126,6 +121,8 @@ export default function AppLayout({ children, Page, Steps }) {
   const UserNavigation = (action) => {
     handleNavigation(action);
   };
+
+
 
   return (
     <>
@@ -243,9 +240,9 @@ export default function AppLayout({ children, Page, Steps }) {
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-14 mt-4 w-auto"
-                src="/LogoCustomAIze.png"
-                alt="Company Logo"
+                className="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                alt="Your Company"
               />
             </div>
             <nav className="flex flex-1 flex-col">
@@ -287,6 +284,7 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
         </div>
         <div className="lg:pl-56">
+
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
@@ -356,7 +354,8 @@ export default function AppLayout({ children, Page, Steps }) {
                                   UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
                                 } else {
                                   handleNavigation(item.action);
-                                }                              }}
+                                }
+                              }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",
                                 "block px-3 py-1 text-sm leading-6 text-gray-900"
@@ -375,17 +374,17 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              {window.location.href.includes("/benefits") == false &&
-                window.location.href.includes("/dashboard") == false && (
-                  <Breadcrumb steps={Steps} />
-                )}
+              {window.location.href.includes("/benefits") == false && window.location.href.includes("/dashboard") == false && (
+                <Breadcrumb steps={Steps} />
+              )}
               {children}
             </div>
           </main>
 
           <UserwayWidget />
+
         </div>
-      </div>
+      </div >
     </>
   );
 }
