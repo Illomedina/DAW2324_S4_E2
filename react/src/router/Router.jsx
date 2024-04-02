@@ -71,7 +71,7 @@ export const Router = () => {
       <Route path="/users" element={<UserPage />} />
       <Route path="/users/:userId/edit" element={<UsersEdit />} />
       <Route path="/users/create" element={<UsersCreate></UsersCreate>} />
-
+      <Route path="/users/profile/:userId" element={<UserProfile />} />
 
 
 
