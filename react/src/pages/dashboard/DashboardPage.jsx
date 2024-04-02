@@ -342,33 +342,33 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Quantity
+                      Orderd ID
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Price
+                      Customer ID
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Shipping Price
+                      Status
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y">
-                  {customers.map((customer, i) => (
-                    <tr key={customer.id}>
+                  {orders.map((orders, i) => (
+                    <tr key={orders.id}>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.quantity}
+                        {orders.idOrderPicanova}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.priceEach}
+                        {orders.idCustomer}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                        {customer.shippingPrice}
+                        {orders.orderStatus}
                       </td>
                     </tr>
                   ))}
