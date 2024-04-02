@@ -22,14 +22,13 @@ export const UserProfile = () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
           headers: {
-              Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
-      });
-        
+        });
+
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
-          console.log("hola ",user.name)
         } else {
           console.error('Error fetching user data:', response.statusText);
         }
@@ -37,7 +36,7 @@ export const UserProfile = () => {
         console.error('Error fetching user data:', error);
       } finally {
         setLoading(false);
-    }
+      }
     };
 
     if (userId) {
@@ -46,7 +45,8 @@ export const UserProfile = () => {
   }, [userId]);
 
   if (!user) {
-    return <Spinner message='Loading...' />;  }
+    return <Spinner message='Loading...' />;
+  }
 
   return (
     <AppLayout Page={'User Profile'} Steps={steps}>
