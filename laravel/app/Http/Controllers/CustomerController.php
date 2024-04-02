@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class CustomerController extends Controller
 {
@@ -28,46 +29,53 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the input data
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'surname' => 'required|max:255',
-            'username' => 'required|max:255|unique:customers,username',
-            'mail' => 'required|email|max:255|unique:customers,mail',
-            'phone' => 'nullable|max:255',
-            'address' => 'nullable|max:255',
-            'city' => 'nullable|max:255',
-            'postcode' => 'nullable|max:255',
-            'idCountry' => 'nullable|integer|exists:countries,id',
-            'is_validated' => 'sometimes|boolean',
-            'status' => 'required|in:Active,Inactive,Banned,Deleted',
-        ]);
+        try {
+            // Validate the input data
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'surname' => 'required|max:255',
+                'username' => 'required|max:255|unique:customers,username',
+                'mail' => 'required|email|max:255|unique:customers,mail',
+                'phone' => 'nullable|max:255',
+                'address' => 'nullable|max:255',
+                'city' => 'nullable|max:255',
+                'postcode' => 'nullable|max:255',
+                'idCountry' => 'nullable|integer|exists:countries,id',
+                'is_validated' => 'sometimes|boolean',
+                'status' => 'required|in:Active,Inactive,Banned,Deleted',
+            ]);
 
-        // Add the current date to the validated data
-        $validatedData['membershipDate'] = now();
+            // Add the current date to the validated data
+            $validatedData['membershipDate'] = now();
 
-        // Create a new customer with the validated data
-        $customer = Customer::create([
-            'name' => $validatedData['name'],
-            'surname' => $validatedData['surname'],
-            'username' => $validatedData['username'],
-            'password' => bcrypt('password'),
-            'mail' => $validatedData['mail'],
-            'city' => $validatedData['city'],
-            'phone' => $validatedData['phone'],
-            'address' => $validatedData['address'],
-            'postcode' => $validatedData['postcode'],
-            'idCountry' => 1,
-            'is_validated' => $validatedData['is_validated'] ?? false,
-            'membershipDate' => $validatedData['membershipDate'],
-            'customerStatus' => $validatedData['status'],
-        ]);
+            // Create a new customer with the validated data
+            $customer = Customer::create([
+                'name' => $validatedData['name'],
+                'surname' => $validatedData['surname'],
+                'username' => $validatedData['username'],
+                'password' => bcrypt('password'),
+                'mail' => $validatedData['mail'],
+                'city' => $validatedData['city'],
+                'phone' => $validatedData['phone'],
+                'address' => $validatedData['address'],
+                'postcode' => $validatedData['postcode'],
+                'idCountry' => 1,
+                'is_validated' => $validatedData['is_validated'] ?? false,
+                'membershipDate' => $validatedData['membershipDate'],
+                'customerStatus' => $validatedData['status'],
+            ]);
 
-        // Return a JSON response with a message and the created customer
-        return response()->json(
-            ['message' => 'Customer created successfully', 'data' => $customer],
-            201
-        );
+            // Return a JSON response with a message and the created customer
+            return response()->json(
+                ['message' => 'Customer created successfully', 'data' => $customer],
+                201
+            );
+        } catch (QueryException $e) {
+            Log::error('Error creating customer: ' . $e->getMessage());
+
+            // Devuelve un mensaje de error genérico al usuario
+            return response()->json(['message' => 'Unable to process your request. Please try again later.'], 500);
+        }
     }
 
 
