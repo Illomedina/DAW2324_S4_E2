@@ -1,50 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppLayout from "../../layout/AppLayout";
+import useOrdersData from "../../hooks/useOrders";
 
+const steps = [
+  { name: "Orders", href: "/orders", current: false },
+  { name: "Order Details", href: "/", current: true },
+];
+
+// Define the functional component for the OrderDetailsPage
 const OrderDetailsPage = () => {
+  // Extract the idOrder from the URL parameters using the useParams hook
   const { idOrder } = useParams();
-  const [orderDetails, setOrderDetails] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const result = await fetch(
-        `${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`
-      );
-      if (result.ok) {
-        const data = await result.json();
-        setOrderDetails(data);
-      } else if (result.status === 429) {
-        console.log("Too Many Requests. Retrying in 5 seconds...");
-        setTimeout(() => fetchData(), 5000);
-      } else {
-        console.error("Error fetching data. Status:", result.status);
-      }
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
+  // Use the custom hook useOrdersData to fetch order details based on the idOrder
+  const {
+    rowData: orderDetails, // Extract rowData from the custom hook response
+    loading, // Flag indicating if data is currently being fetched
+    error, // Stores any error that might occur during data fetching
+  } = useOrdersData(`${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`);
 
-  useEffect(() => {
-    // Verificar que idOrder tenga un valor antes de realizar la solicitud
-    if (idOrder) {
-      fetchData();
-    }
-  }, [idOrder]);
+  // // Render loading state if data is still loading
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
+  // // Render error message if there's an error during data fetching
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
+
+  // Render the UI for the OrderDetailsPage
   return (
-    <AppLayout>
-      <div className="flex items-center justify-center">
+    <AppLayout Page={"Order Details"} Steps={steps}>
+      <div className="flex items-center justify-center mt-4">
         <div className="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg">
+          {/* ... Header and logo section (omitted for brevity) ... */}
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg"
-            alt="chippz"
+            src="/LogoCustomAIze.png"
+            alt="Company Logo"
             className="mx-auto w-16 py-4"
           />
           <div className="flex flex-col justify-center items-center gap-2">
             <h4 className="font-semibold">CustomAIze</h4>
             <p className="text-xs"></p>
           </div>
+          {/* ... Order details section ... */}
           {orderDetails.map((order, index) => (
             <div
               key={index}
@@ -58,10 +59,11 @@ const OrderDetailsPage = () => {
                 <span className="text-gray-400">Shipping Price:</span>
                 <span>{order.shippingPrice}</span>
               </p>
-              <p className="flex justify-between">
+              {/* <p className="flex justify-between">
                 <span className="text-gray-400">Customer:</span>
-                <span>Roger Arques</span>
-              </p>
+                <span></span>
+              </p> */}
+              {/* ... Individual order details ... */}
               <table className="w-full text-left mt-4">
                 <thead>
                   <tr className="flex">
@@ -73,6 +75,7 @@ const OrderDetailsPage = () => {
                 </thead>
                 <tbody>
                   {/* Asumiendo que orderDetails ahora incluye un array de productos en cada pedido */}
+                  {/* Map through individual products in the orderDetails array */}
                   {orderDetails.map((product, productIndex) => (
                     <tr key={productIndex} className="flex">
                       <td className="flex-1 py-1">{product.idProduct}</td>
@@ -85,6 +88,7 @@ const OrderDetailsPage = () => {
               </table>
             </div>
           ))}
+          {/* ... Footer section ... */}
           <div className="py-4 justify-center items-right flex flex-col gap-2 ">
             <div className="flex justify-end">
               <svg
@@ -109,4 +113,5 @@ const OrderDetailsPage = () => {
   );
 };
 
+// Export the OrderDetailsPage component as the default export
 export default OrderDetailsPage;

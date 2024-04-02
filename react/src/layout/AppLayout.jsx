@@ -25,33 +25,104 @@ function classNames(...classes) {
 export default function AppLayout({ children, Page, Steps }) {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
-  let data;
+  const idRole = localStorage.getItem("idRole");
+  const userId = localStorage.getItem("userId");
+
+  let data, role;
+
   if (user) {
     data = JSON.parse(user);
+    role = JSON.parse(idRole);
   } else {
     data = "";
+    role = "";
   }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Users", href: "/users", icon: UsersIcon, current: false },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
-    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
-  ];
+  let navigation = [];
+
+  switch (role) {
+    case 1:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Users", href: "/users", icon: UsersIcon, current: false },
+        {
+          name: "Customers",
+          href: "/customers",
+          icon: UserGroupIcon,
+          current: false,
+        },
+        {
+          name: "Products",
+          href: "/products",
+          icon: CalendarIcon,
+          current: false,
+        },
+        {
+          name: "Orders",
+          href: "/orders",
+          icon: DocumentDuplicateIcon,
+          current: false,
+        },
+        {
+          name: "Benefits",
+          href: "/benefits",
+          icon: ChartPieIcon,
+          current: false,
+        },
+        { name: "Settings", href: "/settings", icon: CogIcon, current: false },
+      ];
+      break;
+    case 2:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        {
+          name: "Customers",
+          href: "/customers",
+          icon: UserGroupIcon,
+          current: false,
+        },
+        {
+          name: "Products",
+          href: "/products",
+          icon: CalendarIcon,
+          current: false,
+        },
+        {
+          name: "Orders",
+          href: "/orders",
+          icon: DocumentDuplicateIcon,
+          current: false,
+        },
+        {
+          name: "Benefits",
+          href: "/benefits",
+          icon: ChartPieIcon,
+          current: false,
+        },
+      ];
+      break;
+    case 3:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        {
+          name: "Customers",
+          href: "/customers",
+          icon: UserGroupIcon,
+          current: false,
+        },
+        {
+          name: "Orders",
+          href: "/orders",
+          icon: DocumentDuplicateIcon,
+          current: false,
+        },
+      ];
+      break;
+    default:
+      console.log("NO tienes rol");
+      break;
+  }
 
   for (var i = 0; i < navigation.length; i++) {
     if (navigation[i].current == true) {
@@ -82,12 +153,16 @@ export default function AppLayout({ children, Page, Steps }) {
         .catch(function (error) {
           console.error("Error:", error);
         })
-        .finally(function () { });
-    } else {
+        .finally(function () {});
+    } else if (action === "My profile") {
+      navigate(`/users/profile/${userId}`);
     }
   };
 
-  const userNavigation = [{ name: "Sign out", action: "Sign out" }];
+  const userNavigation = [
+    { name: "My profile", action: "My profile" },
+    { name: "Sign out", action: "Sign out" },
+  ];
 
   /**
    * A description of the entire function.
@@ -95,11 +170,9 @@ export default function AppLayout({ children, Page, Steps }) {
    * @param {type} paramName - description of parameter
    * @return {type} description of return value
    */
-  const UserNavigation = () => {
+  const UserNavigation = (action) => {
     handleNavigation(action);
   };
-
-
 
   return (
     <>
@@ -160,8 +233,8 @@ export default function AppLayout({ children, Page, Steps }) {
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        className="h-14 w-auto"
+                        src="/LogoCustomAIze.png"
                         alt="Your Company"
                       />
                     </div>
@@ -217,8 +290,8 @@ export default function AppLayout({ children, Page, Steps }) {
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                className="h-14 mt-5 w-auto"
+                src="/LogoCustomAIze.png"
                 alt="Your Company"
               />
             </div>
@@ -261,7 +334,6 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
         </div>
         <div className="lg:pl-56">
-
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
@@ -302,7 +374,7 @@ export default function AppLayout({ children, Page, Steps }) {
                         className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true"
                       >
-                        {data.name}
+                        {data}
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -327,7 +399,11 @@ export default function AppLayout({ children, Page, Steps }) {
                               href={item.action}
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleNavigation(item.action);
+                                if (item.action === "My profile") {
+                                  UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
+                                } else {
+                                  handleNavigation(item.action);
+                                }
                               }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",
@@ -347,15 +423,15 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              {window.location.href.includes("/benefits") == false && window.location.href.includes("/dashboard") == false && (
-                <Breadcrumb steps={Steps} />
-              )}
+              {window.location.href.includes("/benefits") == false &&
+                window.location.href.includes("/dashboard") == false && (
+                  <Breadcrumb steps={Steps} />
+                )}
               {children}
             </div>
           </main>
 
           <UserwayWidget />
-
         </div>
       </div>
     </>

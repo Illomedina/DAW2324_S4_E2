@@ -2,6 +2,8 @@ import AppLayout from '../../layout/AppLayout';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
+const token = localStorage.getItem('token');
+
 const steps = [
   { name: 'Users', href: '/users', current: false },
   { name: 'Edit User', href: '/users/create', current: true },
@@ -38,25 +40,26 @@ export const UsersEdit = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        alert('User updated successfully!');
-        navigate('/users');
-      } else {
-        // Manejo de errores en caso de que la respuesta no sea exitosa
-        console.error('Error:', response.statusText);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        });
+    
+        if (response.ok) {
+          alert('User updated successfully!');
+          navigate('/users');
+                } else {
+          // Manejo de errores en caso de que la respuesta no sea exitosa
+          console.error('Error:', response.statusText);
+        }
+      } catch (error) {
+        // Manejo de errores en caso de que ocurra un error durante la solicitud
+        console.error('Error:', error);
       }
-    } catch (error) {
-      // Manejo de errores en caso de que ocurra un error durante la solicitud
-      console.error('Error:', error);
-    }
   }
 
   const onDelete = async (userId) => {
@@ -66,6 +69,8 @@ export const UsersEdit = () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+
         },
       });
 
@@ -175,7 +180,7 @@ export const UsersEdit = () => {
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
-                  </div>
+                  </div>                               
                 </div>
               </div>
             </div>
@@ -361,12 +366,12 @@ export const UsersEdit = () => {
             {/* Contenedor para los botones de la derecha */}
             <div className="flex justify-end">
               <button type="button" onClick={() => navigate(-1)}
-                className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                className="inline-flex justify-center rounded-md bg-indigo-400 px-3 py-2 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
                 Cancel
               </button>
 
               <button type="submit" onClick={onSubmit}
-                className="ml-4 bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                className="inline-flex justify-center rounded-md ml-2 bg-teal-400 px-3 py-2 text-md font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
                 Update
               </button>
             </div>
@@ -380,4 +385,3 @@ export const UsersEdit = () => {
 }
 
 export default UsersEdit;
-
