@@ -3,7 +3,36 @@ import React, { useEffect, useState } from "react";
 import "../../components/sectionTable/SectionTable.css";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
 export const DashboardPage = () => {
+  const { t } = useTranslation();
   const [benefits, setBenefits] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -124,7 +153,7 @@ export const DashboardPage = () => {
                   marginLeft: "220px",
                 }}
               >
-                <Link to="/benefits">◉ See more</Link>
+                <Link to="/benefits">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -135,25 +164,25 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Month
+                      {t("Month")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Income
+                      {t("Income")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Expenses
+                      {t("Expenses")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Profit
+                      {t("Profit")}
                     </th>
                   </tr>
                 </thead>
@@ -192,7 +221,7 @@ export const DashboardPage = () => {
                   marginLeft: "190px",
                 }}
               >
-                <Link to="/customers">◉ See more</Link>
+                <Link to="/customers">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -203,25 +232,25 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Name
+                      {t("Name")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs w-60 font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Email
+                      {t("Email")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Username
+                      {t("Username")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      PostalCode
+                      {t("PostalCode")}
                     </th>
                   </tr>
                 </thead>
@@ -263,7 +292,7 @@ export const DashboardPage = () => {
                   marginLeft: "210px",
                 }}
               >
-                <Link to="/products">◉ See more</Link>
+                <Link to="/products">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[600px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -274,25 +303,25 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Name
+                      {t("Name")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      SKU
+                      {t("SKU")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      DPI
+                      {t("DPI")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Type
+                      {t("Type")}
                     </th>
                   </tr>
                 </thead>
@@ -331,7 +360,7 @@ export const DashboardPage = () => {
                   marginLeft: "280px",
                 }}
               >
-                <Link to="/orders">◉ See more</Link>
+                <Link to="/orders">{t("◉ See more")}</Link>
               </div>
             </div>
             <div className="scrollit relative flex max-w-[620px] h-[350px] w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-softGray bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -342,19 +371,19 @@ export const DashboardPage = () => {
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Orderd ID
+                      {t("Orderd ID")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Customer ID
+                      {t("Customer ID")}
                     </th>
                     <th
                       scope="col"
                       className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
-                      Status
+                      {t("Status")}
                     </th>
                   </tr>
                 </thead>

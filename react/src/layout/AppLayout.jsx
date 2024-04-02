@@ -17,12 +17,41 @@ import { Breadcrumb } from "../components/Breadcrumb";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserwayWidget from "../components/userwayWidget/UserWayWidget";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageSwitcher from "../components/LanguageSwitcher";
+import translationEN from "/src/locales/eng/translation.json";
+import translationCA from "/src/locales/cat/translation.json";
+import translationES from "/src/locales/esp/translation.json";
+
+const resources = {
+  eng: {
+    translation: translationEN,
+  },
+  cat: {
+    translation: translationCA,
+  },
+  esp: {
+    translation: translationES,
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "eng",
+  fallbackLng: "eng",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function AppLayout({ children, Page, Steps }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
   const idRole = localStorage.getItem("idRole");
@@ -153,7 +182,7 @@ export default function AppLayout({ children, Page, Steps }) {
         .catch(function (error) {
           console.error("Error:", error);
         })
-        .finally(function () {});
+        .finally(function () { });
     } else if (action === "My profile") {
       navigate(`/users/profile/${userId}`);
     }
@@ -221,7 +250,7 @@ export default function AppLayout({ children, Page, Steps }) {
                         className="-m-2.5 p-2.5"
                         onClick={() => setSidebarOpen(false)}
                       >
-                        <span className="sr-only">Close sidebar</span>
+                        <span className="sr-only">{t("Close sidebar")}</span>
                         <XMarkIcon
                           className="h-6 w-6 text-white"
                           aria-hidden="true"
@@ -272,7 +301,7 @@ export default function AppLayout({ children, Page, Steps }) {
                               className="h-6 w-6 shrink-0"
                               aria-hidden="true"
                             />
-                            Settings
+                            {t("Settings")}
                           </a>
                         </li>
                       </ul>
@@ -340,7 +369,7 @@ export default function AppLayout({ children, Page, Steps }) {
               className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
               onClick={() => setSidebarOpen(true)}
             >
-              <span className="sr-only">Open sidebar</span>
+              <span className="sr-only">{t("Open sidebar")}</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
 
@@ -351,6 +380,9 @@ export default function AppLayout({ children, Page, Steps }) {
             />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+              <div className="float-right">
+                <LanguageSwitcher />
+              </div>
               <div className="relative flex flex-1 my-auto">
                 <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
                   {Page}
@@ -363,7 +395,7 @@ export default function AppLayout({ children, Page, Steps }) {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
-                    <span className="sr-only">Open user menu</span>
+                    <span className="sr-only">{t("Open user menu")}</span>
                     {/* <img
                                             className="h-8 w-8 rounded-full bg-gray-50"
                                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
