@@ -21,7 +21,9 @@ import axios from "axios";
 import UserPage from "../pages/users/UserPage";
 import UsersCreate from "../pages/users/UsersCreate";
 import UsersEdit from "../pages/users/UsersEdit";
-import UsersShow from "../pages/users/UsersShow"
+import UsersShow from "../pages/users/UsersShow";
+import UserProfile from "../pages/users/UserProfile";
+
 //import RegisterForm from "../pages/users/RegisterForm";
 import SettingPage from "../pages/setting/SettingPage";
 import SettingForm from "../pages/setting/SettingForm";
@@ -73,8 +75,7 @@ export const Router = () => {
       <Route path="/users" element={<UserPage />} />
       <Route path="/users/:userId/edit" element={<UsersEdit />} />
       <Route path="/users/create" element={<UsersCreate></UsersCreate>} />
-
-
+      <Route path="/users/profile/:userId" component={UserProfile} />
 
 
       <Route path="/*" element={<PageNotFound />} />

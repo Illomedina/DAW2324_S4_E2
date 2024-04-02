@@ -109,6 +109,21 @@ class UserController extends Controller
         }
     }
     
+    public function show($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'User details successfully retrieved',
+                'data' => $user,
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'User not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve user details'], 500);
+        }
+    }
 
     public function destroy($id)
     {

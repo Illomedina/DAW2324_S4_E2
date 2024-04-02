@@ -88,7 +88,7 @@ export default function AppLayout({ children, Page, Steps }) {
   //endpoint when the action parameter is 'Sign out'. It then removes the token
   //from local storage and navigates to the home page if the request is successful.
   //If there is an error during the request, it logs the error to the console.
-  const handleNavigation = async (action) => {
+  const handleNavigation = async (action, userId) => {
     if (action === "Sign out") {
       const url = `${import.meta.env.VITE_API_URL}/logout`;
       await axios({
@@ -105,20 +105,22 @@ export default function AppLayout({ children, Page, Steps }) {
           console.error("Error:", error);
         })
         .finally(function () {});
-    } else {
+    } else if (action === "My profile") {
+      navigate(`/users/profile/${userId}`);
     }
   };
 
-  const userNavigation = [{ name: "Sign out", action: "Sign out" }];
+  const userNavigation = [{ name: "My profile", action: "My profile" },{ name: "Sign out", action: "Sign out" }];
 
+  
   /**
    * A description of the entire function.
    *
    * @param {type} paramName - description of parameter
    * @return {type} description of return value
    */
-  const UserNavigation = () => {
-    handleNavigation(action);
+  const UserNavigation = (action) => {
+    handleNavigation(action, data.id);
   };
 
   return (
@@ -347,8 +349,11 @@ export default function AppLayout({ children, Page, Steps }) {
                               href={item.action}
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleNavigation(item.action);
-                              }}
+                                if (item.action === "My profile") {
+                                  UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
+                                } else {
+                                  handleNavigation(item.action);
+                                }                              }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",
                                 "block px-3 py-1 text-sm leading-6 text-gray-900"

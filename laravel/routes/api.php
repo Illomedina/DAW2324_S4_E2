@@ -69,7 +69,7 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 Route::post('/createUser',  [UserController::class, 'store']);
 //Ruta para eliminar un usuario
 Route::delete('users/{id}', [UserController::class, 'destroy']);
-
+Route::get('/users/{id}', [UserController::class, 'show']);
 
 
 
