@@ -1,6 +1,8 @@
 import AppLayout from '../../layout/AppLayout';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import Spinner from '../../components/Spinner';
+
 
 const token = localStorage.getItem('token');
 
@@ -13,6 +15,7 @@ export const UserProfile = () => {
   const { userId } = useParams(); // Obtener el ID de usuario de la URL
 
   const [user, setUser] = useState(null);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -32,7 +35,9 @@ export const UserProfile = () => {
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
-      }
+      } finally {
+        setLoading(false);
+    }
     };
 
     if (userId) {
@@ -41,8 +46,7 @@ export const UserProfile = () => {
   }, [userId]);
 
   if (!user) {
-    return <div>Loading...</div>; // O cualquier indicador de carga que desees mostrar
-  }
+    return <Spinner message='Loading...' />;  }
 
   return (
     <AppLayout Page={'User Profile'} Steps={steps}>
