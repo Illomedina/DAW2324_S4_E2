@@ -207,7 +207,7 @@ export const DashboardPage = () => {
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                      className="py-3 px-6 text-xs w-60 font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                     >
                       Email
                     </th>
