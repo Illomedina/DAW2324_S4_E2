@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductDetail;
 
 /**
  * Class ProductController
@@ -63,9 +64,29 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $product->is_active = $request->is_active;
-        $product->save();
 
-        return response()->json(['message' => 'Product updated successfully', 'product' => $product]);
+        if ($request->has('is_active')) {
+            $product->is_active = $request->is_active;
+            $product->save();
+
+            return response()->json(['message' => 'Product activation status updated successfully.']);
+        }
+
+        if ($request->has('benefits_margin')) {
+            $productDetails = ProductDetail::where('idProduct', $id)->get();
+
+            if ($productDetails->isEmpty()) {
+                return response()->json(['message' => 'Product details not found.'], 404);
+            }
+
+            foreach ($productDetails as $productDetail) {
+                $productDetail->benefits_margin = $request->benefits_margin;
+                $productDetail->save();
+            }
+
+            return response()->json(['message' => 'Product benefits margins updated successfully.']);
+        }
+
+        return response()->json(['message' => 'No valid update field provided.'], 400);
     }
 }

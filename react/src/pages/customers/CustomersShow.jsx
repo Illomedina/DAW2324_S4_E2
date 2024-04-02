@@ -44,7 +44,7 @@ export const CustomersShow = () => {
             <div className="ml-4 mt-2 flex-shrink-0">
               <button
                 type="button" onClick={() => navigate(`/customers/${id}/edit`, { state: { customer } })}
-                className="relative inline-flex items-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-blue-900 shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full transition duration-300"
               >
                 Edit Customer
               </button>

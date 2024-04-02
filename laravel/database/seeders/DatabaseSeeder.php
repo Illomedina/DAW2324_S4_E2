@@ -2,12 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use Database\Factories\CustomerFactory;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             BenefitsTableSeeder::class,
             CustomersTableSeeder::class,
+            SettingSeeder::class,
             // OrderTableSeeder::class,
             OrderDetailSeeder::class,
         ]);
