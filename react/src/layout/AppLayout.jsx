@@ -25,33 +25,57 @@ function classNames(...classes) {
 export default function AppLayout({ children, Page, Steps }) {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
-  let data;
+  const idRole = localStorage.getItem("idRole");
+  const userId = localStorage.getItem("userId");
+
+
+  let data, role;
   if (user) {
     data = JSON.parse(user);
+    console.log("Datos del usuario:", data);
+    role = JSON.parse(idRole);
+    
   } else {
     data = "";
+    role = "";
   }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigation = [
-    { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Users", href: "/users", icon: UsersIcon, current: false },
-    {
-      name: "Customers",
-      href: "/customers",
-      icon: UserGroupIcon,
-      current: false,
-    },
-    { name: "Products", href: "/products", icon: CalendarIcon, current: false },
-    {
-      name: "Orders",
-      href: "/orders",
-      icon: DocumentDuplicateIcon,
-      current: false,
-    },
-    { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
-    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
-  ];
+
+  let navigation = [];
+
+  switch (role) {
+    case 1:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Users", href: "/users", icon: UsersIcon, current: false },
+        { name: "Customers", href: "/customers", icon: UserGroupIcon, current: false },
+        { name: "Products", href: "/products", icon: CalendarIcon, current: false },
+        { name: "Orders", href: "/orders", icon: DocumentDuplicateIcon, current: false },
+        { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
+        { name: "Settings", href: "/settings", icon: CogIcon, current: false },
+      ];
+      break;
+    case 2:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Customers", href: "/customers", icon: UserGroupIcon, current: false },
+        { name: "Products", href: "/products", icon: CalendarIcon, current: false },
+        { name: "Orders", href: "/orders", icon: DocumentDuplicateIcon, current: false },
+        { name: "Benefits", href: "/benefits", icon: ChartPieIcon, current: false },
+      ];
+      break;
+    case 3:
+      navigation = [
+        { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+        { name: "Customers", href: "/customers", icon: UserGroupIcon, current: false },
+        { name: "Orders", href: "/orders", icon: DocumentDuplicateIcon, current: false },
+      ];
+      break;
+    default:
+      console.log("NO tienes rol");
+      break;
+  }
 
   for (var i = 0; i < navigation.length; i++) {
     if (navigation[i].current == true) {
@@ -67,6 +91,8 @@ export default function AppLayout({ children, Page, Steps }) {
   //from local storage and navigates to the home page if the request is successful.
   //If there is an error during the request, it logs the error to the console.
   const handleNavigation = async (action) => {
+    console.log(userId)
+    console.log(data)
     if (action === "Sign out") {
       const url = `${import.meta.env.VITE_API_URL}/logout`;
       await axios({
@@ -83,19 +109,21 @@ export default function AppLayout({ children, Page, Steps }) {
           console.error("Error:", error);
         })
         .finally(function () {});
-    } else {
+    } else if (action === "My profile") {
+      navigate(`/users/profile/${userId}`);
     }
   };
 
-  const userNavigation = [{ name: "Sign out", action: "Sign out" }];
+  const userNavigation = [{ name: "My profile", action: "My profile" },{ name: "Sign out", action: "Sign out" }];
 
+  
   /**
    * A description of the entire function.
    *
    * @param {type} paramName - description of parameter
    * @return {type} description of return value
    */
-  const UserNavigation = () => {
+  const UserNavigation = (action) => {
     handleNavigation(action);
   };
 
@@ -299,7 +327,7 @@ export default function AppLayout({ children, Page, Steps }) {
                         className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true"
                       >
-                        {data.name}
+                        {data}
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -324,8 +352,11 @@ export default function AppLayout({ children, Page, Steps }) {
                               href={item.action}
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleNavigation(item.action);
-                              }}
+                                if (item.action === "My profile") {
+                                  UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
+                                } else {
+                                  handleNavigation(item.action);
+                                }                              }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",
                                 "block px-3 py-1 text-sm leading-6 text-gray-900"

@@ -24,33 +24,57 @@ export const Login = () => {
           user,
           password,
         },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
+        //{
+          //headers: {
+            //Accept: "application/json",
+            //"Content-Type": "application/json",
+          //},
+        //}
       );
 
       if (response.status === 200) {
         //si respuesta es igual a 200 guardamos usuario y token
         const { token } = response.data;
-        const { user } = response.data;
+        //const { user } = response.data;
         //verificamos que no esten vacios
         if (!token) {
           console.error("No token found in the response");
           setAlert(true);
           return;
-        } else if (!user) {
-          console.error("No user found in the response");
-          setAlert(true);
-        }
+        } 
+        //else if (!user) {
+          //console.error("No user found in the response");
+          //setAlert(true);
+       // }
         //si no estan vacios se guardan los datos
         localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-        setToken(token);
+
+        // Hacemos una solicitud adicional para obtener los datos del usuario, incluido su rol
+        const userDataResponse = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pasamos el token en los headers de autorización
+          },
+        });
+
+        if (userDataResponse.status === 200) {
+          const userData = userDataResponse.data.data;
+        const loggedInUser = userData.find(userData => userData.user === user);
+        const idRole = loggedInUser ? loggedInUser.idRole : null;
+        const userId = loggedInUser ? loggedInUser.id : null;
+          console.log("User role:", idRole);
+          // Guardamos los datos del usuario en el almacenamiento local
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("idRole", JSON.stringify(idRole));
+          console.log("User ID:", userId);
+          localStorage.setItem("userId", userId);
+          // Navegamos a la página de dashboard
+          navigate('/dashboard');
+        }
+
+        //localStorage.setItem("user", JSON.stringify(user));
+        //setToken(token);
         //navegamos a /dashboard
-        navigate('/dashboard');
+        //navigate('/dashboard');
       }
     } catch (error) {
       console.error("Error logging in:", error);

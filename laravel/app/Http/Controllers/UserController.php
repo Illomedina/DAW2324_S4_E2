@@ -112,7 +112,30 @@ class UserController extends Controller
             return response()->json(['error' => 'Error al actualizar el usuario.'], 500);
         }
     }
+    
+    public function show($userId)
+{
+    try {
+        $user = User::findOrFail($userId);
 
+        $userData = [
+            'name' => $user->name,
+            'surname' => $user->surname,
+            'email' => $user->email,
+            // Agrega más campos según sea necesario
+        ];
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User details successfully retrieved',
+            'data' => $userData,
+        ], 200);
+    } catch (ModelNotFoundException $e) {
+        return response()->json(['error' => 'User not found'], 404);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to retrieve user details'], 500);
+    }
+}
 
     public function destroy($id)
     {
