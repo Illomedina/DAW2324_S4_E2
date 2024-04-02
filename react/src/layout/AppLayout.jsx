@@ -352,7 +352,7 @@ export default function AppLayout({ children, Page, Steps }) {
                                 if (item.action === "My profile") {
                                   UserNavigation(item.action); // Pasa el ID del usuario al hacer clic en "My profile"
                                 } else {
-                                  handleNavigation(item.action);
+                                  handleNavigation(item.action, data.id);
                                 }                              }}
                               className={classNames(
                                 active ? "bg-gray-50" : "",
