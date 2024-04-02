@@ -58,8 +58,7 @@ class BenefitsController extends Controller
         $existingRecord = DB::select("SELECT * FROM benefits WHERE year = ? AND month = ?", [$request->year, $request->month]);
 
         if (count($existingRecord) > 0) {
-            return response()->json(['message' => $existingRecord], 409);
-            // return response()->json(['message' => 'Year and month already exist'], 409);
+            return response()->json(['message' => 'Year and month already exist'], 409);
         } else {
 
             $benefit = Benefits::create([

@@ -47,8 +47,7 @@ function SectionTable({ SectionName }) {
   };
 
   const handleInputChange = (event) => {
-    setSearchTerm(event.value.toLowerCase());
-    console.log(searchTerm);
+    setSearchTerm(event.value);
   };
 
   /**
@@ -143,8 +142,6 @@ function SectionTable({ SectionName }) {
           labelsTemp[11] = response.data[i].month.substring(0, 3);
         }
       }
-      console.log(chartDataTemp);
-      console.log(labelsTemp);
 
       setChartData(chartDataTemp);
       setLabels(labelsTemp);

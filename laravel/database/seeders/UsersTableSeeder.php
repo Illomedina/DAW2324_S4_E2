@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('password'), 
                 'email' => 'jordinavarro@customaize.com',
                 'email_verified_at' => date('Y-m-d H:i:s'),
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d  H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
