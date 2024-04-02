@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import AppLayout from "../../layout/AppLayout";
 import useOrdersData from "../../hooks/useOrders";
 
+const steps = [
+  { name: "Orders", href: "/orders", current: false },
+  { name: "Order Details", href: "/", current: true },
+];
+
 // Define the functional component for the OrderDetailsPage
 const OrderDetailsPage = () => {
   // Extract the idOrder from the URL parameters using the useParams hook
@@ -15,20 +20,20 @@ const OrderDetailsPage = () => {
     error, // Stores any error that might occur during data fetching
   } = useOrdersData(`${import.meta.env.VITE_API_URL}/OrderDetails/${idOrder}`);
 
-  // Render loading state if data is still loading
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // // Render loading state if data is still loading
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  // Render error message if there's an error during data fetching
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // // Render error message if there's an error during data fetching
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   // Render the UI for the OrderDetailsPage
   return (
-    <AppLayout>
-      <div className="flex items-center justify-center">
+    <AppLayout Page={"Order Details"} Steps={steps}>
+      <div className="flex items-center justify-center mt-4">
         <div className="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg">
           {/* ... Header and logo section (omitted for brevity) ... */}
           <img

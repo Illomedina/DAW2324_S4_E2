@@ -29,7 +29,7 @@ const EditOrder = ({ data }) => {
     </a>
   );
 };
-
+const steps = [{ name: "Orders", href: "/orders", current: true }];
 // OrdersPage Component
 const OrdersPage = () => {
   // Define the API URL for fetching orders data
@@ -86,9 +86,9 @@ const OrdersPage = () => {
 
   // Render the AgGridReact component with fetched data and column definitions
   return (
-    <AppLayout Page="Orders">
+    <AppLayout Page={"Orders"} Steps={steps}>
       <div
-        className="ag-theme-quartz"
+        className="ag-theme-quartz mt-4"
         style={{ width: "100%", height: "80vh" }}
       >
         <AgGridReact
