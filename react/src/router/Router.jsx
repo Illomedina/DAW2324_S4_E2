@@ -37,7 +37,7 @@ export const Router = () => {
 
   useEffect(() => {
     checkRoute();
-  });
+  }, []);
   return (
     <Routes>
       // ROOT
