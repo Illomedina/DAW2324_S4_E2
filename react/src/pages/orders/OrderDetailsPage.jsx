@@ -32,7 +32,7 @@ const OrderDetailsPage = () => {
         <div className="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg">
           {/* ... Header and logo section (omitted for brevity) ... */}
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg"
+            src="/LogoCustomAIze.png"
             alt="chippz"
             className="mx-auto w-16 py-4"
           />
