@@ -1,12 +1,14 @@
 <?php
+namespace Database\Seeders;
 
+use App\Models\OrderDetails;
 use Illuminate\Database\Seeder;
 
 
-class DatabaseSeeder extends Seeder
+class OrderDetailSeeder extends Seeder
 {
     public function run()
     {
-        \App\Models\OrderDetails::factory()->count(50)->create();
+        OrderDetails::factory()->count(50)->create();
     }
 }

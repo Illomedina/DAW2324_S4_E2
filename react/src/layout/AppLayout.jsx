@@ -82,7 +82,7 @@ export default function AppLayout({ children, Page, Steps }) {
         .catch(function (error) {
           console.error("Error:", error);
         })
-        .finally(function () { });
+        .finally(function () {});
     } else {
     }
   };
@@ -98,8 +98,6 @@ export default function AppLayout({ children, Page, Steps }) {
   const UserNavigation = () => {
     handleNavigation(action);
   };
-
-
 
   return (
     <>
@@ -261,7 +259,6 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
         </div>
         <div className="lg:pl-56">
-
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
@@ -347,15 +344,15 @@ export default function AppLayout({ children, Page, Steps }) {
           </div>
           <main className="bg-gray-100 py-5 h-screen overflow-y-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              {window.location.href.includes("/benefits") == false && window.location.href.includes("/dashboard") == false && (
-                <Breadcrumb steps={Steps} />
-              )}
+              {window.location.href.includes("/benefits") == false &&
+                window.location.href.includes("/dashboard") == false && (
+                  <Breadcrumb steps={Steps} />
+                )}
               {children}
             </div>
           </main>
 
           <UserwayWidget />
-
         </div>
       </div>
     </>

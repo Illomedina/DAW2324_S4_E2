@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "859119c05fc763941ce0e7adcdd05e85",
+    "content-hash": "082f6282e77939c8b237421269bfa5bd",
     "packages": [
         {
             "name": "brick/math",
@@ -64,6 +64,7 @@
         {
             "name": "carbonphp/carbon-doctrine-types",
             "version": "3.2.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonPHP/carbon-doctrine-types.git",
@@ -77,11 +78,14 @@
             },
             "require": {
                 "php": "^8.1"
+                "php": "^8.1"
             },
             "conflict": {
                 "doctrine/dbal": "<4.0.0 || >=5.0.0"
+                "doctrine/dbal": "<4.0.0 || >=5.0.0"
             },
             "require-dev": {
+                "doctrine/dbal": "^4.0.0",
                 "doctrine/dbal": "^4.0.0",
                 "nesbot/carbon": "^2.71.0 || ^3.0.0",
                 "phpunit/phpunit": "^10.3"
@@ -113,6 +117,7 @@
             "support": {
                 "issues": "https://github.com/CarbonPHP/carbon-doctrine-types/issues",
                 "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.0"
+                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.0"
             },
             "funding": [
                 {
@@ -128,6 +133,7 @@
                     "type": "tidelift"
                 }
             ],
+            "time": "2024-02-09T16:56:22+00:00"
             "time": "2024-02-09T16:56:22+00:00"
         },
         {
@@ -1587,37 +1593,34 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.17.6",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "2d453dc629b27e8cf39fb1217aba062f8c54e690"
+                "reference": "e398fae4836e68b3d3734d7cdc37622eaf90fdd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/2d453dc629b27e8cf39fb1217aba062f8c54e690",
-                "reference": "2d453dc629b27e8cf39fb1217aba062f8c54e690",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/e398fae4836e68b3d3734d7cdc37622eaf90fdd9",
+                "reference": "e398fae4836e68b3d3734d7cdc37622eaf90fdd9",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^8.37|^9.0|^10.0",
+                "laravel/framework": "^8.37|^9.0|^10.0|^11.0",
                 "php": "^8.0",
-                "symfony/var-dumper": "^5.0|^6.0"
+                "symfony/var-dumper": "^5.0|^6.0|^7.0"
             },
             "require-dev": {
                 "ext-gd": "*",
                 "guzzlehttp/guzzle": "^6.0|^7.0",
-                "laravel/octane": "^1.4",
-                "orchestra/testbench": "^6.0|^7.0|^8.0",
+                "laravel/octane": "^1.4|^2.0|dev-develop",
+                "orchestra/testbench": "^6.40|^7.37|^8.17|^9.0",
                 "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^9.0"
+                "phpunit/phpunit": "^9.0|^10.5"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "4.x-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Laravel\\Telescope\\TelescopeServiceProvider"
@@ -1652,9 +1655,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.17.6"
+                "source": "https://github.com/laravel/telescope/tree/v5.0.0"
             },
-            "time": "2024-02-08T15:04:38+00:00"
+            "time": "2024-03-12T14:17:54+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -8615,5 +8618,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }

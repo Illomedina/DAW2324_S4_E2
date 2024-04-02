@@ -12,8 +12,8 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'idOrderPicanova' => $this->faker->unique()->uuid,
-            'idCustomer' => rand(1, 50), // O puedes utilizar $this->faker->numberBetween(1, 50)
+           'idOrderPicanova' => $this->faker->unique()->numberBetween(100000000, 999999999),
+            'idCustomer' => rand(1, 10), // O puedes utilizar $this->faker->numberBetween(1, 50)
             'datetime' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'orderStatus' => $this->faker->randomElement(['Pending', 'Processing', 'Shipped']),
         ];

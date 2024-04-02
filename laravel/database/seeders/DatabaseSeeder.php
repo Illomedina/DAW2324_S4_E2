@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             BenefitsTableSeeder::class,
             CustomersTableSeeder::class,
             SettingSeeder::class,
+            // OrderTableSeeder::class,
+            OrderDetailSeeder::class,
         ]);
     }
 }

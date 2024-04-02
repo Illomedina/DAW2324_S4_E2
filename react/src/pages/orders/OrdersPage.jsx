@@ -4,7 +4,9 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import AppLayout from "../../layout/AppLayout";
 import { Link } from "react-router-dom";
+import useOrdersData from "../../hooks/useOrders";
 
+// EditOrder Component
 const EditOrder = ({ data }) => {
   return (
     <a href={`/orders/${data.id}`}>
@@ -27,15 +29,16 @@ const EditOrder = ({ data }) => {
     </a>
   );
 };
-export default function OrdersPage() {
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/orders`)
-      .then((result) => result.json())
-      .then((data) => setRowData(data))
-      .catch((error) => console.error("Error fetching data: ", error));
-  }, []);
 
-  const [rowData, setRowData] = useState([]);
+// OrdersPage Component
+const OrdersPage = () => {
+  // Define the API URL for fetching orders data
+  const apiUrl = `${import.meta.env.VITE_API_URL}/orders`;
+
+  // Use the custom hook to fetch orders data
+  const { rowData, loading, error } = useOrdersData(apiUrl);
+
+  // Define column definitions for the AgGridReact component
   const colDefs = [
     {
       field: "idOrderPicanova",
@@ -62,13 +65,28 @@ export default function OrdersPage() {
     },
   ];
 
-  const defaultColDef = useMemo(() => ({
-    filter: true,
-    editable: false,
-  }));
+  // Define default column definition using useMemo to avoid unnecessary re-renders
+  const defaultColDef = useMemo(
+    () => ({
+      filter: true,
+      editable: false,
+    }),
+    []
+  );
 
+  // // Render loading state if data is still loading
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // // Render error message if there's an error during data fetching
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
+
+  // Render the AgGridReact component with fetched data and column definitions
   return (
-    <AppLayout>
+    <AppLayout Page="Orders">
       <div
         className="ag-theme-quartz"
         style={{ width: "100%", height: "80vh" }}
@@ -83,4 +101,7 @@ export default function OrdersPage() {
       </div>
     </AppLayout>
   );
-}
+};
+
+// Export the OrdersPage component
+export default OrdersPage;
